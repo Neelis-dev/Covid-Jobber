@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Covid-Jobber</string>
+    <string name="card_display_fragment_jobname">Hello blank fragment</string>
+    <string name="card_display_fragment_image_contentdesc">some random pic</string>
+    <string name="thumbsup_text">Thumbs up!</string>
+    <string name="thumbsdown_text">Thumbs down!</string>
 </resources>
