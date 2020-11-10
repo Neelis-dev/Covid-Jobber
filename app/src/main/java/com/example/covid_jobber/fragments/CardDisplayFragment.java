@@ -7,10 +7,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.covid_jobber.R;
 import com.example.covid_jobber.databinding.FragmentCardDisplayBinding;
+import com.google.android.gms.common.util.JsonUtils;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -33,7 +36,7 @@ import okhttp3.ResponseBody;
  */
 public class CardDisplayFragment extends Fragment {
 
-    public FragmentCardDisplayBinding fragmentCardDisplayBinding;
+    private FragmentCardDisplayBinding fragmentCardDisplayBinding;
     public CardDisplayFragment() {
         // Required empty public constructor
 
@@ -50,11 +53,13 @@ public class CardDisplayFragment extends Fragment {
         super.onCreate(savedInstanceState);
         fragmentCardDisplayBinding = FragmentCardDisplayBinding.inflate(getLayoutInflater());
 
+
         final String appId = "64fa1822";
         final String appKey = "d41a9537116b72a1c2a890a27376d552";
+        final String pageNumber = "1";
 
         Request request = new Request.Builder()
-                .url("https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id="+appId+"&app_key="+appKey)
+                .url("https://api.adzuna.com/v1/api/jobs/gb/search/"+pageNumber+"?app_id="+appId+"&app_key="+appKey)
                 .build();
 
         OkHttpClient client = new OkHttpClient();
@@ -64,11 +69,24 @@ public class CardDisplayFragment extends Fragment {
             }
 
             @Override public void onResponse(Call call, Response response) throws IOException {
+                System.out.println("response recieved");
                 ResponseBody responseBody = response.body();
-                JSONObject jsonObject=null;
-                System.out.println("it worked");
-                System.out.println(responseBody.string());
-                fragmentCardDisplayBinding.tvJobDescription.setText("If you can see this the API responded successfully! no Error code!");
+                JSONObject jsonObject;
+                try {
+                    jsonObject= new JSONObject(responseBody.string());
+
+                    TextView mytextview = getActivity().findViewById(R.id.tv_jobDescription);
+                    mytextview.setText(jsonObject.getJSONArray("results").getJSONObject(0).get("title").toString());
+
+                    fragmentCardDisplayBinding.tvJobDescription.setText(jsonObject.getJSONArray("results").getJSONObject(0).get("title").toString());
+                    System.out.println("Job Desc should be:" + jsonObject.getJSONArray("results").getJSONObject(0).get("title").toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    System.out.println("fail while creating JSON");
+                }
+
+                //System.out.println(responseBody.string());
+                //fragmentCardDisplayBinding.tvJobDescription.setText("If you can see this the API responded successfully! no Error code!");
             }
         });
     }
