@@ -1,8 +1,8 @@
 <resources>
-<!--    General-->
+    <!--    General-->
     <string name="app_name">Covid-Jobber</string>
 
-<!--    Swipe Fragment-->
+    <!--    Swipe Fragment-->
     <string name="img_swipe_fragment_picture">some random pic</string>
     <string name="img_swipe_fragment_thumbsup">Thumbs up!</string>
     <string name="img_swipe_fragment_thumbsdown">Thumbs down!</string>
@@ -10,4 +10,8 @@
     <string name="txt_swipe_fragment_job_name">Jobname:</string>
     <string name="txt_swipe_fragment_job_description">Job Description:</string>
     <string name="txt_swipe_fragment_content_placeholder"> </string>
+
+    <!--    Navbar Fragment-->
+    <string name="txt_navbar_fragment_placeholder">Hello navbar fragment</string>
+    <string name="img_navbar_fragment_search">Search Button Image</string>
 </resources>

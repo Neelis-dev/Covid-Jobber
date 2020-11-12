@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 
 import com.example.covid_jobber.R;
 import com.example.covid_jobber.classes.ApiHandler;
-import com.example.covid_jobber.databinding.FragmentCardDisplayBinding;
 import com.example.covid_jobber.databinding.FragmentSwipeBinding;
 
 /**
