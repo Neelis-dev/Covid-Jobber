@@ -47,7 +47,7 @@ public class ApiHandler {
                     String title = jsonObject.getJSONArray("results").getJSONObject(0).get("title").toString();
                     System.out.println("Job Desc should be:" + title);
 //                    https://stackoverflow.com/questions/50139888/how-to-get-async-call-to-return-response-to-main-thread-using-okhttp
-//                    how to return values?? --> maybe CompletableFuture<Response>
+//                    Todo: Return Value
                 } catch (JSONException e) {
                     e.printStackTrace();
                     System.out.println("fail while creating JSON");
