@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.example.covid_jobber.R;
 import com.example.covid_jobber.databinding.ActivityMainBinding;
-import com.example.covid_jobber.fragments.CardDisplayFragment;
+import com.example.covid_jobber.fragments.SwipeFragment;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -19,10 +19,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         // check if card display container exists
-        if(findViewById(R.id.card_display_fragment) != null){
+        if(findViewById(R.id.content_fragment) != null){
             // replace container with fragment object
             getSupportFragmentManager().beginTransaction().
-                    replace(R.id.card_display_fragment,new CardDisplayFragment()).commitAllowingStateLoss();
+                    replace(R.id.content_fragment,new SwipeFragment()).commitAllowingStateLoss();
         }
 
 

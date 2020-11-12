@@ -1,5 +1,8 @@
 <resources>
+<!--    General-->
     <string name="app_name">Covid-Jobber</string>
+
+<!--    Swipe Fragment-->
     <string name="card_display_fragment_jobname">Hello blank fragment</string>
     <string name="card_display_fragment_image_contentdesc">some random pic</string>
     <string name="thumbsup_text">Thumbs up!</string>

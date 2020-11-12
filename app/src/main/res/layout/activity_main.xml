@@ -13,7 +13,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/card_display_fragment"/>
+            android:id="@+id/content_fragment"/>
 
     </LinearLayout>
 
