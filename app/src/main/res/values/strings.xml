@@ -3,12 +3,11 @@
     <string name="app_name">Covid-Jobber</string>
 
 <!--    Swipe Fragment-->
-    <string name="card_display_fragment_jobname">Hello blank fragment</string>
-    <string name="card_display_fragment_image_contentdesc">some random pic</string>
-    <string name="thumbsup_text">Thumbs up!</string>
-    <string name="thumbsdown_text">Thumbs down!</string>
+    <string name="img_swipe_fragment_picture">some random pic</string>
+    <string name="img_swipe_fragment_thumbsup">Thumbs up!</string>
+    <string name="img_swipe_fragment_thumbsdown">Thumbs down!</string>
 
-    <string name="text_tv_jobNameTag">Jobname:</string>
-    <string name="text_tv_jobDescriptionTag">Job Description:</string>
-    <string name="text_content_placeholder"> </string>
+    <string name="txt_swipe_fragment_job_name">Jobname:</string>
+    <string name="txt_swipe_fragment_job_description">Job Description:</string>
+    <string name="txt_swipe_fragment_content_placeholder"> </string>
 </resources>
