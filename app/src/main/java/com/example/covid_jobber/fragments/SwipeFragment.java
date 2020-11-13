@@ -21,39 +21,41 @@ import org.jetbrains.annotations.NotNull;
  * create an instance of this fragment.
  */
 public class SwipeFragment extends Fragment {
+    private FragmentSwipeBinding binding;
 
     private ApiHandler apiHandler = new ApiHandler();
-
-    private FragmentSwipeBinding binding;
 
     public SwipeFragment() {
         // Required empty public constructor
     }
 
     public static SwipeFragment newInstance() {
-        SwipeFragment fragment = new SwipeFragment();
-        return fragment;
+        return new SwipeFragment();
     }
 
+//    In fragments use OnCreateView() instead of OnCreate() for binding
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentSwipeBinding.inflate(inflater, container, false);
-        View view = binding.getRoot();
-        return view;
+        return binding.getRoot();
     }
 
+//    OnStart() is after OnCreateView --> binding can be used
     @Override
     public void onStart() {
         super.onStart();
 
+//        Todo: some real apiHandler action in beginning
         apiHandler.forUI();
 
+//        Just some example to test that binding is working
         String exampleText = "example";
         binding.tvJobName.setText(exampleText);
     }
 
+//    Resets binding, if view is destroyed
     @Override
     public void onDestroyView() {
         super.onDestroyView();
