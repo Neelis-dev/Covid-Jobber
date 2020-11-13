@@ -6,16 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".activities.MainActivity">
 
-    <LinearLayout
+    <!--    Content Frame-->
+    <FrameLayout
+        android:id="@+id/content_frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="654dp"
+        app:layout_constraintBottom_toTopOf="@+id/navbar_frame"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/card_display_fragment"/>
+    </FrameLayout>
 
-    </LinearLayout>
+    <!--    Navbar Frame-->
+    <FrameLayout
+        android:id="@+id/navbar_frame"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="-1dp"></FrameLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
