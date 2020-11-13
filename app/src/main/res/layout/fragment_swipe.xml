@@ -90,13 +90,13 @@
                         android:layout_height="match_parent" >
 
                         <TextView
-                            android:id="@+id/tv_jobNameTag"
+                            android:id="@+id/tv_job_name_tag"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/txt_swipe_fragment_job_name" />
+                            android:text="@string/txt_swipe_fragment_job_name_tag" />
 
                         <TextView
-                            android:id="@+id/tv_jobName"
+                            android:id="@+id/tv_job_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/txt_swipe_fragment_content_placeholder" />
@@ -107,13 +107,13 @@
                         android:layout_height="match_parent" >
 
                         <TextView
-                            android:id="@+id/tv_jobDescriptionTag"
+                            android:id="@+id/tv_job_description_tag"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/txt_swipe_fragment_job_description" />
+                            android:text="@string/txt_swipe_fragment_job_description_tag" />
 
                         <TextView
-                            android:id="@+id/tv_jobDescription"
+                            android:id="@+id/tv_job_description"
                             android:layout_width="151dp"
                             android:layout_height="wrap_content"
                             android:text="@string/txt_swipe_fragment_content_placeholder" />
