@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.covid_jobber.R;
+import com.example.covid_jobber.activities.MainActivity;
 import com.example.covid_jobber.databinding.FragmentNavbarBinding;
 import com.example.covid_jobber.databinding.FragmentSwipeBinding;
 
@@ -36,6 +37,14 @@ public class NavbarFragment extends Fragment {
                              ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentNavbarBinding.inflate(inflater, container, false);
+
+        binding.btnNavbarSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         return binding.getRoot();
     }
 
@@ -44,6 +53,23 @@ public class NavbarFragment extends Fragment {
         super.onStart();
 
 //        Todo: Do something on start?
+    }
+
+
+    public void onClick(View view) {
+        if(view != null)
+        {
+            // Get view component id
+            int id = view.getId();
+
+            if(id == binding.btnNavbarSearch.getId())
+            {
+//                todo
+            }else if(id == binding.btnNavbarProfile.getId())
+            {
+//                todo
+            }
+        }
     }
 
     //    Resets binding, if view is destroyed

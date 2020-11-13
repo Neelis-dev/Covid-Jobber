@@ -7,11 +7,18 @@ import android.os.Bundle;
 import com.example.covid_jobber.R;
 import com.example.covid_jobber.databinding.ActivityMainBinding;
 import com.example.covid_jobber.fragments.NavbarFragment;
+import com.example.covid_jobber.fragments.ProfileFragment;
 import com.example.covid_jobber.fragments.SwipeFragment;
 
 
 public class MainActivity extends AppCompatActivity {
     public ActivityMainBinding mainBinding;
+
+    private final  SwipeFragment swipeFragment = new SwipeFragment();
+    private final ProfileFragment profileFragment = new ProfileFragment();
+    private final NavbarFragment navbarFragment = new NavbarFragment();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,19 +28,31 @@ public class MainActivity extends AppCompatActivity {
 
         // check if content frame exists
         if(findViewById(R.id.content_frame) != null){
-            // replace container with fragment object
+            // replace container with fragment object: swipeFragment
             getSupportFragmentManager().beginTransaction().
-                    replace(R.id.content_frame,new SwipeFragment()).commitAllowingStateLoss();
+                    replace(R.id.content_frame,swipeFragment).commitAllowingStateLoss();
         }
 
-        // check if navbar frame exists
-        if(findViewById(R.id.navbar_frame) != null){
+        changeToSwipe();
+
+    }
+
+    public void changeToSwipe(){
+        // check if content frame exists
+        if(findViewById(R.id.content_frame) != null){
             // replace container with fragment object
             getSupportFragmentManager().beginTransaction().
-                    replace(R.id.navbar_frame,new NavbarFragment()).commitAllowingStateLoss();
+                    replace(R.id.content_frame,swipeFragment).commitAllowingStateLoss();
         }
+    }
 
-
+    public void changeToProfile(){
+        // check if content frame exists
+        if(findViewById(R.id.content_frame) != null){
+            // replace container with fragment object
+            getSupportFragmentManager().beginTransaction().
+                    replace(R.id.content_frame,profileFragment).commitAllowingStateLoss();
+        }
     }
 
 
