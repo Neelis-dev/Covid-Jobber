@@ -67,22 +67,6 @@ public class NavbarFragment extends Fragment {
     }
 
 
-//    public void onClick(View view) {
-//        if(view != null)
-//        {
-//            // Get view component id
-//            int id = view.getId();
-//
-//            if(id == binding.btnNavbarSearch.getId())
-//            {
-////                todo
-//            }else if(id == binding.btnNavbarProfile.getId())
-//            {
-////                todo
-//            }
-//        }
-//    }
-
     //    Resets binding, if view is destroyed
     @Override
     public void onDestroyView() {

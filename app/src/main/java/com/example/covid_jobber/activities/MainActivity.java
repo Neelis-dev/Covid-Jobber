@@ -2,6 +2,7 @@ package com.example.covid_jobber.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +12,8 @@ import com.example.covid_jobber.databinding.ActivityMainBinding;
 import com.example.covid_jobber.fragments.NavbarFragment;
 import com.example.covid_jobber.fragments.ProfileFragment;
 import com.example.covid_jobber.fragments.SwipeFragment;
+
+import java.sql.SQLOutput;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -27,8 +30,8 @@ public class MainActivity extends AppCompatActivity {
         this.mainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_main);
 
-//        Content Frame at first Swipe View
-        changeToSwipe();
+//        At first Swipe Fragment in Content Frame
+        replaceFrame(R.id.content_frame, swipeFragment);
 
 //        Put Navbar Fragment in Navbar Frame
         replaceFrame(R.id.navbar_frame, navbarFragment);
@@ -47,9 +50,12 @@ public class MainActivity extends AppCompatActivity {
     public void replaceFrame(int frameID, Fragment fragment){
         // check if content frame exists
         if(findViewById(frameID) != null){
-            // replace container with fragment object
-            getSupportFragmentManager().beginTransaction().
-                    replace(frameID,fragment).commitAllowingStateLoss();
+//            Check if this Fragment is already in Frame
+            if(this.getSupportFragmentManager().findFragmentById(frameID) != fragment){
+                // replace container with fragment object
+                getSupportFragmentManager().beginTransaction().replace(frameID,fragment).commitAllowingStateLoss();
+                System.out.println("Changed Fragment");
+            }
         }
     }
 
