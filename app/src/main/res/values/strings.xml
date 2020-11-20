@@ -2,19 +2,27 @@
     <!--    General-->
     <string name="app_name">Covid-Jobber</string>
 
+    <!--    Navbar Fragment-->
+    <string name="txt_navbar_fragment_placeholder">Hello navbar fragment</string>
+    <string name="img_navbar_fragment_search">Search Button Image</string>
+    <string name="img_navbar_fragment_favorites">Search Button Image</string>
+    <string name="img_navbar_fragment_filters">Profile Button Image</string>
+    <string name="img_navbar_fragment_profile">Profile Button Image</string>
+
     <!--    Swipe Fragment-->
     <string name="img_swipe_fragment_picture">some random pic</string>
     <string name="img_swipe_fragment_thumbsup">Thumbs up!</string>
     <string name="img_swipe_fragment_thumbsdown">Thumbs down!</string>
-
     <string name="txt_swipe_fragment_job_name_tag">Jobname:</string>
     <string name="txt_swipe_fragment_job_description_tag">Job Description:</string>
     <string name="txt_swipe_fragment_content_placeholder">Placeholder</string>
 
-    <!--    Navbar Fragment-->
-    <string name="txt_navbar_fragment_placeholder">Hello navbar fragment</string>
-    <string name="img_navbar_fragment_search">Search Button Image</string>
-    <string name="img_navbar_fragment_profile">Profile Button Image</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!--  Favorites Fragment  -->
+    <string name="txt_favorites_fragment_filler">Favorites Fragment</string>
+
+    <!--  Filters Fragment  -->
+    <string name="txt_filters_fragment_filler">Filters Fragment</string>
+
+    <!--  Profile Fragment  -->
+    <string name="txt_profile_fragment_filler">Profile Fragment</string>
 </resources>

@@ -44,16 +44,24 @@ public class NavbarFragment extends Fragment {
         View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(v == binding.btnNavbarProfile){
-                    mainActivity.changeToProfile();
-                }
-                else if(v == binding.btnNavbarSearch){
+                if(v == binding.btnNavbarSearch){
                     mainActivity.changeToSwipe();
+                }
+                else if(v == binding.btnNavbarFavorites){
+                    mainActivity.changeToFavorites();
+                }
+                else if(v == binding.btnNavbarFilters){
+                    mainActivity.changeToFilters();
+                }
+                else if(v == binding.btnNavbarProfile){
+                    mainActivity.changeToProfile();
                 }
             }
         };
 
         binding.btnNavbarSearch.setOnClickListener(listener);
+        binding.btnNavbarFavorites.setOnClickListener(listener);
+        binding.btnNavbarFilters.setOnClickListener(listener);
         binding.btnNavbarProfile.setOnClickListener(listener);
 
         return binding.getRoot();

@@ -9,6 +9,8 @@ import android.view.View;
 
 import com.example.covid_jobber.R;
 import com.example.covid_jobber.databinding.ActivityMainBinding;
+import com.example.covid_jobber.fragments.FavoritesFragment;
+import com.example.covid_jobber.fragments.FiltersFragment;
 import com.example.covid_jobber.fragments.NavbarFragment;
 import com.example.covid_jobber.fragments.ProfileFragment;
 import com.example.covid_jobber.fragments.SwipeFragment;
@@ -20,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
     public ActivityMainBinding mainBinding;
 
     private final  SwipeFragment swipeFragment = new SwipeFragment();
+    private final FavoritesFragment favoritesFragment = new FavoritesFragment();
+    private final  FiltersFragment filtersFragment = new FiltersFragment();
     private final ProfileFragment profileFragment = new ProfileFragment();
     private final NavbarFragment navbarFragment = new NavbarFragment();
 
@@ -41,7 +45,12 @@ public class MainActivity extends AppCompatActivity {
     public void changeToSwipe(){
         replaceFrame(R.id.content_frame, swipeFragment);
     }
-
+    public void changeToFavorites(){
+        replaceFrame(R.id.content_frame, favoritesFragment);
+    }
+    public void changeToFilters(){
+        replaceFrame(R.id.content_frame, filtersFragment);
+    }
     public void changeToProfile(){
         replaceFrame(R.id.content_frame, profileFragment);
     }

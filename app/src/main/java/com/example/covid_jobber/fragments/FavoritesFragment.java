@@ -9,32 +9,32 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.covid_jobber.R;
-import com.example.covid_jobber.databinding.FragmentNavbarBinding;
-import com.example.covid_jobber.databinding.FragmentProfileBinding;
+import com.example.covid_jobber.databinding.FragmentFavoritesBinding;
+import com.example.covid_jobber.databinding.FragmentFiltersBinding;
 
 import org.jetbrains.annotations.NotNull;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ProfileFragment#newInstance} factory method to
+ * Use the {@link FavoritesFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProfileFragment extends Fragment {
+public class FavoritesFragment extends Fragment {
 
-    private FragmentProfileBinding binding;
+    private FragmentFavoritesBinding binding;
 
-    public ProfileFragment() {
+    public FavoritesFragment() {
         // Required empty public constructor
     }
 
-    public static ProfileFragment newInstance() {
-        return new ProfileFragment();
+    public static FavoritesFragment newInstance() {
+        return new FavoritesFragment();
     }
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentProfileBinding.inflate(inflater, container, false);
+        binding = FragmentFavoritesBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
