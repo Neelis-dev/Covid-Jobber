@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.covid_jobber.R;
+import com.example.covid_jobber.activities.MainActivity;
 import com.example.covid_jobber.classes.ApiHandler;
 import com.example.covid_jobber.databinding.FragmentSwipeBinding;
 
@@ -23,7 +24,7 @@ import org.jetbrains.annotations.NotNull;
 public class SwipeFragment extends Fragment {
     private FragmentSwipeBinding binding;
 
-    private ApiHandler apiHandler = new ApiHandler();
+    private final ApiHandler apiHandler = new ApiHandler();
 
     public SwipeFragment() {
         // Required empty public constructor

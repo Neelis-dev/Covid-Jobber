@@ -1,9 +1,8 @@
 package com.example.covid_jobber.classes;
 
-import com.example.covid_jobber.Enums.ContractTime;
+import com.example.covid_jobber.enums.ContractTime;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 

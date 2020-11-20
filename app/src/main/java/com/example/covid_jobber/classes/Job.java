@@ -1,6 +1,6 @@
 package com.example.covid_jobber.classes;
 
-import com.example.covid_jobber.Enums.ContractTime;
+import com.example.covid_jobber.enums.ContractTime;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.covid_jobber.R;
+import com.example.covid_jobber.activities.MainActivity;
 import com.example.covid_jobber.databinding.FragmentNavbarBinding;
 import com.example.covid_jobber.databinding.FragmentSwipeBinding;
 
@@ -21,6 +22,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public class NavbarFragment extends Fragment {
     private FragmentNavbarBinding binding;
+    private MainActivity mainActivity;
 
     public NavbarFragment() {
         // Required empty public constructor
@@ -36,6 +38,24 @@ public class NavbarFragment extends Fragment {
                              ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentNavbarBinding.inflate(inflater, container, false);
+
+        mainActivity = (MainActivity) getActivity();
+
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(v == binding.btnNavbarProfile){
+                    mainActivity.changeToProfile();
+                }
+                else if(v == binding.btnNavbarSearch){
+                    mainActivity.changeToSwipe();
+                }
+            }
+        };
+
+        binding.btnNavbarSearch.setOnClickListener(listener);
+        binding.btnNavbarProfile.setOnClickListener(listener);
+
         return binding.getRoot();
     }
 
@@ -45,6 +65,23 @@ public class NavbarFragment extends Fragment {
 
 //        Todo: Do something on start?
     }
+
+
+//    public void onClick(View view) {
+//        if(view != null)
+//        {
+//            // Get view component id
+//            int id = view.getId();
+//
+//            if(id == binding.btnNavbarSearch.getId())
+//            {
+////                todo
+//            }else if(id == binding.btnNavbarProfile.getId())
+//            {
+////                todo
+//            }
+//        }
+//    }
 
     //    Resets binding, if view is destroyed
     @Override

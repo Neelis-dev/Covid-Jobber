@@ -13,6 +13,7 @@
         android:layout_height="654dp"
         app:layout_constraintBottom_toTopOf="@+id/navbar_frame"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
     </FrameLayout>
@@ -23,7 +24,8 @@
         android:layout_width="match_parent"
         android:layout_height="75dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="-1dp"></FrameLayout>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"></FrameLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
