@@ -22,6 +22,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public class NavbarFragment extends Fragment {
     private FragmentNavbarBinding binding;
+    private MainActivity mainActivity;
 
     public NavbarFragment() {
         // Required empty public constructor
@@ -38,10 +39,20 @@ public class NavbarFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentNavbarBinding.inflate(inflater, container, false);
 
+        mainActivity = (MainActivity) getActivity();
         binding.btnNavbarSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                System.out.println("Clicked Search Button!");
+                mainActivity.changeToSwipe();
+            }
+        });
 
+        binding.btnNavbarProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("Clicked Profile Button!");
+                mainActivity.changeToProfile();
             }
         });
 
@@ -56,21 +67,21 @@ public class NavbarFragment extends Fragment {
     }
 
 
-    public void onClick(View view) {
-        if(view != null)
-        {
-            // Get view component id
-            int id = view.getId();
-
-            if(id == binding.btnNavbarSearch.getId())
-            {
-//                todo
-            }else if(id == binding.btnNavbarProfile.getId())
-            {
-//                todo
-            }
-        }
-    }
+//    public void onClick(View view) {
+//        if(view != null)
+//        {
+//            // Get view component id
+//            int id = view.getId();
+//
+//            if(id == binding.btnNavbarSearch.getId())
+//            {
+////                todo
+//            }else if(id == binding.btnNavbarProfile.getId())
+//            {
+////                todo
+//            }
+//        }
+//    }
 
     //    Resets binding, if view is destroyed
     @Override

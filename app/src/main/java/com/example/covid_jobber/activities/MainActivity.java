@@ -1,8 +1,10 @@
 package com.example.covid_jobber.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.covid_jobber.R;
 import com.example.covid_jobber.databinding.ActivityMainBinding;
@@ -25,33 +27,27 @@ public class MainActivity extends AppCompatActivity {
         this.mainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_main);
 
-
-        // check if content frame exists
-        if(findViewById(R.id.content_frame) != null){
-            // replace container with fragment object: swipeFragment
-            getSupportFragmentManager().beginTransaction().
-                    replace(R.id.content_frame,swipeFragment).commitAllowingStateLoss();
-        }
-
         changeToSwipe();
+
+//        Change to Navbar Fragment
+        replaceFrame(R.id.navbar_frame, navbarFragment);
 
     }
 
     public void changeToSwipe(){
-        // check if content frame exists
-        if(findViewById(R.id.content_frame) != null){
-            // replace container with fragment object
-            getSupportFragmentManager().beginTransaction().
-                    replace(R.id.content_frame,swipeFragment).commitAllowingStateLoss();
-        }
+        replaceFrame(R.id.content_frame, swipeFragment);
     }
 
     public void changeToProfile(){
+        replaceFrame(R.id.content_frame, profileFragment);
+    }
+
+    public void replaceFrame(int frameID, Fragment fragment){
         // check if content frame exists
-        if(findViewById(R.id.content_frame) != null){
+        if(findViewById(frameID) != null){
             // replace container with fragment object
             getSupportFragmentManager().beginTransaction().
-                    replace(R.id.content_frame,profileFragment).commitAllowingStateLoss();
+                    replace(frameID,fragment).commitAllowingStateLoss();
         }
     }
 
