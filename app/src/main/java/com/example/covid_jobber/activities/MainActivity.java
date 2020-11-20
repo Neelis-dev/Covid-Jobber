@@ -27,9 +27,10 @@ public class MainActivity extends AppCompatActivity {
         this.mainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_main);
 
+//        Content Frame at first Swipe View
         changeToSwipe();
 
-//        Change to Navbar Fragment
+//        Put Navbar Fragment in Navbar Frame
         replaceFrame(R.id.navbar_frame, navbarFragment);
 
     }
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         replaceFrame(R.id.content_frame, profileFragment);
     }
 
+//    Replaces Frame with frameID with Fragment
     public void replaceFrame(int frameID, Fragment fragment){
         // check if content frame exists
         if(findViewById(frameID) != null){

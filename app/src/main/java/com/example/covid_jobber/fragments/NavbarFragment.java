@@ -40,21 +40,21 @@ public class NavbarFragment extends Fragment {
         binding = FragmentNavbarBinding.inflate(inflater, container, false);
 
         mainActivity = (MainActivity) getActivity();
-        binding.btnNavbarSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println("Clicked Search Button!");
-                mainActivity.changeToSwipe();
-            }
-        });
 
-        binding.btnNavbarProfile.setOnClickListener(new View.OnClickListener() {
+        View.OnClickListener listener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("Clicked Profile Button!");
-                mainActivity.changeToProfile();
+                if(v == binding.btnNavbarProfile){
+                    mainActivity.changeToProfile();
+                }
+                else if(v == binding.btnNavbarSearch){
+                    mainActivity.changeToSwipe();
+                }
             }
-        });
+        };
+
+        binding.btnNavbarSearch.setOnClickListener(listener);
+        binding.btnNavbarProfile.setOnClickListener(listener);
 
         return binding.getRoot();
     }
