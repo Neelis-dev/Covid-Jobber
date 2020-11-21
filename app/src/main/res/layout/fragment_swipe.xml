@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.CardDisplayFragment">
+    tools:context=".fragments.SwipeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,12 +15,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-
         <ImageView
             android:id="@+id/imageView3"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:contentDescription="@string/thumbsdown_text"
+            android:contentDescription="@string/img_swipe_fragment_thumbsdown"
             android:src="@drawable/thumbsdown"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -35,7 +34,7 @@
             android:id="@+id/imageView2"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:contentDescription="@string/thumbsup_text"
+            android:contentDescription="@string/img_swipe_fragment_thumbsup"
             android:src="@drawable/thumbsup"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -64,7 +63,7 @@
                     android:id="@+id/imageView"
                     android:layout_width="match_parent"
                     android:layout_height="173dp"
-                    android:contentDescription="@string/card_display_fragment_image_contentdesc"
+                    android:contentDescription="@string/img_swipe_fragment_picture"
                     android:scaleX="1"
                     android:scaleY="1"
                     android:src="@drawable/ic_launcher_background"
@@ -91,16 +90,16 @@
                         android:layout_height="match_parent" >
 
                         <TextView
-                            android:id="@+id/tv_jobNameTag"
+                            android:id="@+id/tv_job_name_tag"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/text_tv_jobNameTag" />
+                            android:text="@string/txt_swipe_fragment_job_name_tag" />
 
                         <TextView
-                            android:id="@+id/tv_jobName"
+                            android:id="@+id/tv_job_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/text_content_placeholder" />
+                            android:text="@string/txt_swipe_fragment_content_placeholder" />
                     </TableRow>
 
                     <TableRow
@@ -108,16 +107,16 @@
                         android:layout_height="match_parent" >
 
                         <TextView
-                            android:id="@+id/tv_jobDescriptionTag"
+                            android:id="@+id/tv_job_description_tag"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/text_tv_jobDescriptionTag" />
+                            android:text="@string/txt_swipe_fragment_job_description_tag" />
 
                         <TextView
-                            android:id="@+id/tv_jobDescription"
+                            android:id="@+id/tv_job_description"
                             android:layout_width="151dp"
                             android:layout_height="wrap_content"
-                            android:text="@string/text_content_placeholder" />
+                            android:text="@string/txt_swipe_fragment_content_placeholder" />
                     </TableRow>
 
                     <TableRow
