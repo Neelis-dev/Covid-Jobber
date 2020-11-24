@@ -9,9 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.covid_jobber.R;
-import com.example.covid_jobber.activities.MainActivity;
-import com.example.covid_jobber.classes.ApiHandler;
+
+import com.example.covid_jobber.classes.services.ApiHandler;
 import com.example.covid_jobber.databinding.FragmentSwipeBinding;
 
 import org.jetbrains.annotations.NotNull;
@@ -28,6 +27,14 @@ public class SwipeFragment extends Fragment {
 
     public SwipeFragment() {
         // Required empty public constructor
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("hello");
+            }
+        };
+
+
     }
 
     public static SwipeFragment newInstance() {
@@ -49,7 +56,7 @@ public class SwipeFragment extends Fragment {
         super.onStart();
 
 //        Todo: some real apiHandler action in beginning
-        apiHandler.forUI();
+
 
 //        Just some example to test that binding is working
         String exampleText = "example";

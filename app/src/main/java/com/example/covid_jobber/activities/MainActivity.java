@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.covid_jobber.R;
+import com.example.covid_jobber.classes.Job;
+import com.example.covid_jobber.classes.services.ApiHandler;
 import com.example.covid_jobber.databinding.ActivityMainBinding;
 import com.example.covid_jobber.fragments.FavoritesFragment;
 import com.example.covid_jobber.fragments.FiltersFragment;
@@ -16,6 +18,11 @@ import com.example.covid_jobber.fragments.ProfileFragment;
 import com.example.covid_jobber.fragments.SwipeFragment;
 
 import java.sql.SQLOutput;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.Random;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -27,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     private final ProfileFragment profileFragment = new ProfileFragment();
     private final NavbarFragment navbarFragment = new NavbarFragment();
 
+
+    private final MainActivity instance = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +75,12 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("Changed Fragment");
             }
         }
+
+    }
+
+    public void callmeback(JSONArray results) throws JSONException {
+        Job j = new Job(results.getJSONObject(new Random().nextInt(results.length())));
+
     }
 
 
