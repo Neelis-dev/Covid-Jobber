@@ -9,10 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
+
 
 import com.example.covid_jobber.R;
-import com.example.covid_jobber.databinding.FragmentNavbarBinding;
+
 import com.example.covid_jobber.databinding.FragmentProfileBinding;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
@@ -67,9 +67,6 @@ public class ProfileFragment extends Fragment {
                 // this is the simplest way to delete an object from the Adapter (/AdapterView)
                 Log.d("LIST", "removed object!");
                 String job = al.remove(0);
-                if(wannasave = true){
-                    saved.add(job);
-                }
                 arrayAdapter.notifyDataSetChanged();
             }
 
@@ -94,8 +91,8 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onScroll(float scrollProgressPercent) {
                 View view = flingContainer.getSelectedView();
-                view.findViewById(R.id.item_swipe_right_indicator).setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
-                view.findViewById(R.id.item_swipe_left_indicator).setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
+                //view.findViewById(R.id.item_swipe_right_indicator).setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
+                //view.findViewById(R.id.item_swipe_left_indicator).setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
             }
         });
 
