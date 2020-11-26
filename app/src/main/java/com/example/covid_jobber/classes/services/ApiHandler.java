@@ -13,6 +13,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -36,7 +37,7 @@ public class ApiHandler {
 
 
 
-    public void forUI(MainActivity mainActivity) throws JSONException {
+    public void forUI(MainActivity mainActivity, Callable func) throws JSONException {
         Request request = new Request.Builder()
                 .url("https://api.adzuna.com/v1/api/jobs/gb/search/"+pageNumber+"?app_id="+appId+"&app_key="+appKey)
                 .build();

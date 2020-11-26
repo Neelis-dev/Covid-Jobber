@@ -23,11 +23,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.Random;
+import java.util.concurrent.Callable;
 
 
 public class MainActivity extends AppCompatActivity {
     public ActivityMainBinding mainBinding;
-
+    private ApiHandler handler = new ApiHandler();
     private final  SwipeFragment swipeFragment = new SwipeFragment();
     private final FavoritesFragment favoritesFragment = new FavoritesFragment();
     private final  FiltersFragment filtersFragment = new FiltersFragment();
@@ -42,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.mainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_main);
+
 
 //        At first Swipe Fragment in Content Frame
         replaceFrame(R.id.content_frame, swipeFragment);
