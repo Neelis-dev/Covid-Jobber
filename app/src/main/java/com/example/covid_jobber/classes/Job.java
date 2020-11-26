@@ -71,6 +71,22 @@ public class Job {
 
     }
 
+    @Override
+    public String toString() {
+        return "Job{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", company='" + company + '\'' +
+                ", description='" + description + '\'' +
+                ", url='" + url + '\'' +
+                ", address=" + address +
+                ", created='" + created + '\'' +
+                ", contractTime=" + contractTime +
+                ", category='" + category + '\'' +
+                ", salary=" + salary +
+                '}';
+    }
+
     public int getId() {
         return id;
     }

@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.covid_jobber.R;
+import com.example.covid_jobber.classes.Job;
+import com.example.covid_jobber.classes.services.ApiHandler;
 import com.example.covid_jobber.databinding.ActivityMainBinding;
 import com.example.covid_jobber.fragments.FavoritesFragment;
 import com.example.covid_jobber.fragments.FiltersFragment;
@@ -17,10 +19,16 @@ import com.example.covid_jobber.fragments.SwipeFragment;
 
 import java.sql.SQLOutput;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.Random;
+import java.util.concurrent.Callable;
+
 
 public class MainActivity extends AppCompatActivity {
     public ActivityMainBinding mainBinding;
-
+    private ApiHandler handler = new ApiHandler();
     private final  SwipeFragment swipeFragment = new SwipeFragment();
     private final FavoritesFragment favoritesFragment = new FavoritesFragment();
     private final  FiltersFragment filtersFragment = new FiltersFragment();
@@ -28,11 +36,14 @@ public class MainActivity extends AppCompatActivity {
     private final NavbarFragment navbarFragment = new NavbarFragment();
 
 
+    private final MainActivity instance = this;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.mainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_main);
+
 
 //        At first Swipe Fragment in Content Frame
         replaceFrame(R.id.content_frame, swipeFragment);
@@ -66,6 +77,12 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println("Changed Fragment");
             }
         }
+
+    }
+
+    public void callmeback(JSONArray results) throws JSONException {
+        Job j = new Job(results.getJSONObject(new Random().nextInt(results.length())));
+
     }
 
 
