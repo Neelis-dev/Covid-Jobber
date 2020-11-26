@@ -14,13 +14,13 @@ import android.widget.ArrayAdapter;
 
 import com.example.covid_jobber.R;
 
-import com.example.covid_jobber.databinding.FragmentProfileBinding;
 import com.example.covid_jobber.databinding.FragmentSwipeBinding;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,15 +28,18 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class SwipeFragment extends Fragment {
-    private FragmentSwipeBinding fragmentSwipeBinding;
+    private FragmentSwipeBinding binding;
 
     private boolean wannasave = false;
-    private ArrayList<String> saved;
-    private ArrayList<String> al;
-    private FragmentProfileBinding fragmentProfileBinding;
+    private List<String> saved = new ArrayList<>();
+    private List<String> al = new ArrayList<>();
+    private SwipeFlingAdapterView flingContainer;
 
     public SwipeFragment() {
         // Required empty public constructor
+        List<String> list = new ArrayList<>();
+        list.add("START SWIPING!");
+        addToList(list);
     }
 
     public static SwipeFragment newInstance() {
@@ -47,25 +50,31 @@ public class SwipeFragment extends Fragment {
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ArrayAdapter<String> arrayAdapter;
-        View v = inflater.inflate(R.layout.fragment_swipe, container, false);
 
-        al = new ArrayList<>();
-        al.add("Bäcker");
-        al.add("Zahnarzt helfer/in");
-        al.add("Data Scientist");
-        al.add("Bizness Analyst");
-        al.add("Dualer Student");
-        al.add("Fahrer");
-        al.add("Abteilungsleiter");
-        al.add("Manager");
+        binding = FragmentSwipeBinding.inflate(inflater, container, false);
+
+        initialize();
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
+    public void initialize(){
+
+
+        ArrayAdapter<String> arrayAdapter;
+
 
         arrayAdapter = new ArrayAdapter<String>(getActivity(), R.layout.item, R.id.helloText, al );
 
-        SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) v.findViewById(R.id.frame);
+        binding.cardFrame.setAdapter(arrayAdapter);
 
-        flingContainer.setAdapter(arrayAdapter);
-        flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
+
+        binding.cardFrame.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
             public void removeFirstObjectInAdapter() {
                 // this is the simplest way to delete an object from the Adapter (/AdapterView)
@@ -85,7 +94,7 @@ public class SwipeFragment extends Fragment {
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
                 // Ask for more data here
-                al.add("Momentan nicht mehr Jobs verfügbar");
+//                al.add("Momentan nicht mehr Jobs verfügbar");
                 arrayAdapter.notifyDataSetChanged();
                 Log.d("LIST", "notified");
             }
@@ -93,7 +102,7 @@ public class SwipeFragment extends Fragment {
             //Durch die Farbänderung stürzt die App bisher manchmal ab
             @Override
             public void onScroll(float scrollProgressPercent) {
-                View view = flingContainer.getSelectedView();
+                View view = binding.cardFrame.getSelectedView();
                 if(view == null){
                     return;
                 }
@@ -104,19 +113,18 @@ public class SwipeFragment extends Fragment {
 
 
         // Optionally add an OnItemClickListener
-        flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
+        binding.cardFrame.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
             @Override
             public void onItemClicked(int itemPosition, Object dataObject) {
             }
         });
 
-        return v;
+
+
+
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        fragmentProfileBinding = null;
-        fragmentSwipeBinding = null;
+    public void addToList(List<String> titles){
+        al.addAll(titles);
     }
 }

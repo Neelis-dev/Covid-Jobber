@@ -48,7 +48,10 @@ public class Job {
 
         // Every jobObject should have these
         this.title = jobObject.getString("title");
-        this.company = jobObject.getJSONObject("company").getString("display_name");
+        if(jobObject.getJSONObject("company").has("display_name")) {
+            this.company = jobObject.getJSONObject("company").getString("display_name");
+        }
+
         this.created = jobObject.getString("created");
         this.category = jobObject.getJSONObject("category").getString("label");
         if(jobObject.has("contract_time")){

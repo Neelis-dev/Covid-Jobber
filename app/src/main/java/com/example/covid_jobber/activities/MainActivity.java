@@ -48,14 +48,11 @@ public class MainActivity extends AppCompatActivity {
         this.mainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_main);
 
-
-        ApiHandler apiHandler = new ApiHandler();
         try {
             handler.makeApiCall(this);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
 
 //        At first Swipe Fragment in Content Frame
         replaceFrame(R.id.content_frame, swipeFragment);
@@ -97,7 +94,14 @@ public class MainActivity extends AppCompatActivity {
         for(int i = 0; i< results.length(); i++){
             jobs.add(new Job((JSONObject) results.get(i)));
         }
+
         // TODO: make Jobs into cards
+        List<String> jobtitles = new ArrayList<>();
+        for (Job j:jobs) {
+            jobtitles.add(j.getTitle());
+        }
+        swipeFragment.addToList(jobtitles);
+
 
 
     }
