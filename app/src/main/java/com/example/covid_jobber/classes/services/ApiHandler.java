@@ -12,8 +12,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -37,30 +35,30 @@ public class ApiHandler {
 
 
 
-    public void forUI(MainActivity mainActivity, Callable func) throws JSONException {
+    public void makeApiCall(MainActivity mainActivity) throws JSONException {
         Request request = new Request.Builder()
                 .url("https://api.adzuna.com/v1/api/jobs/gb/search/"+pageNumber+"?app_id="+appId+"&app_key="+appKey)
                 .build();
-
         Runnable apiCallThread = new Runnable() {
             @Override
             public void run() {
-                Future<JSONArray> f = makeApiCall(request);
+                Future<JSONArray> f = makeCall(request);
+
                 try {
-                    mainActivity.callmeback(f.get());
+                    mainActivity.resultsToJobs(f.get());
                 } catch (ExecutionException | InterruptedException | JSONException e) {
                     e.printStackTrace();
                 }
             }
         };
-        new Thread(apiCallThread).start();
+       new Thread(apiCallThread).start();
 
 
 
     }
 
 
-    private Future<JSONArray> makeApiCall(Request request){
+    private Future<JSONArray> makeCall(Request request){
         CompletableFuture<JSONArray> f = new CompletableFuture<>();
 
         client.newCall(request).enqueue(new Callback() {

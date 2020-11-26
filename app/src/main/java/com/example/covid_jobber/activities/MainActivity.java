@@ -21,9 +21,13 @@ import java.sql.SQLOutput;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CompletableFuture;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -43,6 +47,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.mainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_main);
+
+
+        ApiHandler apiHandler = new ApiHandler();
+        try {
+            handler.makeApiCall(this);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
 
 //        At first Swipe Fragment in Content Frame
@@ -80,10 +92,19 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void callmeback(JSONArray results) throws JSONException {
-        Job j = new Job(results.getJSONObject(new Random().nextInt(results.length())));
+    public void resultsToJobs(JSONArray results) throws JSONException {
+        List<Job> jobs = new ArrayList<>();
+        for(int i = 0; i< results.length(); i++){
+            jobs.add(new Job((JSONObject) results.get(i)));
+        }
+        // TODO: make Jobs into cards
+
 
     }
+
+//    public FilterOptions getFilterOptions(){
+//        return filterOptions;
+//    }
 
 
 }
