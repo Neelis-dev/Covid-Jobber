@@ -1,6 +1,6 @@
 package com.example.covid_jobber.fragments;
 
-import android.annotation.SuppressLint;
+
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,11 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Toast;
+
 
 import com.example.covid_jobber.R;
-import com.example.covid_jobber.databinding.FragmentNavbarBinding;
+
 import com.example.covid_jobber.databinding.FragmentProfileBinding;
+import com.example.covid_jobber.databinding.FragmentSwipeBinding;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import org.jetbrains.annotations.NotNull;
@@ -27,12 +28,12 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class SwipeFragment extends Fragment {
-    private FragmentSwipeBinding binding;
+    private FragmentSwipeBinding fragmentSwipeBinding;
 
     private boolean wannasave = false;
     private ArrayList<String> saved;
     private ArrayList<String> al;
-    private FragmentProfileBinding binding;
+    private FragmentProfileBinding fragmentProfileBinding;
 
     public SwipeFragment() {
         // Required empty public constructor
@@ -93,6 +94,9 @@ public class SwipeFragment extends Fragment {
             @Override
             public void onScroll(float scrollProgressPercent) {
                 View view = flingContainer.getSelectedView();
+                if(view == null){
+                    return;
+                }
                 view.findViewById(R.id.item_swipe_right_indicator).setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
                 view.findViewById(R.id.item_swipe_left_indicator).setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
             }
@@ -112,6 +116,7 @@ public class SwipeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        binding = null;
+        fragmentProfileBinding = null;
+        fragmentSwipeBinding = null;
     }
 }
