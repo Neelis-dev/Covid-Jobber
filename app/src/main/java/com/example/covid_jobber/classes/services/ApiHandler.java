@@ -24,31 +24,18 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 public class ApiHandler {
-    final private String appId = "64fa1822";
-    final private String appKey = "d41a9537116b72a1c2a890a27376d552";
-    final private String pageNumber = "1";
-
-    private String title = "";
     private OkHttpClient client = new OkHttpClient();
 
+    public void makeApiCall(ApiCall apiCall){
 
+        // make Runnable to create seperate Thread and not use Main Thread
+        Runnable apiCallThread = () -> {
+            Future<JSONArray> f = makeCall(apiCall.getRequest());
 
-
-
-    public void makeApiCall(MainActivity mainActivity) throws JSONException {
-        Request request = new Request.Builder()
-                .url("https://api.adzuna.com/v1/api/jobs/gb/search/"+pageNumber+"?app_id="+appId+"&app_key="+appKey)
-                .build();
-        Runnable apiCallThread = new Runnable() {
-            @Override
-            public void run() {
-                Future<JSONArray> f = makeCall(request);
-
-                try {
-                    mainActivity.resultsToJobs(f.get());
-                } catch (ExecutionException | InterruptedException | JSONException e) {
-                    e.printStackTrace();
-                }
+            try {
+                apiCall.callback(f.get());
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
             }
         };
        new Thread(apiCallThread).start();

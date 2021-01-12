@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.example.covid_jobber.R;
 import com.example.covid_jobber.classes.Job;
+import com.example.covid_jobber.classes.services.ApiCall;
 import com.example.covid_jobber.classes.services.ApiHandler;
 import com.example.covid_jobber.databinding.ActivityMainBinding;
 import com.example.covid_jobber.fragments.FavoritesFragment;
@@ -16,6 +17,7 @@ import com.example.covid_jobber.fragments.FiltersFragment;
 import com.example.covid_jobber.fragments.NavbarFragment;
 import com.example.covid_jobber.fragments.ProfileFragment;
 import com.example.covid_jobber.fragments.SwipeFragment;
+import com.google.android.gms.common.api.Api;
 
 import java.sql.SQLOutput;
 
@@ -42,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
     private final MainActivity instance = this;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +52,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         try {
-            handler.makeApiCall(this);
+            handler.makeApiCall(new ApiCall() {
+                @Override
+                public void callback(JSONArray results) {
+                    try {
+                        resultsToJobs(results);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -59,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
 
 //        Put Navbar Fragment in Navbar Frame
         replaceFrame(R.id.navbar_frame, navbarFragment);
+
+
 
     }
 
