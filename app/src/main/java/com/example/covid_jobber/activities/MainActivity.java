@@ -34,10 +34,10 @@ import java.util.concurrent.CompletableFuture;
 
 public class MainActivity extends AppCompatActivity {
     public ActivityMainBinding mainBinding;
-    private ApiHandler handler = new ApiHandler();
+    private final ApiHandler handler = new ApiHandler();
     private final  SwipeFragment swipeFragment = new SwipeFragment();
     private final FavoritesFragment favoritesFragment = new FavoritesFragment();
-    private final  FiltersFragment filtersFragment = new FiltersFragment();
+    private final  FiltersFragment filtersFragment = new FiltersFragment(); // vllt autofilter
     private final ProfileFragment profileFragment = new ProfileFragment();
     private final NavbarFragment navbarFragment = new NavbarFragment();
 

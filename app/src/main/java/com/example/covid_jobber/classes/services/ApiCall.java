@@ -7,6 +7,7 @@ import okhttp3.Request;
 public abstract class ApiCall {
     final String appId = "64fa1822";
     final String appKey = "d41a9537116b72a1c2a890a27376d552";
+
     private final Request request;
 
 
