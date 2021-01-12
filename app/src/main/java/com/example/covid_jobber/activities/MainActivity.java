@@ -51,20 +51,16 @@ public class MainActivity extends AppCompatActivity {
         this.mainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_main);
 
-        try {
-            handler.makeApiCall(new ApiCall() {
-                @Override
-                public void callback(JSONArray results) {
-                    try {
-                        resultsToJobs(results);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+        handler.makeApiCall(new ApiCall() {
+            @Override
+            public void callback(JSONArray results) {
+                try {
+                    resultsToJobs(results);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            });
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+            }
+        });
 
 //        At first Swipe Fragment in Content Frame
         replaceFrame(R.id.content_frame, swipeFragment);

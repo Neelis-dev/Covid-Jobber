@@ -34,7 +34,7 @@ public class ApiHandler {
 
             try {
                 apiCall.callback(f.get());
-            } catch (ExecutionException | InterruptedException e) {
+            } catch ( ExecutionException | InterruptedException e) {
                 e.printStackTrace();
             }
         };
