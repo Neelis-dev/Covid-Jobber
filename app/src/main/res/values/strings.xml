@@ -5,8 +5,8 @@
     <!--    Navbar Fragment-->
     <string name="txt_navbar_fragment_placeholder">Hello navbar fragment</string>
     <string name="img_navbar_fragment_search">Search Button Image</string>
-    <string name="img_navbar_fragment_favorites">Search Button Image</string>
-    <string name="img_navbar_fragment_filters">Profile Button Image</string>
+    <string name="img_navbar_fragment_favorites">Favorites Button Image</string>
+    <string name="img_navbar_fragment_filters">Filters Button Image</string>
     <string name="img_navbar_fragment_profile">Profile Button Image</string>
 
     <!--    Swipe Fragment-->
