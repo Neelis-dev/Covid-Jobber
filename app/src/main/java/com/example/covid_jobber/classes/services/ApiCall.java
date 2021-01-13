@@ -8,7 +8,7 @@ public abstract class ApiCall {
     final String appId = "64fa1822";
     final String appKey = "d41a9537116b72a1c2a890a27376d552";
 
-    private final Request request;
+    private Request request;
 
 
 
@@ -24,6 +24,12 @@ public abstract class ApiCall {
     }
     public ApiCall(Request request){
         this.request = request;
+    }
+
+    public void filterByCategory(String category){
+        this.request = new Request.Builder()
+                .url(request.url().toString()+"&category="+category)
+                .build();
     }
 
 
