@@ -48,27 +48,48 @@ public class Job {
 
         // Every jobObject should have these
         this.title = jobObject.getString("title");
-        this.company = jobObject.getJSONObject("company").getString("display_name");
+        if(jobObject.getJSONObject("company").has("display_name")) {
+            this.company = jobObject.getJSONObject("company").getString("display_name");
+        }
+
         this.created = jobObject.getString("created");
         this.category = jobObject.getJSONObject("category").getString("label");
-
-        switch (jobObject.getString("contract_time")){
-            case "full_time":
-                contractTime = ContractTime.FULL_TIME;
-                break;
-            case "part_time":
-                contractTime = ContractTime.PART_TIME;
-                break;
-            default:
-                contractTime = ContractTime.UNKNOWN;
-                break;
+        if(jobObject.has("contract_time")){
+            switch (jobObject.getString("contract_time")){
+                case "full_time":
+                    contractTime = ContractTime.FULL_TIME;
+                    break;
+                case "part_time":
+                    contractTime = ContractTime.PART_TIME;
+                    break;
+                default:
+                    contractTime = ContractTime.UNKNOWN;
+                    break;
+            }
         }
+
 
         // Better check if these are in the object
         this.url = jobObject.has("redirect_url") ? jobObject.getString("redirect_url") : "";
         this.salary = jobObject.has("salary_min") ? Double.parseDouble(jobObject.get("salary_min").toString()) : -1.0;
 
 
+    }
+
+    @Override
+    public String toString() {
+        return "Job{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", company='" + company + '\'' +
+                ", description='" + description + '\'' +
+                ", url='" + url + '\'' +
+                ", address=" + address +
+                ", created='" + created + '\'' +
+                ", contractTime=" + contractTime +
+                ", category='" + category + '\'' +
+                ", salary=" + salary +
+                '}';
     }
 
     public int getId() {
