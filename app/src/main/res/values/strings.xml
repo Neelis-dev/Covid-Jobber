@@ -1,6 +1,7 @@
 <resources>
     <!--    General-->
     <string name="app_name">Covid-Jobber</string>
+    <string name="img_logo">Logo</string>
 
     <!--    Navbar Fragment-->
     <string name="txt_navbar_fragment_placeholder">Hello navbar fragment</string>
