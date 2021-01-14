@@ -1,5 +1,6 @@
 package com.example.covid_jobber.fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +8,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.example.covid_jobber.R;
 import com.example.covid_jobber.activities.MainActivity;
@@ -32,12 +35,24 @@ public class NavbarFragment extends Fragment {
         return new NavbarFragment();
     }
 
-    //    In fragments use OnCreateView() instead of OnCreate() for binding
+    private static void setButtonPressed(ImageButton[] buttons,ImageButton pressedButton){
+        for (ImageButton button:buttons) {
+            button.setSelected(false);
+        }
+        pressedButton.setSelected(true);
+    }
+
+//        In fragments use OnCreateView() instead of OnCreate() for binding
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentNavbarBinding.inflate(inflater, container, false);
+
+        ImageButton[] buttons = {binding.btnNavbarSearch, binding.btnNavbarFavorites, binding.btnNavbarFilters, binding.btnNavbarProfile};
+
+//        Search Button is selected when app is started
+        binding.btnNavbarSearch.setSelected(true);
 
         mainActivity = (MainActivity) getActivity();
 
@@ -46,15 +61,19 @@ public class NavbarFragment extends Fragment {
             public void onClick(View v) {
                 if(v == binding.btnNavbarSearch){
                     mainActivity.changeToSwipe();
+                    setButtonPressed(buttons, binding.btnNavbarSearch);
                 }
                 else if(v == binding.btnNavbarFavorites){
                     mainActivity.changeToFavorites();
+                    setButtonPressed(buttons, binding.btnNavbarFavorites);
                 }
                 else if(v == binding.btnNavbarFilters){
                     mainActivity.changeToFilters();
+                    setButtonPressed(buttons, binding.btnNavbarFilters);
                 }
                 else if(v == binding.btnNavbarProfile){
                     mainActivity.changeToProfile();
+                    setButtonPressed(buttons, binding.btnNavbarProfile);
                 }
             }
         };
