@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.covid_jobber.R;
+import com.example.covid_jobber.classes.Applicant;
 import com.example.covid_jobber.databinding.FragmentNavbarBinding;
 import com.example.covid_jobber.databinding.FragmentProfileBinding;
 
@@ -20,6 +21,12 @@ import org.jetbrains.annotations.NotNull;
  * create an instance of this fragment.
  */
 public class ProfileFragment extends Fragment {
+
+    private Applicant user = new Applicant();
+
+    public Applicant getUser() {
+        return user;
+    }
 
     private FragmentProfileBinding binding;
 

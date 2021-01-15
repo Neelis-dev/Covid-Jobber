@@ -26,4 +26,10 @@
 
     <!--  Profile Fragment  -->
     <string name="txt_profile_fragment_filler">Profile Fragment</string>
+    <string name="txt_profile_heading">Your Profile</string>
+    <string name="txt_profile_name">Name:</string>
+    <string name="txt_profile_salary">Exp. Salary:</string>
+    <string name="txt_profile_contract_time">Exp. Contract Time:</string>
+    <string name="txt_profile_qualifications">Qualifications:</string>
+    <string name="txt_profile_skills">Skills:</string>
 </resources>
