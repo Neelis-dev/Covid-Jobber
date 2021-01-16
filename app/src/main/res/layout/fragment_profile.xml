@@ -6,14 +6,99 @@
     android:layout_height="match_parent"
     tools:context=".fragments.ProfileFragment">
 
-     <!-- TODO: Update blank fragment layout -->
      <TextView
+         android:id="@+id/txt_profile_heading"
+         style="@style/Text_Heading"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
-         android:text="@string/txt_profile_fragment_filler"
-         app:layout_constraintBottom_toBottomOf="parent"
+         android:layout_marginTop="15dp"
+         android:text="@string/txt_profile_heading"
          app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintHorizontal_bias="0.5"
          app:layout_constraintStart_toStartOf="parent"
          app:layout_constraintTop_toTopOf="parent" />
+
+     <!--     Name Field-->
+     <TextView
+         android:id="@+id/txt_profile_name"
+         style="@style/Text_Label"
+         android:layout_width="wrap_content"
+         android:layout_height="45dp"
+         android:layout_marginStart="15dp"
+         android:layout_marginTop="20dp"
+         android:gravity="center"
+         android:text="@string/txt_profile_name"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@+id/txt_profile_heading" />
+
+     <EditText
+         android:id="@+id/input_profile_name"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_marginEnd="60dp"
+         android:ems="10"
+         android:inputType="textPersonName"
+         android:text=""
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintTop_toTopOf="@+id/txt_profile_name" />
+
+     <!--     Salary Field-->
+     <TextView
+         android:id="@+id/txt_profile_salary"
+         style="@style/Text_Label"
+         android:layout_width="wrap_content"
+         android:layout_height="45dp"
+         android:layout_marginTop="15dp"
+         android:gravity="center"
+         android:text="@string/txt_profile_salary"
+         app:layout_constraintStart_toStartOf="@+id/txt_profile_name"
+         app:layout_constraintTop_toBottomOf="@+id/txt_profile_name" />
+
+     <EditText
+         android:id="@+id/input_profile_salary"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:ems="10"
+         android:inputType="textPersonName"
+         android:text="0"
+         app:layout_constraintEnd_toEndOf="@+id/input_profile_name"
+         app:layout_constraintTop_toTopOf="@+id/txt_profile_salary" />
+
+     <!--     Contract Time Field-->
+     <TextView
+         android:id="@+id/txt_profile_contract_time"
+         style="@style/Text_Label"
+         android:layout_width="wrap_content"
+         android:layout_height="45dp"
+         android:layout_marginTop="15dp"
+         android:gravity="center"
+         android:text="@string/txt_profile_contract_time"
+         app:layout_constraintStart_toStartOf="@+id/txt_profile_salary"
+         app:layout_constraintTop_toBottomOf="@+id/txt_profile_salary" />
+
+     <!--     Qualifications Field-->
+     <TextView
+         android:id="@+id/txt_profile_qualifications"
+         style="@style/Text_Label"
+         android:layout_width="wrap_content"
+         android:layout_height="45dp"
+         android:layout_marginTop="15dp"
+         android:gravity="center"
+         android:text="@string/txt_profile_qualifications"
+         app:layout_constraintStart_toStartOf="@+id/txt_profile_contract_time"
+         app:layout_constraintTop_toBottomOf="@+id/txt_profile_contract_time" />
+
+     <!--     Skills Field-->
+     <TextView
+         android:id="@+id/txt_profile_skills"
+         style="@style/Text_Label"
+         android:layout_width="wrap_content"
+         android:layout_height="45dp"
+         android:layout_marginTop="15dp"
+         android:gravity="center"
+         android:text="@string/txt_profile_skills"
+         app:layout_constraintStart_toStartOf="@+id/txt_profile_qualifications"
+         app:layout_constraintTop_toBottomOf="@+id/txt_profile_qualifications" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
