@@ -18,12 +18,24 @@
     <string name="txt_swipe_fragment_job_description_tag">Job Description:</string>
     <string name="txt_swipe_fragment_content_placeholder">Placeholder</string>
 
+    <!--    Item-->
+    <string name="txt_item_title">20.000€</string>
+    <string name="txt_item_employer">Atos</string>
+    <string name="txt_item_date">13.02.2021 bis 14.05.2021</string>
+    <string name="txt_item_salary">20.000€</string>
+    <string name="txt_item_decscription">Aufbereitungsmechaniker/innen der Fachrichtung Braunkohle fördern Rohkohle.</string>
+    <string name="img_item_showMore">show more</string>
+
     <!--  Favorites Fragment  -->
-    <string name="txt_favorites_fragment_filler">Favorites Fragment</string>
+    <string name="txt_favorites_fragment_title">Good Job</string>
+    <string name="txt_favorites_fragment_date">13.02.2021 bis 14.05.2021</string>
+    <string name="txt_favorites_fragment_salary">20.000€</string>
+    <string name="txt_favorites_fragment_location">München</string>
+    <string name="txt_favorites_fragment_employerr">BMW</string>
 
     <!--  Filters Fragment  -->
     <string name="txt_filters_fragment_filler">Filters Fragment</string>
 
     <!--  Profile Fragment  -->
-    <string name="txt_profile_fragment_filler">Profile Fragment</string>
+    <string name="txt_profile_fragment_darkmode">Darkmode</string>
 </resources>
