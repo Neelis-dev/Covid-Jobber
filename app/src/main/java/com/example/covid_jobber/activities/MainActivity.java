@@ -2,10 +2,8 @@ package com.example.covid_jobber.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
-import android.view.View;
 
 import com.example.covid_jobber.R;
 import com.example.covid_jobber.classes.Job;
@@ -15,25 +13,15 @@ import com.example.covid_jobber.databinding.ActivityMainBinding;
 import com.example.covid_jobber.fragments.FavoritesFragment;
 import com.example.covid_jobber.fragments.FiltersFragment;
 import com.example.covid_jobber.fragments.NavbarFragment;
-import com.example.covid_jobber.fragments.ProfileFragment;
+import com.example.covid_jobber.fragments.SettingsFragment;
 import com.example.covid_jobber.fragments.SwipeFragment;
-import com.google.android.gms.common.api.Api;
-
-import java.sql.SQLOutput;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.concurrent.Callable;
-import java.util.concurrent.CompletableFuture;
-
-import okhttp3.Request;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -42,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private final  SwipeFragment swipeFragment = new SwipeFragment();
     private final FavoritesFragment favoritesFragment = new FavoritesFragment();
     private final  FiltersFragment filtersFragment = new FiltersFragment(); // vllt autofilter
-    private final ProfileFragment profileFragment = new ProfileFragment();
+    private final SettingsFragment settingsFragment = new SettingsFragment();
     private final NavbarFragment navbarFragment = new NavbarFragment();
 
 
@@ -66,10 +54,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        // Special call to
-        refreshCategories();
-
 //        At first Swipe Fragment in Content Frame
         replaceFrame(R.id.content_frame, swipeFragment);
 
@@ -80,8 +64,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-
     public void changeToSwipe(){
         replaceFrame(R.id.content_frame, swipeFragment);
     }
@@ -91,8 +73,8 @@ public class MainActivity extends AppCompatActivity {
     public void changeToFilters(){
         replaceFrame(R.id.content_frame, filtersFragment);
     }
-    public void changeToProfile(){
-        replaceFrame(R.id.content_frame, profileFragment);
+    public void changeToSettings(){
+        replaceFrame(R.id.content_frame, settingsFragment);
     }
 
 //    Replaces Frame with frameID with Fragment
@@ -124,23 +106,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    }
-
-    public void refreshCategories() {
-        handler.makeApiCall(new ApiCall(new Request.Builder().url("https://api.adzuna.com/v1/api/jobs/de/categories?app_id=64fa1822&app_key=d41a9537116b72a1c2a890a27376d552").build()) {
-            @Override
-            public void callback(JSONArray results) {
-                Map<String,String> categoryMap = new HashMap<>();
-                for(int i=0;i<results.length();i++){
-                    try {
-                        categoryMap.put(results.getJSONObject(i).getString("label"),results.getJSONObject(i).getString("tag"));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                filtersFragment.setCategories(categoryMap);
-            }
-        });
     }
 
 //    public FilterOptions getFilterOptions(){

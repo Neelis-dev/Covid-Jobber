@@ -11,7 +11,7 @@ import android.widget.ArrayAdapter;
 
 import com.example.covid_jobber.R;
 import com.example.covid_jobber.databinding.FragmentFiltersBinding;
-import com.example.covid_jobber.databinding.FragmentProfileBinding;
+import com.example.covid_jobber.databinding.FragmentSettingsBinding;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
