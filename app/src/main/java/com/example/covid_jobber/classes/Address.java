@@ -10,7 +10,7 @@ public class Address {
     double longitude;
 
     public Address(){
-
+        //TODO
     }
 
     public Address(String displayName, String country, String federalState, String city, double latitude, double longitude) {

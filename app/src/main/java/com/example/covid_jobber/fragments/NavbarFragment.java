@@ -49,7 +49,7 @@ public class NavbarFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentNavbarBinding.inflate(inflater, container, false);
 
-        ImageButton[] buttons = {binding.btnNavbarSearch, binding.btnNavbarFavorites, binding.btnNavbarFilters, binding.btnNavbarProfile};
+        ImageButton[] buttons = {binding.btnNavbarSearch, binding.btnNavbarFavorites, binding.btnNavbarFilters, binding.btnNavbarSettings};
 
 //        Search Button is selected when app is started
         binding.btnNavbarSearch.setSelected(true);
@@ -71,9 +71,9 @@ public class NavbarFragment extends Fragment {
                     mainActivity.changeToFilters();
                     setButtonPressed(buttons, binding.btnNavbarFilters);
                 }
-                else if(v == binding.btnNavbarProfile){
-                    mainActivity.changeToProfile();
-                    setButtonPressed(buttons, binding.btnNavbarProfile);
+                else if(v == binding.btnNavbarSettings){
+                    mainActivity.changeToSettings();
+                    setButtonPressed(buttons, binding.btnNavbarSettings);
                 }
             }
         };
@@ -81,7 +81,7 @@ public class NavbarFragment extends Fragment {
         binding.btnNavbarSearch.setOnClickListener(listener);
         binding.btnNavbarFavorites.setOnClickListener(listener);
         binding.btnNavbarFilters.setOnClickListener(listener);
-        binding.btnNavbarProfile.setOnClickListener(listener);
+        binding.btnNavbarSettings.setOnClickListener(listener);
 
         return binding.getRoot();
     }

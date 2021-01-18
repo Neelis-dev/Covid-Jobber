@@ -8,7 +8,7 @@
     <string name="img_navbar_fragment_search">Search Button Image</string>
     <string name="img_navbar_fragment_favorites">Favorites Button Image</string>
     <string name="img_navbar_fragment_filters">Filters Button Image</string>
-    <string name="img_navbar_fragment_profile">Profile Button Image</string>
+    <string name="img_navbar_fragment_settings">Settings Button Image</string>
 
     <!--    Swipe Fragment-->
     <string name="img_swipe_fragment_picture">some random pic</string>
@@ -34,7 +34,12 @@
     <string name="txt_favorites_fragment_employerr">BMW</string>
 
     <!--  Filters Fragment  -->
-    <string name="txt_filters_fragment_filler">Filters Fragment</string>
+    <string name="txt_filters_fragment_heading">Filter Options</string>
+    <string name="txt_filters_fragment_name">Name:</string>
+    <string name="txt_filters_fragment_salary">Exp. Salary:</string>
+    <string name="txt_filters_fragment_contract_time">Exp. Contract Time:</string>
+    <string name="txt_filters_fragment_qualifications">Qualifications:</string>
+    <string name="txt_filters_fragment_skills">Skills:</string>
 
     <!--  Profile Fragment  -->
     <string name="txt_profile_fragment_darkmode">Darkmode</string>

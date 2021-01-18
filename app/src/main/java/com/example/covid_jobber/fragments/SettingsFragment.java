@@ -8,33 +8,38 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.covid_jobber.R;
-import com.example.covid_jobber.databinding.FragmentNavbarBinding;
-import com.example.covid_jobber.databinding.FragmentProfileBinding;
+import com.example.covid_jobber.classes.Applicant;
+import com.example.covid_jobber.databinding.FragmentSettingsBinding;
 
 import org.jetbrains.annotations.NotNull;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ProfileFragment#newInstance} factory method to
+ * Use the {@link SettingsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ProfileFragment extends Fragment {
+public class SettingsFragment extends Fragment {
 
-    private FragmentProfileBinding binding;
+    private Applicant user = new Applicant();
 
-    public ProfileFragment() {
+    public Applicant getUser() {
+        return user;
+    }
+
+    private FragmentSettingsBinding binding;
+
+    public SettingsFragment() {
         // Required empty public constructor
     }
 
-    public static ProfileFragment newInstance() {
-        return new ProfileFragment();
+    public static SettingsFragment newInstance() {
+        return new SettingsFragment();
     }
 
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = FragmentProfileBinding.inflate(inflater, container, false);
+        binding = FragmentSettingsBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
