@@ -13,24 +13,20 @@ import android.widget.Toast;
 
 import com.example.covid_jobber.R;
 import com.example.covid_jobber.databinding.FragmentNavbarBinding;
-import com.example.covid_jobber.databinding.FragmentProfileBinding;
+
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ProfileFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class SwipeFragment extends Fragment {
 
     private boolean wannasave = false;
     private ArrayList<String> saved;
     private ArrayList<String> al;
-    private FragmentProfileBinding binding;
 
     public SwipeFragment() {
         // Required empty public constructor
@@ -56,9 +52,9 @@ public class SwipeFragment extends Fragment {
         al.add("Abteilungsleiter");
         al.add("Manager");
 
-        arrayAdapter = new ArrayAdapter<String>(getActivity(), R.layout.item, R.id.helloText, al );
+        arrayAdapter = new ArrayAdapter<>(getActivity(), R.layout.item, R.id.helloText, al );
 
-        SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) v.findViewById(R.id.frame);
+        SwipeFlingAdapterView flingContainer = v.findViewById(R.id.frame);
 
         flingContainer.setAdapter(arrayAdapter);
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
@@ -112,6 +108,9 @@ public class SwipeFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        binding = null;
+    }
+
+    public void addToList(List<String> jobtitles) {
+        al.addAll(jobtitles);
     }
 }
