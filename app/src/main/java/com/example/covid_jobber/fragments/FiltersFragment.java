@@ -34,7 +34,10 @@ public class FiltersFragment extends Fragment implements View.OnClickListener {
 
     // Variables
     private boolean filtersActive;
+    private String category;
+
     private Map<String,String> categoryMap = new HashMap<>();
+    private List<String> keyList;
 
     public FiltersFragment() {
         // Required empty public constructor
@@ -50,8 +53,14 @@ public class FiltersFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         binding = FragmentFiltersBinding.inflate(inflater, container, false);
 
-        binding.switchToggleFilters.setOnClickListener(this);
-        binding.spinnerCategory.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), android.R.layout.simple_dropdown_item_1line, new ArrayList<>(categoryMap.keySet())));
+        binding.switchProfileToggle.setOnClickListener(this);
+        keyList = new ArrayList<>(categoryMap.keySet());
+        binding.spinnerProfileCategory.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), android.R.layout.simple_dropdown_item_1line, keyList ));
+
+        if(category != null){
+            binding.spinnerProfileCategory.setSelection(keyList.indexOf(category));
+        }
+        binding.switchProfileToggle.setChecked(filtersActive);
 
         return binding.getRoot();
     }
@@ -64,9 +73,9 @@ public class FiltersFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        System.out.println(categoryMap.get(binding.spinnerCategory.getSelectedItem()));
-        if (v.getId() == R.id.switch_toggleFilters) {
-            filtersActive = binding.switchToggleFilters.isChecked();
+        category = (String) binding.spinnerProfileCategory.getSelectedItem();
+        if (v.getId() == R.id.switch_profile_toggle) {
+            filtersActive = binding.switchProfileToggle.isChecked();
             System.out.println(filtersActive);
         }
     }
@@ -76,7 +85,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener {
     }
 
     public String getCategoryFilter(){
-        return categoryMap.get(binding.spinnerCategory.getSelectedItem());
+        return category;
     }
     public boolean getFiltersActive(){
         return filtersActive;
