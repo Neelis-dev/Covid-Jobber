@@ -12,16 +12,24 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.example.covid_jobber.R;
+import com.example.covid_jobber.activities.MainActivity;
+import com.example.covid_jobber.classes.services.ApiCall;
 import com.example.covid_jobber.databinding.FragmentNavbarBinding;
 
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link SwipeFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
 public class SwipeFragment extends Fragment {
 
     private boolean wannasave = false;
@@ -77,7 +85,23 @@ public class SwipeFragment extends Fragment {
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
                 // Ask for more data here
-                al.add("Momentan nicht mehr Jobs verfügbar");
+                MainActivity mainActivity = (MainActivity) getActivity();
+                ApiCall apiCall = new ApiCall() {
+                    @Override
+                    public void callback(JSONArray results) {
+                        try {
+                            mainActivity.resultsToJobs(results);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                if(mainActivity.getCategoryFilter() != null){
+                    apiCall.filterByCategory(mainActivity.getCategoryFilter());
+                }
+
+                mainActivity.getHandler().makeApiCall(apiCall);
+
                 arrayAdapter.notifyDataSetChanged();
                 Log.d("LIST", "notified");
             }

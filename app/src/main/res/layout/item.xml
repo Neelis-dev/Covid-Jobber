@@ -67,7 +67,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.32999998"
-            tools:text="@string/txt_item_title" />
+            tools:text="@string/txt_filters_fragment_heading" />
 
         <TextView
             android:id="@+id/workingPeriod"
@@ -75,7 +75,7 @@
             android:layout_height="wrap_content"
             android:clickable="false"
             android:ems="10"
-            android:text="@string/txt_item_date"
+            android:text="@string/txt_filters_fragment_contract_time"
             android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -91,7 +91,7 @@
             android:layout_height="wrap_content"
             android:clickable="false"
             android:ems="10"
-            android:text="@string/txt_item_employer"
+            android:text="@string/txt_filters_fragment_name"
             android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -107,7 +107,7 @@
             android:layout_height="wrap_content"
             android:clickable="false"
             android:ems="10"
-            android:text="@string/txt_item_salary"
+            android:text="@string/txt_filters_fragment_salary"
             android:textColor="@color/black"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -123,7 +123,7 @@
             android:layout_height="wrap_content"
             android:clickable="false"
             android:ems="10"
-            android:text="@string/txt_item_decscription"
+            android:text="@string/txt_filters_fragment_qualifications"
             android:textColor="@color/black"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"

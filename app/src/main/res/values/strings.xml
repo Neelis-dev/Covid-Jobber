@@ -40,6 +40,8 @@
     <string name="txt_filters_fragment_contract_time">Exp. Contract Time:</string>
     <string name="txt_filters_fragment_qualifications">Qualifications:</string>
     <string name="txt_filters_fragment_skills">Skills:</string>
+    <string name="txt_filters_fragment_category">Category:</string>
+    <string name="txt_filters_fragment_toggle">Toggle Filters:</string>
 
     <!--  Profile Fragment  -->
     <string name="txt_profile_fragment_darkmode">Darkmode</string>

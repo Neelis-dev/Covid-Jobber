@@ -1,5 +1,7 @@
 package com.example.covid_jobber.classes.services;
 
+import com.google.android.gms.common.api.Api;
+
 import org.json.JSONArray;
 
 import okhttp3.Request;
@@ -27,9 +29,12 @@ public abstract class ApiCall {
     }
 
     public void filterByCategory(String category){
+
         this.request = new Request.Builder()
                 .url(request.url().toString()+"&category="+category)
                 .build();
+
+
     }
 
 

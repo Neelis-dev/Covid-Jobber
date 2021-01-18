@@ -1,6 +1,8 @@
 package com.example.covid_jobber.classes.services;
 
 
+import android.util.Log;
+
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -60,8 +62,10 @@ public class ApiHandler {
                     // Return JSONArray results
                     f.complete(jsonObject.getJSONArray("results"));
                 }catch(JSONException j){
+
                     j.printStackTrace();
                 }
+                response.close();
             }
         });
 

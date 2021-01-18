@@ -21,7 +21,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import okhttp3.Request;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -42,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         this.mainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(R.layout.activity_main);
-
+        refreshCategories();
         handler.makeApiCall(new ApiCall() {
             @Override
             public void callback(JSONArray results) {
@@ -97,15 +101,38 @@ public class MainActivity extends AppCompatActivity {
             jobs.add(new Job((JSONObject) results.get(i)));
         }
 
-        // TODO: make Jobs into cards
+        //  make Jobs into cards
         List<String> jobtitles = new ArrayList<>();
         for (Job j:jobs) {
             jobtitles.add(j.getTitle());
         }
         swipeFragment.addToList(jobtitles);
+    }
 
+    public void refreshCategories() {
+        Map<String,String> categoryMap = new HashMap<>();
+        handler.makeApiCall(new ApiCall(new Request.Builder().url("https://api.adzuna.com/v1/api/jobs/de/categories?app_id=64fa1822&app_key=d41a9537116b72a1c2a890a27376d552").build()) {
+            @Override
+            public void callback(JSONArray results) {
+                for(int i=0; i<results.length();i++){
+                    try {
+                        categoryMap.put(results.getJSONObject(i).getString("label"), results.getJSONObject(i).getString("tag"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                filtersFragment.setCategories(categoryMap);
+            }
+        });
 
+    }
 
+    public String getCategoryFilter(){
+        return filtersFragment.getCategoryFilter();
+    }
+
+    public ApiHandler getHandler(){
+        return handler;
     }
 
 //    public FilterOptions getFilterOptions(){
