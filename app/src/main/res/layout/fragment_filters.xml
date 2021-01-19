@@ -6,8 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".fragments.FiltersFragment">
 
-
-
     <TextView
         android:id="@+id/txt_profile_heading"
         style="@style/Text_Heading"

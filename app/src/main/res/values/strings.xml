@@ -19,19 +19,20 @@
     <string name="txt_swipe_fragment_content_placeholder">Placeholder</string>
 
     <!--    Item-->
-    <string name="txt_item_title">20.000€</string>
+    <string name="txt_item_title">Nice Job</string>
     <string name="txt_item_employer">Atos</string>
-    <string name="txt_item_date">13.02.2021 bis 14.05.2021</string>
+    <string name="txt_item_date">13.02.2021 - 14.05.2021</string>
     <string name="txt_item_salary">20.000€</string>
     <string name="txt_item_decscription">Aufbereitungsmechaniker/innen der Fachrichtung Braunkohle fördern Rohkohle.</string>
     <string name="img_item_showMore">show more</string>
 
     <!--  Favorites Fragment  -->
     <string name="txt_favorites_fragment_title">Good Job</string>
-    <string name="txt_favorites_fragment_date">13.02.2021 bis 14.05.2021</string>
-    <string name="txt_favorites_fragment_salary">20.000€</string>
-    <string name="txt_favorites_fragment_location">München</string>
-    <string name="txt_favorites_fragment_employerr">BMW</string>
+    <string name="txt_favorites_fragment_date"> • 13.02.2021 - 14.05.2021</string>
+    <string name="txt_favorites_fragment_salary"> • 20.000€</string>
+    <string name="txt_favorites_fragment_location"> • München</string>
+    <string name="txt_favorites_fragment_employer"> • BMW</string>
+    <string name="img_favorites_fragment_edit">Edit</string>
 
     <!--  Filters Fragment  -->
     <string name="txt_filters_fragment_heading">Filter Options</string>
@@ -40,7 +41,15 @@
     <string name="txt_filters_fragment_contract_time">Exp. Contract Time:</string>
     <string name="txt_filters_fragment_qualifications">Qualifications:</string>
     <string name="txt_filters_fragment_skills">Skills:</string>
+    <string name="txt_filters_fragment_toggle">Toggle</string>
+    <string name="txt_filters_fragment_category">Kategorie</string>
 
-    <!--  Profile Fragment  -->
-    <string name="txt_profile_fragment_darkmode">Darkmode</string>
+    <!--  Settings Fragment  -->
+    <string name="txt_settings_fragment_title">Einstellungen</string>
+    <string name="txt_settings_fragment_messages">Benachrichtigungen</string>
+    <string name="txt_settings_fragment_exportimport">Export/Import</string>
+    <string name="txt_settings_fragment_language">Sprache</string>
+    <string name="txt_settings_fragment_darkmode">Darkmode</string>
+    <string name="btn_settings_fragment_messages">Aktiv</string>
+    <string name="btn_settings_fragment_darkmode">Aus</string>
 </resources>
