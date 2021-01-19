@@ -14,8 +14,11 @@ import android.widget.Toast;
 import com.example.covid_jobber.R;
 import com.example.covid_jobber.activities.MainActivity;
 import com.example.covid_jobber.classes.services.ApiCall;
+import com.example.covid_jobber.classes.services.Filter;
+import com.example.covid_jobber.classes.services.FilterType;
 import com.example.covid_jobber.databinding.FragmentNavbarBinding;
 
+import com.google.android.gms.common.api.Api;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import org.jetbrains.annotations.NotNull;
@@ -84,9 +87,15 @@ public class SwipeFragment extends Fragment {
 
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
-                // Ask for more data here
+
+                if(itemsInAdapter>=3){
+                   return;
+                }
+
+                Log.d("TAG", "CARDS ABOUT TO RUN OUT");
+
                 MainActivity mainActivity = (MainActivity) getActivity();
-                ApiCall apiCall = new ApiCall() {
+                mainActivity.getHandler().makeApiCall(new ApiCall(mainActivity.getFilterFragment().getFilter()) {
                     @Override
                     public void callback(JSONArray results) {
                         try {
@@ -95,12 +104,8 @@ public class SwipeFragment extends Fragment {
                             e.printStackTrace();
                         }
                     }
-                };
-                if(mainActivity.getCategoryFilter() != null){
-                    apiCall.filterByCategory(mainActivity.getCategoryFilter());
-                }
+                });
 
-                mainActivity.getHandler().makeApiCall(apiCall);
 
                 arrayAdapter.notifyDataSetChanged();
                 Log.d("LIST", "notified");

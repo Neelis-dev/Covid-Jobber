@@ -9,6 +9,7 @@ import com.example.covid_jobber.R;
 import com.example.covid_jobber.classes.Job;
 import com.example.covid_jobber.classes.services.ApiCall;
 import com.example.covid_jobber.classes.services.ApiHandler;
+import com.example.covid_jobber.classes.services.Filter;
 import com.example.covid_jobber.databinding.ActivityMainBinding;
 import com.example.covid_jobber.fragments.FavoritesFragment;
 import com.example.covid_jobber.fragments.FiltersFragment;
@@ -45,8 +46,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.mainBinding = ActivityMainBinding.inflate(getLayoutInflater());
+        filtersFragment.fillCategorySpinner();
         setContentView(R.layout.activity_main);
-        refreshCategories();
+
         handler.makeApiCall(new ApiCall() {
             @Override
             public void callback(JSONArray results) {
@@ -108,27 +110,8 @@ public class MainActivity extends AppCompatActivity {
         }
         swipeFragment.addToList(jobtitles);
     }
-
-    public void refreshCategories() {
-        Map<String,String> categoryMap = new HashMap<>();
-        handler.makeApiCall(new ApiCall(new Request.Builder().url("https://api.adzuna.com/v1/api/jobs/de/categories?app_id=64fa1822&app_key=d41a9537116b72a1c2a890a27376d552").build()) {
-            @Override
-            public void callback(JSONArray results) {
-                for(int i=0; i<results.length();i++){
-                    try {
-                        categoryMap.put(results.getJSONObject(i).getString("label"), results.getJSONObject(i).getString("tag"));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                filtersFragment.setCategories(categoryMap);
-            }
-        });
-
-    }
-
-    public String getCategoryFilter(){
-        return filtersFragment.getCategoryFilter();
+    public FiltersFragment getFilterFragment(){
+        return filtersFragment;
     }
 
     public ApiHandler getHandler(){

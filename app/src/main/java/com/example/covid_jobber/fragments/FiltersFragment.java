@@ -11,10 +11,17 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import com.example.covid_jobber.R;
+import com.example.covid_jobber.classes.services.ApiCall;
+import com.example.covid_jobber.classes.services.ApiHandler;
+import com.example.covid_jobber.classes.services.Filter;
+import com.example.covid_jobber.classes.services.FilterType;
 import com.example.covid_jobber.databinding.FragmentFiltersBinding;
 import com.example.covid_jobber.databinding.FragmentSettingsBinding;
+import com.google.android.gms.common.api.Api;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -23,6 +30,8 @@ import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import okhttp3.Request;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,7 +43,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
     private FragmentFiltersBinding binding;
 
     // Variables
-    private boolean filtersActive;
+    private boolean filtersActive=false;
     private String category;
 
     private Map<String, String> categoryMap = new HashMap<>();
@@ -42,7 +51,6 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
     public FiltersFragment() {
         // Required empty public constructor
-        filtersActive = false;
     }
 
     public static FiltersFragment newInstance() {
@@ -94,16 +102,30 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         category = categoryMap.get(binding.spinnerProfileCategory.getSelectedItem().toString());
     }
 
-    public void setCategories(Map<String, String> categoryMap) {
-        this.categoryMap = categoryMap;
+    public void fillCategorySpinner(){
+        ApiHandler handler= new ApiHandler();
+        handler.makeApiCall(new ApiCall(new Request.Builder().url("https://api.adzuna.com/v1/api/jobs/de/categories?app_id=64fa1822&app_key=d41a9537116b72a1c2a890a27376d552").build()) {
+            @Override
+            public void callback(JSONArray results) {
+                for(int i=0; i<results.length();i++){
+                    try {
+                        categoryMap.put(results.getJSONObject(i).getString("label"), results.getJSONObject(i).getString("tag"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 
-    public String getCategoryFilter() {
-        return category;
-    }
+    public Filter getFilter(){
+        if(!filtersActive){
+            return new Filter();
+        }
 
-    public boolean getFiltersActive() {
-        return filtersActive;
+        Filter filter = new Filter();
+        filter.addFilter(FilterType.CATEGORY,category);
+        return filter;
     }
 
 }
