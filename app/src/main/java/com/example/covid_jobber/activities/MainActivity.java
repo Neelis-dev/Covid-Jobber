@@ -9,6 +9,7 @@ import com.example.covid_jobber.R;
 import com.example.covid_jobber.classes.Job;
 import com.example.covid_jobber.classes.services.ApiCall;
 import com.example.covid_jobber.classes.services.ApiHandler;
+import com.example.covid_jobber.classes.services.Filter;
 import com.example.covid_jobber.databinding.ActivityMainBinding;
 import com.example.covid_jobber.fragments.FavoritesFragment;
 import com.example.covid_jobber.fragments.FiltersFragment;
@@ -21,7 +22,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import okhttp3.Request;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -41,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.mainBinding = ActivityMainBinding.inflate(getLayoutInflater());
+        filtersFragment.fillCategorySpinner();
         setContentView(R.layout.activity_main);
 
         handler.makeApiCall(new ApiCall() {
@@ -97,15 +103,19 @@ public class MainActivity extends AppCompatActivity {
             jobs.add(new Job((JSONObject) results.get(i)));
         }
 
-        // TODO: make Jobs into cards
+        //  make Jobs into cards
         List<String> jobtitles = new ArrayList<>();
         for (Job j:jobs) {
             jobtitles.add(j.getTitle());
         }
         swipeFragment.addToList(jobtitles);
+    }
+    public FiltersFragment getFilterFragment(){
+        return filtersFragment;
+    }
 
-
-
+    public ApiHandler getHandler(){
+        return handler;
     }
 
 //    public FilterOptions getFilterOptions(){

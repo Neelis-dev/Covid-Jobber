@@ -2,34 +2,125 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_gravity="center"
     android:layout_width="300dp"
-    android:layout_height="500dp">
-
-    <TextView
-        android:id="@+id/helloText"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#FFFFFF"
-        android:gravity="center"
-        android:textColor="@android:color/black"
-        android:textSize="40sp"
-        tools:text="Nice Job" />
-
-    <View
-        android:id="@+id/item_swipe_left_indicator"
-        android:alpha="0"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#7ED957" />
+    android:layout_height="500dp"
+    android:layout_gravity="center"
+    android:background="#FFFFFF"
+    android:visibility="visible"
+    tools:ignore="ExtraText">
 
     <View
         android:id="@+id/item_swipe_right_indicator"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="right"
         android:alpha="0"
-        android:background="#FF1616" />
+        android:background="#FF1616"
+        android:visibility="visible" />
+
+    <View
+        android:id="@+id/item_swipe_left_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0"
+        android:background="#7ED957"
+        android:visibility="visible" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.gms.maps.MapView
+            android:id="@+id/mapView"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            app:layout_constraintBottom_toTopOf="@+id/helloText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/showMore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:contentDescription="@string/img_item_showMore"
+            android:focusable="true"
+            app:backgroundTint="@color/primary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.97"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/helloText"
+            app:layout_constraintVertical_bias="0.92"
+            app:srcCompat="@android:drawable/ic_menu_add" />
+
+        <TextView
+            android:id="@+id/helloText"
+            style="@style/Text_Heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="160dp"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/txt_item_title" />
+
+        <TextView
+            android:id="@+id/workingPeriod"
+            style="@style/Text_Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="55dp"
+            android:clickable="false"
+            android:ems="10"
+            android:text="@string/txt_item_date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/helloText" />
+
+        <TextView
+            android:id="@+id/employer"
+            style="@style/Text_Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"
+            android:clickable="false"
+            android:ems="10"
+            android:text="@string/txt_item_employer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/helloText" />
+
+        <TextView
+            android:id="@+id/salary"
+            style="@style/Text_Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="90dp"
+            android:clickable="false"
+            android:ems="10"
+            android:text="@string/txt_item_salary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/helloText" />
+
+        <TextView
+            android:id="@+id/description"
+            style="@style/Text_Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="140dp"
+            android:clickable="false"
+            android:ems="10"
+            android:text="@string/txt_item_decscription"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/helloText" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </FrameLayout>

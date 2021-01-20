@@ -18,6 +18,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Switch
+        android:id="@+id/switch_profile_toggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:text="@string/txt_filters_fragment_toggle"
+        app:layout_constraintBottom_toTopOf="@+id/txt_profile_name"
+        app:layout_constraintStart_toStartOf="@+id/txt_profile_name"
+        tools:ignore="UseSwitchCompatOrMaterialXml" />
+
     <!--     Name Field-->
     <TextView
         android:id="@+id/txt_profile_name"
@@ -99,6 +109,27 @@
         android:text="@string/txt_filters_fragment_skills"
         app:layout_constraintStart_toStartOf="@+id/txt_profile_qualifications"
         app:layout_constraintTop_toBottomOf="@+id/txt_profile_qualifications" />
+
+    <!-- Category Field-->
+    <TextView
+        android:id="@+id/txt_profile_category"
+        style="@style/Text_Label"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:text="@string/txt_filters_fragment_category"
+        app:layout_constraintStart_toStartOf="@+id/txt_profile_skills"
+        app:layout_constraintTop_toBottomOf="@+id/txt_profile_skills" />
+
+    <Spinner
+        android:id="@+id/spinner_profile_category"
+        android:layout_width="204dp"
+        android:layout_height="48dp"
+        app:layout_constraintEnd_toEndOf="@+id/input_profile_salary"
+        app:layout_constraintTop_toTopOf="@+id/txt_profile_category" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

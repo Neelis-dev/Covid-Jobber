@@ -6,4 +6,88 @@
     android:layout_height="match_parent"
     tools:context=".fragments.SettingsFragment">
 
+    <TextView
+        android:id="@+id/title"
+        style="@style/Text_Heading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/txt_settings_fragment_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_messages"
+        style="@style/Text_Label"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="@string/txt_settings_fragment_messages"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+
+    <TextView
+        android:id="@+id/txt_exportimport"
+        style="@style/Text_Label"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:text="@string/txt_settings_fragment_exportimport"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_language" />
+
+    <TextView
+        android:id="@+id/txt_language"
+        style="@style/Text_Label"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:text="@string/txt_settings_fragment_language"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_messages" />
+
+    <TextView
+        android:id="@+id/txt_darkmode"
+        style="@style/Text_Label"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:text="@string/txt_settings_fragment_darkmode"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_exportimport" />
+
+    <Spinner
+        android:id="@+id/spinner_settings_language"
+        android:layout_width="204dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txt_language" />
+
+    <ToggleButton
+        android:id="@+id/btn_darkmode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txt_darkmode" />
+
+    <Switch
+        android:id="@+id/btn_messages"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="50dp"
+        android:text="@string/btn_settings_fragment_messages"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txt_messages" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
