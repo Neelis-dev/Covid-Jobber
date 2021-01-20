@@ -107,6 +107,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         handler.makeApiCall(new ApiCall(new Request.Builder().url("https://api.adzuna.com/v1/api/jobs/de/categories?app_id=64fa1822&app_key=d41a9537116b72a1c2a890a27376d552").build()) {
             @Override
             public void callback(JSONArray results) {
+
                 for(int i=0; i<results.length();i++){
                     try {
                         categoryMap.put(results.getJSONObject(i).getString("label"), results.getJSONObject(i).getString("tag"));

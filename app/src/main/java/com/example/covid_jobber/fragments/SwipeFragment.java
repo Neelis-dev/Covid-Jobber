@@ -56,12 +56,8 @@ public class SwipeFragment extends Fragment {
         al = new ArrayList<>();
         al.add("Bäcker");
         al.add("Zahnarzt helfer/in");
-        al.add("Data Scientist");
-        al.add("Bizness Analyst");
-        al.add("Dualer Student");
-        al.add("Fahrer");
-        al.add("Abteilungsleiter");
-        al.add("Manager");
+        al.add("Brückenbauer");
+        al.add("Straßenplaner");
 
         arrayAdapter = new ArrayAdapter<>(getActivity(), R.layout.item, R.id.helloText, al );
 
@@ -88,7 +84,7 @@ public class SwipeFragment extends Fragment {
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
 
-                if(itemsInAdapter>=3){
+                if(itemsInAdapter!=3){
                    return;
                 }
 

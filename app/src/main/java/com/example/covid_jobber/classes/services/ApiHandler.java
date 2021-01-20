@@ -37,8 +37,6 @@ public class ApiHandler {
         };
        new Thread(apiCallThread).start();
 
-
-
     }
 
 
