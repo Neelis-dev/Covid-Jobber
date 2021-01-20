@@ -23,7 +23,7 @@ import org.jetbrains.annotations.NotNull;
  * Use the {@link NavbarFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class NavbarFragment extends Fragment {
+public class NavbarFragment extends Fragment implements View.OnClickListener{
     private FragmentNavbarBinding binding;
     private MainActivity mainActivity;
 
@@ -49,41 +49,41 @@ public class NavbarFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentNavbarBinding.inflate(inflater, container, false);
 
-        ImageButton[] buttons = {binding.btnNavbarSearch, binding.btnNavbarFavorites, binding.btnNavbarFilters, binding.btnNavbarSettings};
+
 
 //        Search Button is selected when app is started
         binding.btnNavbarSearch.setSelected(true);
 
         mainActivity = (MainActivity) getActivity();
 
-        View.OnClickListener listener = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(v == binding.btnNavbarSearch){
-                    mainActivity.changeToSwipe();
-                    setButtonPressed(buttons, binding.btnNavbarSearch);
-                }
-                else if(v == binding.btnNavbarFavorites){
-                    mainActivity.changeToFavorites();
-                    setButtonPressed(buttons, binding.btnNavbarFavorites);
-                }
-                else if(v == binding.btnNavbarFilters){
-                    mainActivity.changeToFilters();
-                    setButtonPressed(buttons, binding.btnNavbarFilters);
-                }
-                else if(v == binding.btnNavbarSettings){
-                    mainActivity.changeToSettings();
-                    setButtonPressed(buttons, binding.btnNavbarSettings);
-                }
-            }
-        };
-
-        binding.btnNavbarSearch.setOnClickListener(listener);
-        binding.btnNavbarFavorites.setOnClickListener(listener);
-        binding.btnNavbarFilters.setOnClickListener(listener);
-        binding.btnNavbarSettings.setOnClickListener(listener);
+        binding.btnNavbarSearch.setOnClickListener(this);
+        binding.btnNavbarFavorites.setOnClickListener(this);
+        binding.btnNavbarFilters.setOnClickListener(this);
+        binding.btnNavbarSettings.setOnClickListener(this);
 
         return binding.getRoot();
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        ImageButton[] buttons = {binding.btnNavbarSearch, binding.btnNavbarFavorites, binding.btnNavbarFilters, binding.btnNavbarSettings};
+        if(v == binding.btnNavbarSearch){
+            mainActivity.changeToSwipe();
+            setButtonPressed(buttons, binding.btnNavbarSearch);
+        }
+        else if(v == binding.btnNavbarFavorites){
+            mainActivity.changeToFavorites();
+            setButtonPressed(buttons, binding.btnNavbarFavorites);
+        }
+        else if(v == binding.btnNavbarFilters){
+            mainActivity.changeToFilters();
+            setButtonPressed(buttons, binding.btnNavbarFilters);
+        }
+        else if(v == binding.btnNavbarSettings){
+            mainActivity.changeToSettings();
+            setButtonPressed(buttons, binding.btnNavbarSettings);
+        }
     }
 
     @Override

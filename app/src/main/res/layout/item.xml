@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0"
-        android:background="#FF1616"
+        android:background="@color/negative"
         android:visibility="visible" />
 
     <View
@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:alpha="0"
-        android:background="#7ED957"
+        android:background="@color/positive"
         android:visibility="visible" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
