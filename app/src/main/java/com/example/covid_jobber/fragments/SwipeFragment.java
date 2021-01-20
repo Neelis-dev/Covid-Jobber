@@ -12,16 +12,27 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.example.covid_jobber.R;
+import com.example.covid_jobber.activities.MainActivity;
+import com.example.covid_jobber.classes.services.ApiCall;
+import com.example.covid_jobber.classes.services.Filter;
+import com.example.covid_jobber.classes.services.FilterType;
 import com.example.covid_jobber.databinding.FragmentNavbarBinding;
 
+import com.google.android.gms.common.api.Api;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link SwipeFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
 public class SwipeFragment extends Fragment {
 
     private boolean wannasave = false;
@@ -45,12 +56,8 @@ public class SwipeFragment extends Fragment {
         al = new ArrayList<>();
         al.add("Bäcker");
         al.add("Zahnarzt helfer/in");
-        al.add("Data Scientist");
-        al.add("Bizness Analyst");
-        al.add("Dualer Student");
-        al.add("Fahrer");
-        al.add("Abteilungsleiter");
-        al.add("Manager");
+        al.add("Brückenbauer");
+        al.add("Straßenplaner");
 
         arrayAdapter = new ArrayAdapter<>(getActivity(), R.layout.item, R.id.helloText, al );
 
@@ -76,8 +83,26 @@ public class SwipeFragment extends Fragment {
 
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
-                // Ask for more data here
-                al.add("Momentan nicht mehr Jobs verfügbar");
+
+                if(itemsInAdapter!=3){
+                   return;
+                }
+
+                Log.d("TAG", "CARDS ABOUT TO RUN OUT");
+
+                MainActivity mainActivity = (MainActivity) getActivity();
+                mainActivity.getHandler().makeApiCall(new ApiCall(mainActivity.getFilterFragment().getFilter()) {
+                    @Override
+                    public void callback(JSONArray results) {
+                        try {
+                            mainActivity.resultsToJobs(results);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+
                 arrayAdapter.notifyDataSetChanged();
                 Log.d("LIST", "notified");
             }
