@@ -22,35 +22,14 @@
         android:id="@+id/switch_profile_toggle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         android:text="@string/txt_filters_fragment_toggle"
-        app:layout_constraintBottom_toTopOf="@+id/txt_profile_name"
-        app:layout_constraintStart_toStartOf="@+id/txt_profile_name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="UseSwitchCompatOrMaterialXml" />
 
     <!--     Name Field-->
-    <TextView
-        android:id="@+id/txt_profile_name"
-        style="@style/Text_Label"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:text="@string/txt_filters_fragment_name"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_profile_heading" />
-
-    <EditText
-        android:id="@+id/input_profile_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="60dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text=""
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txt_profile_name" />
 
     <!--     Salary Field-->
     <TextView
@@ -58,20 +37,22 @@
         style="@style/Text_Label"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="@string/txt_filters_fragment_salary"
-        app:layout_constraintStart_toStartOf="@+id/txt_profile_name"
-        app:layout_constraintTop_toBottomOf="@+id/txt_profile_name" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_profile_heading" />
 
     <EditText
         android:id="@+id/input_profile_salary"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="60dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="0"
-        app:layout_constraintEnd_toEndOf="@+id/input_profile_name"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/txt_profile_salary" />
 
     <!--     Contract Time Field-->
@@ -87,6 +68,10 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_profile_salary" />
 
     <!--     Qualifications Field-->
+
+    <!--     Skills Field-->
+
+    <!-- Category Field-->
     <TextView
         android:id="@+id/txt_profile_qualifications"
         style="@style/Text_Label"
@@ -95,10 +80,9 @@
         android:layout_marginTop="15dp"
         android:gravity="center"
         android:text="@string/txt_filters_fragment_qualifications"
-        app:layout_constraintStart_toStartOf="@+id/txt_profile_contract_time"
-        app:layout_constraintTop_toBottomOf="@+id/txt_profile_contract_time" />
+        app:layout_constraintStart_toStartOf="@+id/txt_profile_category"
+        app:layout_constraintTop_toBottomOf="@+id/txt_profile_category" />
 
-    <!--     Skills Field-->
     <TextView
         android:id="@+id/txt_profile_skills"
         style="@style/Text_Label"
@@ -110,7 +94,6 @@
         app:layout_constraintStart_toStartOf="@+id/txt_profile_qualifications"
         app:layout_constraintTop_toBottomOf="@+id/txt_profile_qualifications" />
 
-    <!-- Category Field-->
     <TextView
         android:id="@+id/txt_profile_category"
         style="@style/Text_Label"
@@ -119,8 +102,8 @@
         android:layout_marginTop="15dp"
         android:gravity="center"
         android:text="@string/txt_filters_fragment_category"
-        app:layout_constraintStart_toStartOf="@+id/txt_profile_skills"
-        app:layout_constraintTop_toBottomOf="@+id/txt_profile_skills" />
+        app:layout_constraintStart_toStartOf="@+id/txt_profile_contract_time"
+        app:layout_constraintTop_toBottomOf="@+id/txt_profile_contract_time" />
 
     <Spinner
         android:id="@+id/spinner_profile_category"
@@ -129,7 +112,12 @@
         app:layout_constraintEnd_toEndOf="@+id/input_profile_salary"
         app:layout_constraintTop_toTopOf="@+id/txt_profile_category" />
 
-
+    <Spinner
+        android:id="@+id/spinner_profile_contract_time"
+        android:layout_width="204dp"
+        android:layout_height="48dp"
+        app:layout_constraintEnd_toEndOf="@+id/input_profile_salary"
+        app:layout_constraintTop_toTopOf="@+id/txt_profile_contract_time" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

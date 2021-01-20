@@ -17,7 +17,7 @@ public class Applicant {
 
 
     public Applicant() {
-        this("", 0, ContractTime.UNKNOWN, new Address());
+        this("", 0, ContractTime.EITHER, new Address());
     }
 
     public Applicant(String name, double expSalary, ContractTime expContractTime, Address location) {

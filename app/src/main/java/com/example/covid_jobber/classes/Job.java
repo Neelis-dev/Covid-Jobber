@@ -63,7 +63,7 @@ public class Job {
                     contractTime = ContractTime.PART_TIME;
                     break;
                 default:
-                    contractTime = ContractTime.UNKNOWN;
+                    contractTime = ContractTime.EITHER;
                     break;
             }
         }

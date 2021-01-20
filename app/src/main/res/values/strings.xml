@@ -35,14 +35,13 @@
     <string name="img_favorites_fragment_edit">Edit</string>
 
     <!--  Filters Fragment  -->
-    <string name="txt_filters_fragment_heading">Filter Options</string>
-    <string name="txt_filters_fragment_name">Name:</string>
-    <string name="txt_filters_fragment_salary">Exp. Salary:</string>
-    <string name="txt_filters_fragment_contract_time">Exp. Contract Time:</string>
-    <string name="txt_filters_fragment_qualifications">Qualifications:</string>
-    <string name="txt_filters_fragment_skills">Skills:</string>
-    <string name="txt_filters_fragment_toggle">Toggle</string>
-    <string name="txt_filters_fragment_category">Kategorie</string>
+    <string name="txt_filters_fragment_heading">Filter Optionen</string>
+    <string name="txt_filters_fragment_salary">Wunschgehalt:</string>
+    <string name="txt_filters_fragment_contract_time">Arbeitszeit:</string>
+    <string name="txt_filters_fragment_category">Kategorie:</string>
+    <string name="txt_filters_fragment_qualifications">Qualifikationen:</string>
+    <string name="txt_filters_fragment_skills">Fähigkeiten:</string>
+    <string name="txt_filters_fragment_toggle">Filter</string>
 
     <!--  Settings Fragment  -->
     <string name="txt_settings_fragment_title">Einstellungen</string>
