@@ -34,23 +34,21 @@
         style="@style/Text_Label"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
-        android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
         android:gravity="center"
         android:text="@string/txt_settings_fragment_exportimport"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_language" />
+        app:layout_constraintStart_toStartOf="@+id/txt_darkmode"
+        app:layout_constraintTop_toBottomOf="@+id/txt_darkmode" />
 
     <TextView
         android:id="@+id/txt_language"
         style="@style/Text_Label"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
-        android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
         android:gravity="center"
         android:text="@string/txt_settings_fragment_language"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/txt_messages"
         app:layout_constraintTop_toBottomOf="@+id/txt_messages" />
 
     <TextView
@@ -58,33 +56,30 @@
         style="@style/Text_Label"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
-        android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
         android:gravity="center"
         android:text="@string/txt_settings_fragment_darkmode"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_exportimport" />
+        app:layout_constraintStart_toStartOf="@+id/txt_language"
+        app:layout_constraintTop_toBottomOf="@+id/txt_language" />
 
     <Spinner
         android:id="@+id/spinner_settings_language"
-        android:layout_width="204dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="50dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="170dp"
+        android:layout_height="45dp"
+        app:layout_constraintEnd_toEndOf="@+id/btn_messages"
         app:layout_constraintTop_toTopOf="@+id/txt_language" />
 
-    <ToggleButton
-        android:id="@+id/btn_darkmode"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="50dp"
-        app:layout_constraintEnd_toEndOf="parent"
+    <Spinner
+        android:id="@+id/spinner_settings_darkmode"
+        android:layout_width="170dp"
+        android:layout_height="45dp"
+        app:layout_constraintEnd_toEndOf="@+id/spinner_settings_language"
         app:layout_constraintTop_toTopOf="@+id/txt_darkmode" />
 
     <Switch
         android:id="@+id/btn_messages"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_marginEnd="50dp"
         android:text="@string/btn_settings_fragment_messages"
         app:layout_constraintEnd_toEndOf="parent"

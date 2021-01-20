@@ -13,6 +13,8 @@
     <color name="primary_dark">#bf4040	</color>
     <color name="light_grey">#b3b3b3</color>
     <color name="dark_grey">#666666</color>
+    <color name="light_background">#ffeee9e2</color>
+    <color name="dark_background">#2e2e2e</color>
     <color name="negative">#ae3931</color>
     <color name="positive">#55C45A</color>
 </resources>
