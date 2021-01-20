@@ -47,6 +47,7 @@
             android:clickable="true"
             android:contentDescription="@string/img_item_showMore"
             android:focusable="true"
+            app:backgroundTint="@color/primary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.97"
@@ -57,81 +58,67 @@
 
         <TextView
             android:id="@+id/helloText"
+            style="@style/Text_Heading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="160dp"
             android:gravity="center"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.32999998"
-            tools:text="@string/txt_filters_fragment_heading" />
+            tools:text="@string/txt_item_title" />
 
         <TextView
             android:id="@+id/workingPeriod"
+            style="@style/Text_Label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="55dp"
             android:clickable="false"
             android:ems="10"
-            android:text="@string/txt_filters_fragment_contract_time"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.15"
+            android:text="@string/txt_item_date"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/helloText"
-            app:layout_constraintVertical_bias="0.29000002" />
+            app:layout_constraintTop_toBottomOf="@+id/helloText" />
 
         <TextView
             android:id="@+id/employer"
+            style="@style/Text_Label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"
             android:clickable="false"
             android:ems="10"
-            android:text="@string/txt_filters_fragment_name"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.144"
+            android:text="@string/txt_item_employer"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/helloText"
-            app:layout_constraintVertical_bias="0.13999999" />
+            app:layout_constraintTop_toBottomOf="@+id/helloText" />
 
         <TextView
             android:id="@+id/salary"
+            style="@style/Text_Label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="90dp"
             android:clickable="false"
             android:ems="10"
-            android:text="@string/txt_filters_fragment_salary"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.15"
+            android:text="@string/txt_item_salary"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/helloText"
-            app:layout_constraintVertical_bias="0.45" />
+            app:layout_constraintTop_toBottomOf="@+id/helloText" />
 
         <TextView
             android:id="@+id/description"
+            style="@style/Text_Label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="140dp"
             android:clickable="false"
             android:ems="10"
-            android:text="@string/txt_filters_fragment_qualifications"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.115"
+            android:text="@string/txt_item_decscription"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/helloText"
-            app:layout_constraintVertical_bias="0.75" />
+            app:layout_constraintTop_toBottomOf="@+id/helloText" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
