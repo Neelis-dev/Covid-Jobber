@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.renderscript.ScriptGroup;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +53,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 //    available options
     private final List<ContractTime> contractTimes = new ArrayList<>(Arrays.asList(ContractTime.EITHER, ContractTime.FULL_TIME, ContractTime.PART_TIME));
     private final Map<String, String> categoryMap = new HashMap<>();
+    private List<View> editOptions;
 
 //    debug variables
     private boolean filtersActive = false;
@@ -70,26 +72,39 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         binding = FragmentFiltersBinding.inflate(inflater, container, false);
 
 //        Filter toggle
-        binding.switchProfileToggle.setOnClickListener(this);
-        binding.switchProfileToggle.setChecked(filtersActive);
+        binding.switchFilterToggle.setOnClickListener(this);
+        binding.switchFilterToggle.setChecked(filtersActive);
+
+//        Edit Button
+        binding.btnFilterEdit.setOnClickListener(this);
+
+//        Save Button
+        binding.btnFilterSave.setOnClickListener(this);
+        binding.btnFilterSave.setVisibility(View.INVISIBLE);
 
 //        Category Spinner
-        binding.spinnerProfileCategory.setOnItemSelectedListener(this);
+        binding.spinnerFilterCategory.setOnItemSelectedListener(this);
 
         List<String> keyList = new ArrayList<>(categoryMap.keySet());
-        binding.spinnerProfileCategory.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), android.R.layout.simple_dropdown_item_1line, keyList));
+        binding.spinnerFilterCategory.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), android.R.layout.simple_dropdown_item_1line, keyList));
 
         if (category != null) {
-            binding.spinnerProfileCategory.setSelection(keyList.indexOf(category));
+            binding.spinnerFilterCategory.setSelection(keyList.indexOf(category));
         }
 
 //        Contract Time Spinner
-        binding.spinnerProfileContractTime.setOnItemSelectedListener(this);
+        binding.spinnerFilterContractTime.setOnItemSelectedListener(this);
 
-        binding.spinnerProfileContractTime.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), android.R.layout.simple_dropdown_item_1line, contractTimes));
+        binding.spinnerFilterContractTime.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), android.R.layout.simple_dropdown_item_1line, contractTimes));
 
         if (contractTime != null) {
-            binding.spinnerProfileContractTime.setSelection(contractTimes.indexOf(contractTime));
+            binding.spinnerFilterContractTime.setSelection(contractTimes.indexOf(contractTime));
+        }
+
+//        All options set to disabled if not in edit mode
+        editOptions = new ArrayList<>(Arrays.asList(binding.inputFilterSalary, binding.spinnerFilterCategory, binding.spinnerFilterContractTime));
+        for (View option:editOptions) {
+            option.setEnabled(false);
         }
 
         return binding.getRoot();
@@ -104,21 +119,47 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 //    Currently only used for toggle button
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.switch_profile_toggle) {
-            filtersActive = binding.switchProfileToggle.isChecked();
+        if (v == binding.switchFilterToggle) {
+            filtersActive = binding.switchFilterToggle.isChecked();
             System.out.println("filters: "+filtersActive);
+        }
+        else if (v == binding.btnFilterEdit){
+            startEditing();
+        }
+        else if (v == binding.btnFilterSave){
+            endEditing();
+        }
+    }
+
+//    enables edit mode -> activated by edit button
+    private void startEditing(){
+        binding.btnFilterSave.setVisibility(View.VISIBLE);
+        binding.btnFilterEdit.setEnabled(false);
+
+        for (View option:editOptions) {
+            option.setEnabled(true);
+        }
+    }
+
+//    disables edit mode -> activated by save button
+    private void endEditing(){
+        binding.btnFilterSave.setVisibility(View.INVISIBLE);
+        binding.btnFilterEdit.setEnabled(true);
+
+        for (View option:editOptions) {
+            option.setEnabled(false);
         }
     }
 
 //    currently only used for category spinner
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        if(parent == binding.spinnerProfileCategory){
-            category = categoryMap.get(binding.spinnerProfileCategory.getSelectedItem().toString());
+        if(parent == binding.spinnerFilterCategory){
+            category = categoryMap.get(binding.spinnerFilterCategory.getSelectedItem().toString());
             System.out.println("category chosen: "+category);
         }
-        else if(parent == binding.spinnerProfileContractTime){
-            contractTime = (ContractTime) binding.spinnerProfileContractTime.getSelectedItem();
+        else if(parent == binding.spinnerFilterContractTime){
+            contractTime = (ContractTime) binding.spinnerFilterContractTime.getSelectedItem();
             System.out.println("contract time chosen: "+contractTime.toString());
         }
 
@@ -127,7 +168,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 //    currently only used for category spinner
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-        category = categoryMap.get(binding.spinnerProfileCategory.getSelectedItem().toString());
+        category = categoryMap.get(binding.spinnerFilterCategory.getSelectedItem().toString());
     }
 
     public void fillCategorySpinner(){

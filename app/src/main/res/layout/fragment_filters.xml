@@ -7,7 +7,7 @@
     tools:context=".fragments.FiltersFragment">
 
     <TextView
-        android:id="@+id/txt_profile_heading"
+        android:id="@+id/txt_filter_heading"
         style="@style/Text_Heading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,12 +19,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Switch
-        android:id="@+id/switch_profile_toggle"
+        android:id="@+id/switch_filter_toggle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:text="@string/txt_filters_fragment_toggle"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        android:text="@string/btn_filters_fragment_toggle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="UseSwitchCompatOrMaterialXml" />
@@ -33,7 +33,7 @@
 
     <!--     Salary Field-->
     <TextView
-        android:id="@+id/txt_profile_salary"
+        android:id="@+id/txt_filter_salary"
         style="@style/Text_Label"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
@@ -42,10 +42,10 @@
         android:gravity="center"
         android:text="@string/txt_filters_fragment_salary"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_profile_heading" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_filter_heading" />
 
     <EditText
-        android:id="@+id/input_profile_salary"
+        android:id="@+id/input_filter_salary"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="60dp"
@@ -53,19 +53,19 @@
         android:inputType="textPersonName"
         android:text="0"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txt_profile_salary" />
+        app:layout_constraintTop_toTopOf="@+id/txt_filter_salary" />
 
     <!--     Contract Time Field-->
     <TextView
-        android:id="@+id/txt_profile_contract_time"
+        android:id="@+id/txt_filter_contract_time"
         style="@style/Text_Label"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
         android:layout_marginTop="15dp"
         android:gravity="center"
         android:text="@string/txt_filters_fragment_contract_time"
-        app:layout_constraintStart_toStartOf="@+id/txt_profile_salary"
-        app:layout_constraintTop_toBottomOf="@+id/txt_profile_salary" />
+        app:layout_constraintStart_toStartOf="@+id/txt_filter_salary"
+        app:layout_constraintTop_toBottomOf="@+id/txt_filter_salary" />
 
     <!--     Qualifications Field-->
 
@@ -73,51 +73,71 @@
 
     <!-- Category Field-->
     <TextView
-        android:id="@+id/txt_profile_qualifications"
+        android:id="@+id/txt_filter_qualifications"
         style="@style/Text_Label"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
         android:layout_marginTop="15dp"
         android:gravity="center"
         android:text="@string/txt_filters_fragment_qualifications"
-        app:layout_constraintStart_toStartOf="@+id/txt_profile_category"
-        app:layout_constraintTop_toBottomOf="@+id/txt_profile_category" />
+        app:layout_constraintStart_toStartOf="@+id/txt_filter_category"
+        app:layout_constraintTop_toBottomOf="@+id/txt_filter_category" />
 
     <TextView
-        android:id="@+id/txt_profile_skills"
+        android:id="@+id/txt_filter_skills"
         style="@style/Text_Label"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
         android:layout_marginTop="15dp"
         android:gravity="center"
         android:text="@string/txt_filters_fragment_skills"
-        app:layout_constraintStart_toStartOf="@+id/txt_profile_qualifications"
-        app:layout_constraintTop_toBottomOf="@+id/txt_profile_qualifications" />
+        app:layout_constraintStart_toStartOf="@+id/txt_filter_qualifications"
+        app:layout_constraintTop_toBottomOf="@+id/txt_filter_qualifications" />
 
     <TextView
-        android:id="@+id/txt_profile_category"
+        android:id="@+id/txt_filter_category"
         style="@style/Text_Label"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
         android:layout_marginTop="15dp"
         android:gravity="center"
         android:text="@string/txt_filters_fragment_category"
-        app:layout_constraintStart_toStartOf="@+id/txt_profile_contract_time"
-        app:layout_constraintTop_toBottomOf="@+id/txt_profile_contract_time" />
+        app:layout_constraintStart_toStartOf="@+id/txt_filter_contract_time"
+        app:layout_constraintTop_toBottomOf="@+id/txt_filter_contract_time" />
 
     <Spinner
-        android:id="@+id/spinner_profile_category"
+        android:id="@+id/spinner_filter_category"
         android:layout_width="204dp"
         android:layout_height="48dp"
-        app:layout_constraintEnd_toEndOf="@+id/input_profile_salary"
-        app:layout_constraintTop_toTopOf="@+id/txt_profile_category" />
+        app:layout_constraintEnd_toEndOf="@+id/input_filter_salary"
+        app:layout_constraintTop_toTopOf="@+id/txt_filter_category" />
 
     <Spinner
-        android:id="@+id/spinner_profile_contract_time"
+        android:id="@+id/spinner_filter_contract_time"
         android:layout_width="204dp"
         android:layout_height="48dp"
-        app:layout_constraintEnd_toEndOf="@+id/input_profile_salary"
-        app:layout_constraintTop_toTopOf="@+id/txt_profile_contract_time" />
+        app:layout_constraintEnd_toEndOf="@+id/input_filter_salary"
+        app:layout_constraintTop_toTopOf="@+id/txt_filter_contract_time" />
+
+    <ImageButton
+        android:id="@+id/btn_filter_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:src="@android:drawable/ic_menu_edit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_filter_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/btn_filters_fragment_save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_filter_skills" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
