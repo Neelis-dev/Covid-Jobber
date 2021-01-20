@@ -1,10 +1,7 @@
 package com.example.covid_jobber.classes.services;
 
 
-
-
-
-import com.example.covid_jobber.activities.MainActivity;
+import android.util.Log;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -40,8 +37,6 @@ public class ApiHandler {
         };
        new Thread(apiCallThread).start();
 
-
-
     }
 
 
@@ -58,15 +53,17 @@ public class ApiHandler {
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 System.out.println("response recieved");
                 ResponseBody responseBody = response.body();
+
                 try{
                     // Create jsonObject out of responsebody
                     JSONObject jsonObject = new JSONObject(responseBody.string());
-
                     // Return JSONArray results
                     f.complete(jsonObject.getJSONArray("results"));
                 }catch(JSONException j){
+
                     j.printStackTrace();
                 }
+                response.close();
             }
         });
 

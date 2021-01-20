@@ -2,20 +2,70 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout2"
+    android:id="@+id/favourites"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".fragments.FavoritesFragment">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/textView2"
+    <ImageButton
+        android:id="@+id/edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/txt_favorites_fragment_filler"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:contentDescription="@string/img_favorites_fragment_edit"
+        android:src="@android:drawable/ic_menu_edit"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <SearchView
+        android:id="@+id/search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <LinearLayout
+        android:id="@+id/joblist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="15dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search">
+
+        <TextView
+            android:id="@+id/data"
+            style="@style/Text_Heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_favorites_fragment_title" />
+
+        <TextView
+            android:id="@+id/employerFavorites"
+            style="@style/Text_Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_favorites_fragment_employer" />
+
+        <TextView
+            android:id="@+id/locationFavorites"
+            style="@style/Text_Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_favorites_fragment_location" />
+
+        <TextView
+            android:id="@+id/salaryFavorites"
+            style="@style/Text_Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_favorites_fragment_salary" />
+
+        <TextView
+            android:id="@+id/dateFavorites"
+            style="@style/Text_Label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_favorites_fragment_date" />
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

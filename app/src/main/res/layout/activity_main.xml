@@ -7,13 +7,34 @@
     tools:context=".activities.MainActivity">
 
     <!--    Content Frame-->
+<!--    <androidx.appcompat.widget.Toolbar-->
+<!--        android:id="@+id/toolbar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="?attr/actionBarSize"-->
+<!--        android:background="@color/primary"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:popupTheme="@style/Theme.CovidJobber">-->
+
+<!--        <ImageView-->
+<!--            android:layout_width="68dp"-->
+<!--            android:layout_height="49dp"-->
+<!--            android:contentDescription="@string/img_logo"-->
+<!--            android:src="@drawable/logo_improved">-->
+
+<!--        </ImageView>-->
+<!--    </androidx.appcompat.widget.Toolbar>-->
+
     <FrameLayout
         android:id="@+id/content_frame"
-        android:layout_width="match_parent"
-        android:layout_height="654dp"
+        android:layout_width="409dp"
+        android:layout_height="604dp"
         app:layout_constraintBottom_toTopOf="@+id/navbar_frame"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent">
 
     </FrameLayout>
 
@@ -24,6 +45,8 @@
         android:layout_height="75dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"></FrameLayout>
+        app:layout_constraintStart_toStartOf="parent">
+
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

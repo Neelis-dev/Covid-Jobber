@@ -1,6 +1,5 @@
 package com.example.covid_jobber.fragments;
 
-
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,14 +9,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-
+import android.widget.Toast;
 
 import com.example.covid_jobber.R;
+import com.example.covid_jobber.activities.MainActivity;
+import com.example.covid_jobber.classes.services.ApiCall;
+import com.example.covid_jobber.classes.services.Filter;
+import com.example.covid_jobber.classes.services.FilterType;
+import com.example.covid_jobber.databinding.FragmentNavbarBinding;
 
-import com.example.covid_jobber.databinding.FragmentSwipeBinding;
+import com.google.android.gms.common.api.Api;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,60 +34,42 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class SwipeFragment extends Fragment {
-    private FragmentSwipeBinding binding;
 
     private boolean wannasave = false;
-    private List<String> saved = new ArrayList<>();
-    private List<String> al = new ArrayList<>();
-    private SwipeFlingAdapterView flingContainer;
+    private ArrayList<String> saved;
+    private ArrayList<String> al;
 
     public SwipeFragment() {
         // Required empty public constructor
-        List<String> list = new ArrayList<>();
-        list.add("START SWIPING!");
-        addToList(list);
     }
 
     public static SwipeFragment newInstance() {
         return new SwipeFragment();
     }
 
-//    In fragments use OnCreateView() instead of OnCreate() for binding
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        binding = FragmentSwipeBinding.inflate(inflater, container, false);
-
-        initialize();
-        return binding.getRoot();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
-
-    public void initialize(){
-
-
         ArrayAdapter<String> arrayAdapter;
+        View v = inflater.inflate(R.layout.fragment_swipe, container, false);
 
+        al = new ArrayList<>();
+        al.add("Bäcker");
+        al.add("Zahnarzt helfer/in");
+        al.add("Brückenbauer");
+        al.add("Straßenplaner");
 
-        arrayAdapter = new ArrayAdapter<String>(getActivity(), R.layout.item, R.id.helloText, al );
+        arrayAdapter = new ArrayAdapter<>(getActivity(), R.layout.item, R.id.helloText, al );
 
-        binding.cardFrame.setAdapter(arrayAdapter);
+        SwipeFlingAdapterView flingContainer = v.findViewById(R.id.frame);
 
-
-        binding.cardFrame.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
+        flingContainer.setAdapter(arrayAdapter);
+        flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
             public void removeFirstObjectInAdapter() {
                 // this is the simplest way to delete an object from the Adapter (/AdapterView)
                 Log.d("LIST", "removed object!");
-
                 String job = al.remove(0);
-
                 arrayAdapter.notifyDataSetChanged();
             }
 
@@ -95,8 +83,26 @@ public class SwipeFragment extends Fragment {
 
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
-                // Ask for more data here
-//                al.add("Momentan nicht mehr Jobs verfügbar");
+
+                if(itemsInAdapter!=3){
+                   return;
+                }
+
+                Log.d("TAG", "CARDS ABOUT TO RUN OUT");
+
+                MainActivity mainActivity = (MainActivity) getActivity();
+                mainActivity.getHandler().makeApiCall(new ApiCall(mainActivity.getFilterFragment().getFilter()) {
+                    @Override
+                    public void callback(JSONArray results) {
+                        try {
+                            mainActivity.resultsToJobs(results);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+
                 arrayAdapter.notifyDataSetChanged();
                 Log.d("LIST", "notified");
             }
@@ -104,7 +110,7 @@ public class SwipeFragment extends Fragment {
             //Durch die Farbänderung stürzt die App bisher manchmal ab
             @Override
             public void onScroll(float scrollProgressPercent) {
-                View view = binding.cardFrame.getSelectedView();
+                View view = flingContainer.getSelectedView();
                 if(view == null){
                     return;
                 }
@@ -115,18 +121,21 @@ public class SwipeFragment extends Fragment {
 
 
         // Optionally add an OnItemClickListener
-        binding.cardFrame.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
+        flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
             @Override
             public void onItemClicked(int itemPosition, Object dataObject) {
             }
         });
 
-
-
-
+        return v;
     }
 
-    public void addToList(List<String> titles){
-        al.addAll(titles);
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
+    public void addToList(List<String> jobtitles) {
+        al.addAll(jobtitles);
     }
 }

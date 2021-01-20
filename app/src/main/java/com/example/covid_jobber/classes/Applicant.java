@@ -17,7 +17,7 @@ public class Applicant {
 
 
     public Applicant() {
-        this("Peter" + new Random().nextInt(), 1337.69, ContractTime.UNKNOWN, new Address());
+        this("", 0, ContractTime.EITHER, new Address());
     }
 
     public Applicant(String name, double expSalary, ContractTime expContractTime, Address location) {
