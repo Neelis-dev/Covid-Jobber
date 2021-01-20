@@ -47,6 +47,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
     // Variables
 //    chosen options
+    private double expSalary = 1000;
     private ContractTime contractTime;
     private String category;
 
@@ -54,6 +55,8 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
     private final List<ContractTime> contractTimes = new ArrayList<>(Arrays.asList(ContractTime.EITHER, ContractTime.FULL_TIME, ContractTime.PART_TIME));
     private final Map<String, String> categoryMap = new HashMap<>();
     private List<View> editOptions;
+
+    private boolean editing = false;
 
 //    debug variables
     private boolean filtersActive = false;
@@ -81,6 +84,10 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 //        Save Button
         binding.btnFilterSave.setOnClickListener(this);
         binding.btnFilterSave.setVisibility(View.INVISIBLE);
+
+//        Salary Input
+//        TODO: When you change the fragment before saving, it does somehow not set the right text when entering again
+        binding.inputFilterSalary.setText(String.valueOf(expSalary));
 
 //        Category Spinner
         binding.spinnerFilterCategory.setOnItemSelectedListener(this);
@@ -112,8 +119,13 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
+        if(editing){
+            endEditing();
+            editing = false;
+        }
+
         binding = null;
+        super.onDestroyView();
     }
 
 //    Currently only used for toggle button
@@ -133,9 +145,11 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
 //    enables edit mode -> activated by edit button
     private void startEditing(){
+        editing = true;
         binding.btnFilterSave.setVisibility(View.VISIBLE);
         binding.btnFilterEdit.setEnabled(false);
 
+//        Enable all edit options
         for (View option:editOptions) {
             option.setEnabled(true);
         }
@@ -143,12 +157,24 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
 //    disables edit mode -> activated by save button
     private void endEditing(){
+        editing = false;
         binding.btnFilterSave.setVisibility(View.INVISIBLE);
         binding.btnFilterEdit.setEnabled(true);
 
+//        Disble all edit options
         for (View option:editOptions) {
             option.setEnabled(false);
         }
+
+//        Save salary input value
+        try{
+            expSalary = Double.parseDouble(binding.inputFilterSalary.getText().toString());
+        }
+        catch (NumberFormatException e){
+            System.out.println("Not a number was entered");
+        }
+        binding.inputFilterSalary.setText(String.valueOf(expSalary));
+
     }
 
 //    currently only used for category spinner
