@@ -6,26 +6,33 @@
     android:layout_height="match_parent"
     tools:context=".activities.MainActivity">
 
-    <!--    Content Frame-->
-<!--    <androidx.appcompat.widget.Toolbar-->
-<!--        android:id="@+id/toolbar"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="?attr/actionBarSize"-->
-<!--        android:background="@color/primary"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.0"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:popupTheme="@style/Theme.CovidJobber">-->
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:theme="@style/ThemeOverlay.MaterialComponents.Dark">
 
-<!--        <ImageView-->
-<!--            android:layout_width="68dp"-->
-<!--            android:layout_height="49dp"-->
-<!--            android:contentDescription="@string/img_logo"-->
-<!--            android:src="@drawable/logo_improved">-->
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:popupTheme="@style/ThemeOverlay.MaterialComponents.Dark"
+            app:title="@string/app_name"
+            tools:ignore="ExtraText">
 
-<!--        </ImageView>-->
-<!--    </androidx.appcompat.widget.Toolbar>-->
+<!--            <ImageView-->
+<!--                android:layout_width="68dp"-->
+<!--                android:layout_height="49dp"-->
+<!--                android:contentDescription="@string/img_logo"-->
+<!--                android:src="@drawable/logo_improved">-->
+<!--            </ImageView>/>-->
+        </androidx.appcompat.widget.Toolbar>
+
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <FrameLayout
         android:id="@+id/content_frame"

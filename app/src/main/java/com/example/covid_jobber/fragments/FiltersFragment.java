@@ -93,7 +93,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         binding.spinnerFilterCategory.setOnItemSelectedListener(this);
 
         List<String> keyList = new ArrayList<>(categoryMap.keySet());
-        binding.spinnerFilterCategory.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), android.R.layout.simple_dropdown_item_1line, keyList));
+        binding.spinnerFilterCategory.setAdapter(new ArrayAdapter<>(this.getContext(), android.R.layout.simple_dropdown_item_1line, keyList));
 
         if (category != null) {
             binding.spinnerFilterCategory.setSelection(keyList.indexOf(category));
@@ -102,7 +102,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 //        Contract Time Spinner
         binding.spinnerFilterContractTime.setOnItemSelectedListener(this);
 
-        binding.spinnerFilterContractTime.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), android.R.layout.simple_dropdown_item_1line, contractTimes));
+        binding.spinnerFilterContractTime.setAdapter(new ArrayAdapter<>(this.getContext(), android.R.layout.simple_dropdown_item_1line, contractTimes));
 
         if (contractTime != null) {
             binding.spinnerFilterContractTime.setSelection(contractTimes.indexOf(contractTime));

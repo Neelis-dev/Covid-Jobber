@@ -1,5 +1,7 @@
 package com.example.covid_jobber.fragments;
 
+import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatDelegate;
@@ -10,10 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.CompoundButton;
-import android.widget.ToggleButton;
+import android.widget.Spinner;
+import android.widget.TextView;
 
-import com.example.covid_jobber.classes.Applicant;
+import com.example.covid_jobber.R;
 import com.example.covid_jobber.databinding.FragmentSettingsBinding;
 import com.example.covid_jobber.enums.DarkMode;
 
@@ -37,7 +39,7 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
     private DarkMode darkMode;
 
 //    available options
-    private List<DarkMode> darkModeOptions = new ArrayList<>(Arrays.asList(DarkMode.SYSTEM, DarkMode.OFF, DarkMode.ON));
+    private final List<DarkMode> darkModeOptions = new ArrayList<>(Arrays.asList(DarkMode.SYSTEM, DarkMode.OFF, DarkMode.ON));
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -53,16 +55,31 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
         binding = FragmentSettingsBinding.inflate(inflater, container, false);
 
 //        Dark Mode
-        binding.spinnerSettingsDarkmode.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), android.R.layout.simple_dropdown_item_1line, darkModeOptions));
+        binding.spinnerSettingsDarkmode.setAdapter(new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_dropdown_item, darkModeOptions));
 
         int initialSelectedPosition = binding.spinnerSettingsDarkmode.getSelectedItemPosition();
         binding.spinnerSettingsDarkmode.setSelection(initialSelectedPosition, true);
+        detectDarkMode();
         if (darkMode != null) {
             binding.spinnerSettingsDarkmode.setSelection(darkModeOptions.indexOf(darkMode));
         }
         binding.spinnerSettingsDarkmode.setOnItemSelectedListener(this);
 
         return binding.getRoot();
+    }
+
+
+//    Checks Default App Dark Mode Settings and sets nightMode enum that way
+    private void detectDarkMode(){
+        int selectedMode = AppCompatDelegate.getDefaultNightMode();
+        switch (selectedMode){
+            case AppCompatDelegate.MODE_NIGHT_YES:
+                darkMode = DarkMode.ON; break;
+            case AppCompatDelegate.MODE_NIGHT_NO:
+                darkMode = DarkMode.OFF; break;
+            case AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM:
+                darkMode = DarkMode.SYSTEM; break;
+        }
     }
 
     @Override
