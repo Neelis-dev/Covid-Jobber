@@ -29,8 +29,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="UseSwitchCompatOrMaterialXml" />
 
-    <!--     Name Field-->
-
     <!--     Salary Field-->
     <TextView
         android:id="@+id/txt_filter_salary"
@@ -50,7 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="60dp"
         android:ems="10"
-        android:inputType="textPersonName"
+        android:inputType="numberDecimal"
         android:text="0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/txt_filter_salary" />
