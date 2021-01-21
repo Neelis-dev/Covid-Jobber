@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="75dp"
-    android:background="@color/primary"
-    tools:context=".fragments.NavbarFragment">
+    tools:context=".fragments.NavbarFragment"
+    style="@style/NavBar">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
