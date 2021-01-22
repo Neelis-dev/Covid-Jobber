@@ -104,11 +104,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //  make Jobs into cards
-        List<String> jobtitles = new ArrayList<>();
-        for (Job j:jobs) {
-            jobtitles.add(j.getTitle());
-        }
-        swipeFragment.addToList(jobtitles);
+//        List<String> jobtitles = new ArrayList<>();
+//        for (Job j:jobs) {
+//            jobtitles.add(j.getTitle());
+//        }
+        swipeFragment.addJob(jobs);
     }
     public FiltersFragment getFilterFragment(){
         return filtersFragment;
@@ -121,6 +121,10 @@ public class MainActivity extends AppCompatActivity {
 //    public FilterOptions getFilterOptions(){
 //        return filterOptions;
 //    }
+
+    public void addFavoriteJob(Job job){
+        favoritesFragment.addFavorite(job);
+    }
 
 
 }

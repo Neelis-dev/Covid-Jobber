@@ -13,8 +13,8 @@
 
         <ImageButton
             android:id="@+id/btn_navbar_search"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:adjustViewBounds="true"
             android:background="@drawable/round_button"
             android:contentDescription="@string/img_navbar_fragment_search"
@@ -29,8 +29,8 @@
 
         <ImageButton
             android:id="@+id/btn_navbar_favorites"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:adjustViewBounds="true"
             android:background="@drawable/round_button"
             android:contentDescription="@string/img_navbar_fragment_favorites"
@@ -45,8 +45,8 @@
 
         <ImageButton
             android:id="@+id/btn_navbar_filters"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:adjustViewBounds="true"
             android:background="@drawable/round_button"
             android:contentDescription="@string/img_navbar_fragment_filters"
@@ -64,8 +64,8 @@
 
         <ImageButton
             android:id="@+id/btn_navbar_settings"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:adjustViewBounds="true"
             android:background="@drawable/round_button"
             android:contentDescription="@string/img_navbar_fragment_settings"
