@@ -9,10 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.covid_jobber.R;
+import com.example.covid_jobber.classes.Job;
 import com.example.covid_jobber.databinding.FragmentFavoritesBinding;
 import com.example.covid_jobber.databinding.FragmentFiltersBinding;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,6 +24,9 @@ import org.jetbrains.annotations.NotNull;
  * create an instance of this fragment.
  */
 public class FavoritesFragment extends Fragment {
+
+//    variables
+    private final List<Job> favoriteJobs = new ArrayList<>();
 
     private FragmentFavoritesBinding binding;
 
@@ -42,5 +49,10 @@ public class FavoritesFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    public void addFavorite(Job job){
+        favoriteJobs.add(job);
+        System.out.println(favoriteJobs);
     }
 }
