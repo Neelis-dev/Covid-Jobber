@@ -2,11 +2,15 @@ package com.example.covid_jobber.fragments;
 
 import android.os.Bundle;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.covid_jobber.R;
 import com.example.covid_jobber.classes.Job;
@@ -42,6 +46,16 @@ public class FavoritesFragment extends Fragment {
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentFavoritesBinding.inflate(inflater, container, false);
+
+        for (int i = 0; i < favoriteJobs.size(); i++) {
+            Job j = favoriteJobs.get(i);
+//            create job layout from job_favorites.xml
+            LinearLayout jobLayout = (LinearLayout) View.inflate(this.getContext(), R.layout.job_favorite, null);
+//            set title of Job
+            ((TextView)((ConstraintLayout) jobLayout.getChildAt(0)).getChildAt(0)).setText(j.getTitle());
+            binding.layoutFavoritesJobs.addView(jobLayout, 0);
+        }
+
         return binding.getRoot();
     }
 
@@ -53,6 +67,5 @@ public class FavoritesFragment extends Fragment {
 
     public void addFavorite(Job job){
         favoriteJobs.add(job);
-        System.out.println(favoriteJobs);
     }
 }

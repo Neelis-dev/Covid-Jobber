@@ -46,14 +46,11 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
         <LinearLayout
+            android:id="@+id/layout_favorites_jobs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <FrameLayout
-                android:id="@+id/content_frame"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"></FrameLayout>
         </LinearLayout>
 
     </ScrollView>
