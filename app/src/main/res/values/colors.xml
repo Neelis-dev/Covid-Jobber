@@ -15,7 +15,7 @@
     <color name="dark_grey">#666666</color>
     <color name="light_background">#ffeee9e2</color>
     <color name="dark_background">#121212</color>
-    <color name="action_bar">#212121</color>
+    <color name="action_bar">#272727</color>
     <color name="negative">#ae3931</color>
     <color name="positive">#55C45A</color>
 </resources>
