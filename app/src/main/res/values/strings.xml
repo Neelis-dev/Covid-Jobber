@@ -27,6 +27,7 @@
     <string name="img_item_showMore">show more</string>
 
     <!--  Favorites Fragment  -->
+    <string name="txt_favorites_heading">Favoriten</string>
 <!--    <string name="txt_favorites_fragment_title">Good Job</string>-->
 <!--    <string name="txt_favorites_fragment_date"> • 13.02.2021 - 14.05.2021</string>-->
 <!--    <string name="txt_favorites_fragment_salary"> • 20.000€</string>-->
