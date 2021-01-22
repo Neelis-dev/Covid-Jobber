@@ -16,12 +16,12 @@
     <style name="Swipe_Background">
         <item name="android:background">@color/dark_background</item>
     </style>
-    <style name="Text_Heading">
+    <style name="h1">
         <item name="android:textSize">32sp</item>
         <!--        <item name="android:textStyle">bold</item>-->
         <item name="android:textColor">@color/white</item>
     </style>
-    <style name="Text_Label">
+    <style name="h3">
         <item name="android:textSize">20sp</item>
         <!--        <item name="android:textStyle">bold</item>-->
         <item name="android:textColor">@color/white</item>

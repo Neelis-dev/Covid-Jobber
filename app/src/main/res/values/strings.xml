@@ -37,12 +37,15 @@
     <!--  Filters Fragment  -->
     <string name="txt_filters_fragment_heading">Filter Optionen</string>
     <string name="txt_filters_fragment_salary">Wunschgehalt:</string>
+    <string name="txt_filters_fragment_salaryinput">0:</string>
     <string name="txt_filters_fragment_contract_time">Arbeitszeit:</string>
     <string name="txt_filters_fragment_category">Kategorie:</string>
     <string name="txt_filters_fragment_qualifications">Qualifikationen:</string>
     <string name="txt_filters_fragment_skills">Fähigkeiten:</string>
+    <string name="txt_filters_fragment_surrounding">Umkreis:</string>
     <string name="btn_filters_fragment_toggle">Filter</string>
     <string name="btn_filters_fragment_save">Speichern</string>
+    <string name="btn_filters_fragment_edit">Bearbeiten</string>
 
     <!--  Settings Fragment  -->
     <string name="txt_settings_fragment_title">Einstellungen</string>

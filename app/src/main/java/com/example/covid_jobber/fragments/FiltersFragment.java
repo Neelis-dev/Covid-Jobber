@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import com.example.covid_jobber.R;
+import com.example.covid_jobber.classes.Applicant;
 import com.example.covid_jobber.classes.services.ApiCall;
 import com.example.covid_jobber.classes.services.ApiHandler;
 import com.example.covid_jobber.classes.services.Filter;
@@ -50,6 +51,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
     private double expSalary = 1000;
     private ContractTime contractTime;
     private String category;
+    private int surrounding;
 
 //    available options
     private final List<ContractTime> contractTimes = new ArrayList<>(Arrays.asList(ContractTime.EITHER, ContractTime.FULL_TIME, ContractTime.PART_TIME));
@@ -106,6 +108,15 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
         if (contractTime != null) {
             binding.spinnerFilterContractTime.setSelection(contractTimes.indexOf(contractTime));
+        }
+
+//        Surrounding Spinner
+        binding.spinnerFilterSurrounding.setOnItemSelectedListener(this);
+
+        binding.spinnerFilterSurrounding.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), android.R.layout.simple_dropdown_item_1line, contractTimes));
+
+        if (contractTime != null) {
+            binding.spinnerFilterContractTime.setSelection(10);
         }
 
 //        All options set to disabled if not in edit mode
@@ -222,6 +233,21 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         Filter filter = new Filter();
         filter.addFilter(FilterType.CATEGORY,category);
         return filter;
+    }
+
+//      Berechnung zur Bestimmung ob ein Ort aus der API innerhalb des ausgewählten Umkreises des Users liegt
+//      lat1 und lon 1 sind die Koordinaten des Jobs, lat2 und lon2 sind die Koordinaten des Users
+    public boolean checkDistance(int surrounding, double lat1, double lon1){
+        double dx, dy, lat, distance;
+//      double lat2 = Applicant.getLocation.latitude;
+//      double lon2 = Applicant.getLocation.longitude; bleibt Applicant?
+
+//      lat = (lat1 + lat2) / 2 * 0.01745;
+//      dx = 111.3 * cos(lat) * (lon1 - lon2);
+//      dy = 111.3 * (lat1 - lat2);
+//      distance = sqrt(dx * dx + dy * dy);
+
+        return distance <= surrounding;
     }
 
 }
