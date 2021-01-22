@@ -29,15 +29,15 @@
             app:layout_constraintBottom_toBottomOf="@+id/txt_favorites_heading"
             app:layout_constraintEnd_toEndOf="parent" />
 
-        <SearchView
-            android:id="@+id/search_favorites"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            app:layout_constraintBottom_toBottomOf="@+id/txt_favorites_heading"
-            app:layout_constraintStart_toStartOf="parent">
+<!--        <SearchView-->
+<!--            android:id="@+id/search_favorites"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="10dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/txt_favorites_heading"-->
+<!--            app:layout_constraintStart_toStartOf="parent">-->
 
-        </SearchView>
+<!--        </SearchView>-->
 
         <ScrollView
             android:id="@+id/scrollView2"
