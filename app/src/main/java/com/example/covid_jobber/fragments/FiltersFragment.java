@@ -86,7 +86,6 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         binding.btnFilterSave.setVisibility(View.INVISIBLE);
 
 //        Salary Input
-//        TODO: When you change the fragment before saving, it does somehow not set the right text when entering again
         binding.inputFilterSalary.setText(String.valueOf(expSalary));
 
 //        Category Spinner
@@ -118,13 +117,16 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
     }
 
     @Override
-    public void onDestroyView() {
+    public void onStart() {
         if(editing){
             endEditing();
-            editing = false;
         }
+        super.onStart();
+    }
 
-        binding = null;
+    @Override
+    public void onDestroyView() {
+//        binding = null;
         super.onDestroyView();
     }
 
