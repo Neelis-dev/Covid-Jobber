@@ -12,14 +12,18 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="android:textColor">@color/black</item>
     </style>
+
+<!--    Different Styles -->
     <style name="Swipe_Background">
         <item name="android:background">@color/light_background</item>
     </style>
+
+<!--    Text Styles-->
     <style name="h1">
-        <item name="android:textSize">32sp</item>
-<!--        <item name="android:textStyle">bold</item>-->
-        <item name="android:textColor">@color/black</item>
+    <style name="NavBar">
+        <item name="android:background">@color/primary</item>
     </style>
     <style name="h2">
         <item name="android:textSize">24sp</item>

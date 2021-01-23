@@ -96,14 +96,13 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         binding.btnFilterSave.setVisibility(View.INVISIBLE);
 
 //        Salary Input
-//        TODO: When you change the fragment before saving, it does somehow not set the right text when entering again
         binding.inputFilterSalary.setText(String.valueOf(expSalary));
 
 //        Category Spinner
         binding.spinnerFilterCategory.setOnItemSelectedListener(this);
 
         List<String> keyList = new ArrayList<>(categoryMap.keySet());
-        binding.spinnerFilterCategory.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), android.R.layout.simple_dropdown_item_1line, keyList));
+        binding.spinnerFilterCategory.setAdapter(new ArrayAdapter<>(this.getContext(), android.R.layout.simple_dropdown_item_1line, keyList));
 
         if (category != null) {
             binding.spinnerFilterCategory.setSelection(keyList.indexOf(category));
@@ -112,7 +111,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 //        Contract Time Spinner
         binding.spinnerFilterContractTime.setOnItemSelectedListener(this);
 
-        binding.spinnerFilterContractTime.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), android.R.layout.simple_dropdown_item_1line, contractTimes));
+        binding.spinnerFilterContractTime.setAdapter(new ArrayAdapter<>(this.getContext(), android.R.layout.simple_dropdown_item_1line, contractTimes));
 
         if (contractTime != null) {
             binding.spinnerFilterContractTime.setSelection(contractTimes.indexOf(contractTime));
@@ -137,13 +136,16 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
     }
 
     @Override
-    public void onDestroyView() {
+    public void onStart() {
         if(editing){
             endEditing();
-            editing = false;
         }
+        super.onStart();
+    }
 
-        binding = null;
+    @Override
+    public void onDestroyView() {
+//        binding = null;
         super.onDestroyView();
     }
 

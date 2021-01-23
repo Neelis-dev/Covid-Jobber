@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.covid_jobber.R;
 import com.example.covid_jobber.activities.MainActivity;
+import com.example.covid_jobber.classes.Job;
 import com.example.covid_jobber.classes.services.ApiCall;
 import com.example.covid_jobber.classes.services.Filter;
 import com.example.covid_jobber.classes.services.FilterType;
@@ -26,6 +27,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -35,9 +37,14 @@ import java.util.List;
  */
 public class SwipeFragment extends Fragment {
 
-    private boolean wannasave = false;
-    private ArrayList<String> saved;
-    private ArrayList<String> al;
+    private MainActivity mainActivity;
+
+    private final boolean wannasave = false;
+    private List<String> saved;
+
+    private List<Job> jobs;
+    private List<String> titles; // Renamed al in titles, because currently only titles used for card creation TODO: later on directly from jobs Array?
+    private final List<String> testTitles = new ArrayList<>(Arrays.asList("Bäcker", "Zahnarzt helfer/in", "Brückenbauer", "Straßenplaner"));
 
     public SwipeFragment() {
         // Required empty public constructor
@@ -53,13 +60,13 @@ public class SwipeFragment extends Fragment {
         ArrayAdapter<String> arrayAdapter;
         View v = inflater.inflate(R.layout.fragment_swipe, container, false);
 
-        al = new ArrayList<>();
-        al.add("Bäcker");
-        al.add("Zahnarzt helfer/in");
-        al.add("Brückenbauer");
-        al.add("Straßenplaner");
+        mainActivity = (MainActivity) getActivity();
 
-        arrayAdapter = new ArrayAdapter<>(getActivity(), R.layout.item, R.id.helloText, al );
+        jobs = new ArrayList<>();
+        titles = new ArrayList<>();
+        titles.addAll(testTitles);
+
+        arrayAdapter = new ArrayAdapter<>(getActivity(), R.layout.item, R.id.helloText, titles );
 
         SwipeFlingAdapterView flingContainer = v.findViewById(R.id.frame);
 
@@ -69,7 +76,7 @@ public class SwipeFragment extends Fragment {
             public void removeFirstObjectInAdapter() {
                 // this is the simplest way to delete an object from the Adapter (/AdapterView)
                 Log.d("LIST", "removed object!");
-                String job = al.remove(0);
+                String title = titles.remove(0);
                 arrayAdapter.notifyDataSetChanged();
             }
 
@@ -79,6 +86,12 @@ public class SwipeFragment extends Fragment {
 
             @Override
             public void onRightCardExit(Object dataObject) {
+                String title = (String) dataObject;
+                testTitles.indexOf(title);
+                if(!testTitles.contains(title)){
+                    Job favorite = getJobByTitle(title);
+                    mainActivity.addFavoriteJob(favorite);
+                }
             }
 
             @Override
@@ -90,7 +103,6 @@ public class SwipeFragment extends Fragment {
 
                 Log.d("TAG", "CARDS ABOUT TO RUN OUT");
 
-                MainActivity mainActivity = (MainActivity) getActivity();
                 mainActivity.getHandler().makeApiCall(new ApiCall(mainActivity.getFilterFragment().getFilter()) {
                     @Override
                     public void callback(JSONArray results) {
@@ -135,7 +147,21 @@ public class SwipeFragment extends Fragment {
         super.onDestroyView();
     }
 
-    public void addToList(List<String> jobtitles) {
-        al.addAll(jobtitles);
+    public void addJob(List<Job> newJobs) {
+        jobs.addAll(newJobs);
+        for (Job j:newJobs) {
+            titles.add(j.getTitle());
+        }
     }
+
+    private Job getJobByTitle(String title){
+        Job job = null;
+        for (Job j:jobs) {
+            if(j.getTitle().equals(title)){
+                job = j;
+            }
+        }
+        return job;
+    }
+
 }

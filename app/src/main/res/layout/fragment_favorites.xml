@@ -1,70 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/favourites"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
 
-    <ImageButton
-        android:id="@+id/edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/img_favorites_fragment_edit"
-        android:src="@android:drawable/ic_menu_edit"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <SearchView
-        android:id="@+id/search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/joblist"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="15dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search">
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/data"
-            style="@style/h2"
+            android:id="@+id/txt_favorites_heading"
+            style="@style/Text_Heading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/txt_favorites_fragment_title" />
+            android:layout_marginTop="15dp"
+            android:text="@string/txt_favorites_heading"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/employerFavorites"
-            style="@style/h3"
+        <ImageButton
+            android:id="@+id/btn_favorites_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/txt_favorites_fragment_employer" />
+            android:layout_marginEnd="10dp"
+            android:contentDescription="@string/img_favorites_fragment_edit"
+            android:src="@android:drawable/ic_menu_edit"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_favorites_heading"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-        <TextView
-            android:id="@+id/locationFavorites"
-            style="@style/h3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/txt_favorites_fragment_location" />
+<!--        <SearchView-->
+<!--            android:id="@+id/search_favorites"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="10dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/txt_favorites_heading"-->
+<!--            app:layout_constraintStart_toStartOf="parent">-->
 
-        <TextView
-            android:id="@+id/salaryFavorites"
-            style="@style/h3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/txt_favorites_fragment_salary" />
+<!--        </SearchView>-->
 
-        <TextView
-            android:id="@+id/dateFavorites"
-            style="@style/h3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/txt_favorites_fragment_date" />
-    </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ScrollView
+            android:id="@+id/scrollView2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_favorites_heading"
+            app:layout_constraintWidth_percent="1">
+
+            <LinearLayout
+                android:id="@+id/layout_favorites_jobs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            </LinearLayout>
+
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>

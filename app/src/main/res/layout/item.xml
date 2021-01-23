@@ -66,7 +66,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="@string/txt_item_title" />
+            tools:text="@string/txt_item_title"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/workingPeriod"
@@ -79,7 +80,8 @@
             android:ems="10"
             android:text="@string/txt_item_date"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/helloText" />
+            app:layout_constraintTop_toBottomOf="@+id/helloText"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/employer"
@@ -92,7 +94,8 @@
             android:ems="10"
             android:text="@string/txt_item_employer"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/helloText" />
+            app:layout_constraintTop_toBottomOf="@+id/helloText"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/salary"
@@ -105,7 +108,8 @@
             android:ems="10"
             android:text="@string/txt_item_salary"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/helloText" />
+            app:layout_constraintTop_toBottomOf="@+id/helloText"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/description"
@@ -118,7 +122,8 @@
             android:ems="10"
             android:text="@string/txt_item_decscription"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/helloText" />
+            app:layout_constraintTop_toBottomOf="@+id/helloText"
+            android:textColor="@color/black"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
