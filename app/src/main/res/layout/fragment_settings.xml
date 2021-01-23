@@ -43,23 +43,23 @@
         android:layout_marginTop="15dp"
         android:gravity="center"
         android:text="@string/txt_settings_fragment_exportimport"
-        app:layout_constraintStart_toStartOf="@+id/txt_darkmode"
-        app:layout_constraintTop_toBottomOf="@+id/txt_darkmode" />
+        app:layout_constraintStart_toStartOf="@+id/txt_settings_darkmode"
+        app:layout_constraintTop_toBottomOf="@+id/txt_settings_darkmode" />
 
     <TextView
         android:id="@+id/txt_settings_language"
-        style="@style/Text_Label"
+        style="@style/h3"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
         android:layout_marginTop="15dp"
         android:gravity="center"
         android:text="@string/txt_settings_fragment_language"
-        app:layout_constraintStart_toStartOf="@+id/txt_messages"
-        app:layout_constraintTop_toBottomOf="@+id/txt_messages" />
+        app:layout_constraintStart_toStartOf="@+id/txt_settings_messages"
+        app:layout_constraintTop_toBottomOf="@+id/txt_settings_messages" />
 
     <TextView
         android:id="@+id/txt_settings_darkmode"
-        style="@style/Text_Label"
+        style="@style/h3"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
         android:layout_marginTop="15dp"
