@@ -44,7 +44,6 @@ public class SwipeFragment extends Fragment {
 
     private List<Job> jobs;
     private List<String> titles; // Renamed al in titles, because currently only titles used for card creation TODO: later on directly from jobs Array?
-    private final List<String> testTitles = new ArrayList<>(Arrays.asList("Bäcker", "Zahnarzt helfer/in", "Brückenbauer", "Straßenplaner"));
 
     public SwipeFragment() {
         // Required empty public constructor
@@ -64,9 +63,9 @@ public class SwipeFragment extends Fragment {
 
         jobs = new ArrayList<>();
         titles = new ArrayList<>();
-        titles.addAll(testTitles);
+        titles.add("Start swiping!");
 
-        arrayAdapter = new ArrayAdapter<>(getActivity(), R.layout.item, R.id.helloText, titles );
+        arrayAdapter = new ArrayAdapter<>(getActivity(), R.layout.item, R.id.helloText, titles);
 
         SwipeFlingAdapterView flingContainer = v.findViewById(R.id.frame);
 
@@ -87,11 +86,8 @@ public class SwipeFragment extends Fragment {
             @Override
             public void onRightCardExit(Object dataObject) {
                 String title = (String) dataObject;
-                testTitles.indexOf(title);
-                if(!testTitles.contains(title)){
-                    Job favorite = getJobByTitle(title);
-                    mainActivity.addFavoriteJob(favorite);
-                }
+                Job favorite = getJobByTitle(title);
+                mainActivity.addFavoriteJob(favorite);
             }
 
             @Override
