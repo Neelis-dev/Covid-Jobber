@@ -29,9 +29,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="UseSwitchCompatOrMaterialXml" />
 
-    <!--     Name Field-->
+    <ToggleButton
+        android:id="@+id/btn_filter_permission"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:textOff="@string/btn_filters_fragment_permission_off"
+        android:textOn="@string/btn_filters_fragment_permission_on"
+        app:layout_constraintEnd_toEndOf="@+id/spinner_filter_surrounding"
+        app:layout_constraintTop_toTopOf="@+id/txt_filter_location" />
 
-    <!--     Salary Field-->
     <TextView
         android:id="@+id/txt_filter_salary"
         style="@style/h3"
@@ -103,6 +109,17 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_filter_skills" />
 
     <TextView
+        android:id="@+id/txt_filter_location"
+        style="@style/h3"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:text="@string/txt_filters_fragment_location"
+        app:layout_constraintStart_toStartOf="@+id/txt_filter_surrounding"
+        app:layout_constraintTop_toBottomOf="@+id/txt_filter_surrounding" />
+
+    <TextView
         android:id="@+id/txt_filter_category"
         style="@style/h3"
         android:layout_width="wrap_content"
@@ -153,7 +170,7 @@
         android:text="@string/btn_filters_fragment_save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_filter_surrounding" />
+        app:layout_constraintTop_toBottomOf="@+id/txt_filter_location" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

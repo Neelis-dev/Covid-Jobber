@@ -1,7 +1,10 @@
 package com.example.covid_jobber.fragments;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.renderscript.ScriptGroup;
@@ -62,6 +65,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
 //    debug variables
     private boolean filtersActive = false;
+    private boolean permissionActive = false;
 
     public FiltersFragment() {
         // Required empty public constructor
@@ -79,6 +83,10 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 //        Filter toggle
         binding.switchFilterToggle.setOnClickListener(this);
         binding.switchFilterToggle.setChecked(filtersActive);
+
+//        Permission toggle
+        binding.btnFilterPermission.setOnClickListener(this);
+        binding.btnFilterPermission.setChecked(permissionActive);
 
 //        Edit Button
         binding.btnFilterEdit.setOnClickListener(this);
@@ -116,11 +124,11 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         binding.spinnerFilterSurrounding.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), android.R.layout.simple_dropdown_item_1line, contractTimes));
 
         if (contractTime != null) {
-            binding.spinnerFilterContractTime.setSelection(10);
+            binding.spinnerFilterContractTime.setSelection(contractTimes.indexOf(contractTime));
         }
 
 //        All options set to disabled if not in edit mode
-        editOptions = new ArrayList<>(Arrays.asList(binding.inputFilterSalary, binding.spinnerFilterCategory, binding.spinnerFilterContractTime));
+        editOptions = new ArrayList<>(Arrays.asList(binding.inputFilterSalary, binding.spinnerFilterCategory, binding.spinnerFilterContractTime, binding.spinnerFilterSurrounding, binding.btnFilterPermission));
         for (View option:editOptions) {
             option.setEnabled(false);
         }
@@ -152,9 +160,22 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         else if (v == binding.btnFilterSave){
             endEditing();
         }
+        else if (v == binding.btnFilterPermission){
+            permissionActive = binding.btnFilterPermission.isChecked();
+            System.out.println("permission: "+permissionActive);
+ /*           if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+                updateLocation();
+            }
+            else {
+                requestPermissions(new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 0);
+*/            }
+        }
+
+
+    private void updateLocation() {
     }
 
-//    enables edit mode -> activated by edit button
+    //    enables edit mode -> activated by edit button
     private void startEditing(){
         editing = true;
         binding.btnFilterSave.setVisibility(View.VISIBLE);
@@ -235,10 +256,11 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         return filter;
     }
 
+
 //      Berechnung zur Bestimmung ob ein Ort aus der API innerhalb des ausgewählten Umkreises des Users liegt
 //      lat1 und lon 1 sind die Koordinaten des Jobs, lat2 und lon2 sind die Koordinaten des Users
     public boolean checkDistance(int surrounding, double lat1, double lon1){
-        double dx, dy, lat, distance;
+        double dx, dy, lat, distance=0;
 //      double lat2 = Applicant.getLocation.latitude;
 //      double lon2 = Applicant.getLocation.longitude; bleibt Applicant?
 
