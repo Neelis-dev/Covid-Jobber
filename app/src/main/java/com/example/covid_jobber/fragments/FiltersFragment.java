@@ -1,9 +1,14 @@
 package com.example.covid_jobber.fragments;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -15,6 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import com.example.covid_jobber.R;
+import com.example.covid_jobber.activities.MainActivity;
 import com.example.covid_jobber.classes.Applicant;
 import com.example.covid_jobber.classes.services.ApiCall;
 import com.example.covid_jobber.classes.services.ApiHandler;
@@ -24,6 +30,8 @@ import com.example.covid_jobber.databinding.FragmentFiltersBinding;
 import com.example.covid_jobber.databinding.FragmentSettingsBinding;
 import com.example.covid_jobber.enums.ContractTime;
 import com.google.android.gms.common.api.Api;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
@@ -55,6 +63,8 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
     private ContractTime contractTime;
     private String category;
     private int surrounding;
+    private double latitude;
+    private double longitude;
 
 //    available options
     private final List<ContractTime> contractTimes = new ArrayList<>(Arrays.asList(ContractTime.EITHER, ContractTime.FULL_TIME, ContractTime.PART_TIME));
@@ -151,28 +161,43 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
     public void onClick(View v) {
         if (v == binding.switchFilterToggle) {
             filtersActive = binding.switchFilterToggle.isChecked();
-            System.out.println("filters: "+filtersActive);
-        }
-        else if (v == binding.btnFilterEdit){
+            System.out.println("filters: " + filtersActive);
+        } else if (v == binding.btnFilterEdit) {
             startEditing();
-        }
-        else if (v == binding.btnFilterSave){
+        } else if (v == binding.btnFilterSave) {
             endEditing();
-        }
-        else if (v == binding.btnFilterPermission){
+        } else if (v == binding.btnFilterPermission) {
             permissionActive = binding.btnFilterPermission.isChecked();
-            System.out.println("permission: "+permissionActive);
- /*           if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+            System.out.println("permission: " + permissionActive);
+            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 updateLocation();
+            } else {
+                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 0);
             }
-            else {
-                requestPermissions(new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, 0);
-*/            }
         }
-
-
-    private void updateLocation() {
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+            updateLocation();
+        }
+        //evtl. ein else um zu erklären, dass nicht auf die Örtlichkeit gefiltert werden kann
+    }
+
+    @SuppressLint("MissingPermission")
+    public void updateLocation() {
+        FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
+        fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this::onLocationReceived);
+    }
+
+    public void onLocationReceived(Location location){
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
+        System.out.println(latitude + " " + longitude);
+    }
+
 
     //    enables edit mode -> activated by edit button
     private void startEditing(){
@@ -258,14 +283,12 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
 //      Berechnung zur Bestimmung ob ein Ort aus der API innerhalb des ausgewählten Umkreises des Users liegt
 //      lat1 und lon 1 sind die Koordinaten des Jobs, lat2 und lon2 sind die Koordinaten des Users
-    public boolean checkDistance(int surrounding, double lat1, double lon1){
+    public boolean checkDistance(int surrounding, double latlocation, double lonlocation){
         double dx, dy, lat, distance=0;
-//      double lat2 = Applicant.getLocation.latitude;
-//      double lon2 = Applicant.getLocation.longitude; bleibt Applicant?
 
-//      lat = (lat1 + lat2) / 2 * 0.01745;
-//      dx = 111.3 * cos(lat) * (lon1 - lon2);
-//      dy = 111.3 * (lat1 - lat2);
+//      lat = (latitude + latlocation) / 2 * 0.01745;
+//      dx = 111.3 * cos(lat) * (longitude - lonlocation);
+//      dy = 111.3 * (latitude - latlocation);
 //      distance = sqrt(dx * dx + dy * dy);
 
         return distance <= surrounding;
