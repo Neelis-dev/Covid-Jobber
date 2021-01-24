@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".fragments.FiltersFragment">
@@ -103,27 +103,27 @@
         app:layout_constraintStart_toStartOf="@+id/txt_filter_qualifications"
         app:layout_constraintTop_toBottomOf="@+id/txt_filter_qualifications" />
 
-    <TextView
-        android:id="@+id/txt_filter_surrounding"
-        style="@style/h3"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_marginTop="15dp"
-        android:gravity="center"
-        android:text="@string/txt_filters_fragment_surrounding"
-        app:layout_constraintStart_toStartOf="@+id/txt_filter_skills"
-        app:layout_constraintTop_toBottomOf="@+id/txt_filter_skills" />
+        <TextView
+            android:id="@+id/txt_filter_surrounding"
+            style="@style/h3"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:text="@string/txt_filters_fragment_surrounding"
+            app:layout_constraintStart_toStartOf="@+id/txt_filter_location"
+            app:layout_constraintTop_toBottomOf="@+id/txt_filter_location" />
 
-    <TextView
-        android:id="@+id/txt_filter_location"
-        style="@style/h3"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_marginTop="15dp"
-        android:gravity="center"
-        android:text="@string/txt_filters_fragment_location"
-        app:layout_constraintStart_toStartOf="@+id/txt_filter_surrounding"
-        app:layout_constraintTop_toBottomOf="@+id/txt_filter_surrounding" />
+        <TextView
+            android:id="@+id/txt_filter_location"
+            style="@style/h3"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:text="@string/txt_filters_fragment_location"
+            app:layout_constraintStart_toStartOf="@+id/txt_filter_skills"
+            app:layout_constraintTop_toBottomOf="@+id/txt_filter_skills" />
 
     <TextView
         android:id="@+id/txt_filter_category"
@@ -168,15 +168,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btn_filter_save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="@string/btn_filters_fragment_save"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_filter_location" />
+        <Button
+            android:id="@+id/btn_filter_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/btn_filters_fragment_save"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_filter_surrounding" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

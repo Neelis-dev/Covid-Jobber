@@ -58,6 +58,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
 //    available options
     private final List<ContractTime> contractTimes = new ArrayList<>(Arrays.asList(ContractTime.EITHER, ContractTime.FULL_TIME, ContractTime.PART_TIME));
+    private final List<Integer> surroundingList = new ArrayList<>(Arrays.asList(5, 10, 25, 75, 150));
     private final Map<String, String> categoryMap = new HashMap<>();
     private List<View> editOptions;
 
@@ -120,14 +121,10 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 //        Surrounding Spinner
         binding.spinnerFilterSurrounding.setOnItemSelectedListener(this);
 
-        binding.spinnerFilterSurrounding.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), android.R.layout.simple_dropdown_item_1line, contractTimes));
-
-        if (contractTime != null) {
-            binding.spinnerFilterContractTime.setSelection(contractTimes.indexOf(contractTime));
-        }
+        binding.spinnerFilterSurrounding.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), android.R.layout.simple_dropdown_item_1line, surroundingList));
 
 //        All options set to disabled if not in edit mode
-        editOptions = new ArrayList<>(Arrays.asList(binding.inputFilterSalary, binding.spinnerFilterCategory, binding.spinnerFilterContractTime, binding.spinnerFilterSurrounding, binding.btnFilterPermission));
+        editOptions = new ArrayList<>(Arrays.asList(binding.inputFilterSalary, binding.spinnerFilterCategory, binding.spinnerFilterContractTime, binding.btnFilterPermission,  binding.spinnerFilterSurrounding));
         for (View option:editOptions) {
             option.setEnabled(false);
         }
