@@ -26,17 +26,11 @@
     <!--    Text Styles-->
     <style name="h1">
         <item name="android:textSize">32sp</item>
-        <!--        <item name="android:textStyle">bold</item>-->
-        <item name="android:textColor">@color/black</item>
     </style>
     <style name="h2">
         <item name="android:textSize">24sp</item>
-        <!--        <item name="android:textStyle">bold</item>-->
-        <item name="android:textColor">@color/black</item>
     </style>
     <style name="h3">
         <item name="android:textSize">20sp</item>
-        <!--        <item name="android:textStyle">bold</item>-->
-        <item name="android:textColor">@color/black</item>
     </style>
 </resources>
