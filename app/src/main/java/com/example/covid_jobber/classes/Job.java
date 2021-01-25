@@ -62,10 +62,10 @@ public class Job {
                 case "part_time":
                     contractTime = ContractTime.PART_TIME;
                     break;
-                default:
-                    contractTime = ContractTime.EITHER;
-                    break;
             }
+        }
+        else {
+            contractTime = ContractTime.EITHER;
         }
 
 

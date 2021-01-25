@@ -12,6 +12,7 @@ import com.example.covid_jobber.R;
 import com.example.covid_jobber.classes.Job;
 import com.example.covid_jobber.databinding.FragmentFavoriteJobBinding;
 import com.example.covid_jobber.databinding.FragmentFavoritesBinding;
+import com.example.covid_jobber.enums.ContractTime;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -50,6 +51,11 @@ public class FavoriteJobFragment extends Fragment implements View.OnClickListene
 //        set texts
         binding.txtJobTitle.setText(job.getTitle());
         binding.txtJobCompany.setText(job.getCompany());
+        String contractTimeText = "Unbekannt";
+        if(job.getContractTime() != ContractTime.EITHER){
+            contractTimeText = "Arbeitszeit: "+job.getContractTime().toString();
+        }
+        binding.txtJobContractTime.setText(contractTimeText);
         binding.txtJobDescription.setText(job.getDescription());
 
 //        hide lower part
