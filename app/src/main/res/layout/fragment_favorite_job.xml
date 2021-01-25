@@ -2,28 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/layout_favorites_jobs"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
-
+    tools:context=".fragments.FavoriteJobFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/frameLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_margin="10dp"
-        android:background="@color/white"
-        android:visibility="visible"
-        tools:ignore="ExtraText">
-
-        <!--        <string name="txt_favorites_fragment_heading">Favoriten</string>
-    <string name="txt_favorites_fragment_title">Job-Titel</string>
-    <string name="txt_favorites_fragment_company">Firma</string>
-    <string name="txt_favorites_fragment_description">Beschreibung</string>
-    <string name="txt_favorites_fragment_address">Adresse</string>
-    <string name="txt_favorites_fragment_category">Kategorie</string>-->
+        android:background="@color/white">
 
         <TextView
             android:id="@+id/txt_job_title"
@@ -43,15 +30,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
             android:text="@string/txt_favorites_fragment_company"
             android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/txt_job_title"
             app:layout_constraintTop_toBottomOf="@+id/txt_job_title" />
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:clickable="true"
+            app:fabCustomSize="50dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_job_company"
+            app:srcCompat="@android:drawable/ic_menu_more" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>
-

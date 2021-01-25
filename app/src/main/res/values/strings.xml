@@ -59,4 +59,6 @@
     <string name="txt_settings_fragment_darkmode">Darkmode</string>
     <string name="btn_settings_fragment_messages">Aktiv</string>
     <string name="btn_settings_fragment_darkmode">Aus</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

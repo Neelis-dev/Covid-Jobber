@@ -5,10 +5,12 @@ import android.os.Bundle;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -48,15 +50,23 @@ public class FavoritesFragment extends Fragment {
         binding = FragmentFavoritesBinding.inflate(inflater, container, false);
 
         for (int i = 0; i < favoriteJobs.size(); i++) {
+
             Job j = favoriteJobs.get(i);
-//            create job layout from job_favorites.xml
-            LinearLayout jobLayout = (LinearLayout) View.inflate(this.getContext(), R.layout.job_favorite, null);
 
-//            set title of Job and Company
-            ((TextView) jobLayout.findViewById(R.id.txt_job_title)).setText(j.getTitle());
-            ((TextView) jobLayout.findViewById(R.id.txt_job_company)).setText(j.getCompany());
+//            generate FrameLayout
+            FrameLayout newFrame = new FrameLayout(this.getContext());
+            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+            newFrame.setLayoutParams(params);
+            newFrame.setId(View.generateViewId());
 
-            binding.layoutFavoritesJobs.addView(jobLayout, 0);
+//            add FrameLayout to LayoutFavoriteJobs
+            binding.layoutFavoritesJobs.addView(newFrame, 0);
+
+//            generate FavoriteJobFragment
+            FavoriteJobFragment newJobFragment = new FavoriteJobFragment(j);
+
+//            Place FavoriteJobFragment in the new frame
+            getActivity().getSupportFragmentManager().beginTransaction().replace(newFrame.getId(),newJobFragment).commitAllowingStateLoss();
         }
 
         return binding.getRoot();
