@@ -131,7 +131,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 //        Surrounding Spinner
         binding.spinnerFilterSurrounding.setOnItemSelectedListener(this);
 
-        binding.spinnerFilterSurrounding.setAdapter(new ArrayAdapter<>(getActivity().getApplicationContext(), android.R.layout.simple_dropdown_item_1line, surroundingList));
+        binding.spinnerFilterSurrounding.setAdapter(new ArrayAdapter<>(this.getContext(), android.R.layout.simple_dropdown_item_1line, surroundingList));
 
 //        All options set to disabled if not in edit mode
         editOptions = new ArrayList<>(Arrays.asList(binding.inputFilterSalary, binding.spinnerFilterCategory, binding.spinnerFilterContractTime, binding.btnFilterPermission,  binding.spinnerFilterSurrounding));
