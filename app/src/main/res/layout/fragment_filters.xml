@@ -157,18 +157,18 @@
         app:layout_constraintEnd_toEndOf="@+id/input_filter_salary"
         app:layout_constraintTop_toTopOf="@+id/txt_filter_contract_time" />
 
-    <ImageButton
-        android:id="@+id/btn_filter_edit"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginEnd="10dp"
-        android:background="@drawable/round_button"
-        android:padding="10dp"
-        android:scaleType="fitCenter"
-        android:contentDescription="@string/btn_filters_fragment_edit"
-        android:src="@drawable/edit_icon"
-        app:layout_constraintBottom_toBottomOf="@+id/txt_filter_heading"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <ImageButton
+            android:id="@+id/btn_filter_edit"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/button"
+            android:contentDescription="@string/btn_filters_fragment_edit"
+            android:padding="10dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/edit_icon"
+            app:layout_constraintBottom_toBottomOf="@+id/txt_filter_heading"
+            app:layout_constraintEnd_toEndOf="parent" />
 
 
     <Button

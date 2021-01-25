@@ -51,8 +51,11 @@ public class FavoritesFragment extends Fragment {
             Job j = favoriteJobs.get(i);
 //            create job layout from job_favorites.xml
             LinearLayout jobLayout = (LinearLayout) View.inflate(this.getContext(), R.layout.job_favorite, null);
-//            set title of Job
-            ((TextView)((ConstraintLayout) jobLayout.getChildAt(0)).getChildAt(0)).setText(j.getTitle());
+
+//            set title of Job and Company
+            ((TextView) jobLayout.findViewById(R.id.txt_job_title)).setText(j.getTitle());
+            ((TextView) jobLayout.findViewById(R.id.txt_job_company)).setText(j.getCompany());
+
             binding.layoutFavoritesJobs.addView(jobLayout, 0);
         }
 

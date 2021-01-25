@@ -27,13 +27,13 @@
     <string name="img_item_showMore">show more</string>
 
     <!--  Favorites Fragment  -->
-    <string name="txt_favorites_heading">Favoriten</string>
-<!--    <string name="txt_favorites_fragment_title">Good Job</string>-->
-<!--    <string name="txt_favorites_fragment_date"> • 13.02.2021 - 14.05.2021</string>-->
-<!--    <string name="txt_favorites_fragment_salary"> • 20.000€</string>-->
-<!--    <string name="txt_favorites_fragment_location"> • München</string>-->
-<!--    <string name="txt_favorites_fragment_employer"> • BMW</string>-->
-    <string name="img_favorites_fragment_edit">Edit</string>
+    <string name="txt_favorites_fragment_heading">Favoriten</string>
+    <string name="txt_favorites_fragment_title">Job-Titel</string>
+    <string name="txt_favorites_fragment_company">Firma</string>
+    <string name="txt_favorites_fragment_description">Beschreibung</string>
+    <string name="txt_favorites_fragment_address">Adresse</string>
+    <string name="txt_favorites_fragment_category">Kategorie</string>
+    <string name="img_favorites_fragment_edit">Bearbeiten</string>
 
     <!--  Filters Fragment  -->
     <string name="txt_filters_fragment_heading">Filter Optionen</string>
