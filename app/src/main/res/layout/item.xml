@@ -58,7 +58,7 @@
 
         <TextView
             android:id="@+id/helloText"
-            style="@style/Text_Heading"
+            style="@style/h2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="160dp"
@@ -71,7 +71,7 @@
 
         <TextView
             android:id="@+id/workingPeriod"
-            style="@style/Text_Label"
+            style="@style/h3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
@@ -85,7 +85,7 @@
 
         <TextView
             android:id="@+id/employer"
-            style="@style/Text_Label"
+            style="@style/h3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
@@ -99,7 +99,7 @@
 
         <TextView
             android:id="@+id/salary"
-            style="@style/Text_Label"
+            style="@style/h3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
@@ -113,7 +113,7 @@
 
         <TextView
             android:id="@+id/description"
-            style="@style/Text_Label"
+            style="@style/h3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"

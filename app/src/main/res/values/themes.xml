@@ -15,7 +15,7 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
-<!--    Different Styles -->
+    <!--    Different Styles -->
     <style name="Swipe_Background">
         <item name="android:background">@color/light_background</item>
     </style>
@@ -23,13 +23,20 @@
         <item name="android:background">@color/primary</item>
     </style>
 
-<!--    Text Styles-->
-    <style name="Text_Heading">
+    <!--    Text Styles-->
+    <style name="h1">
         <item name="android:textSize">32sp</item>
-        <item name="android:textColor">?android:textColor</item>
+        <!--        <item name="android:textStyle">bold</item>-->
+        <item name="android:textColor">@color/black</item>
     </style>
-    <style name="Text_Label">
+    <style name="h2">
+        <item name="android:textSize">24sp</item>
+        <!--        <item name="android:textStyle">bold</item>-->
+        <item name="android:textColor">@color/black</item>
+    </style>
+    <style name="h3">
         <item name="android:textSize">20sp</item>
-        <item name="android:textColor">?android:textColor</item>
+        <!--        <item name="android:textStyle">bold</item>-->
+        <item name="android:textColor">@color/black</item>
     </style>
 </resources>
