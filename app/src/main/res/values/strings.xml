@@ -27,23 +27,35 @@
     <string name="img_item_showMore">show more</string>
 
     <!--  Favorites Fragment  -->
-    <string name="txt_favorites_heading">Favoriten</string>
-<!--    <string name="txt_favorites_fragment_title">Good Job</string>-->
-<!--    <string name="txt_favorites_fragment_date"> • 13.02.2021 - 14.05.2021</string>-->
-<!--    <string name="txt_favorites_fragment_salary"> • 20.000€</string>-->
-<!--    <string name="txt_favorites_fragment_location"> • München</string>-->
-<!--    <string name="txt_favorites_fragment_employer"> • BMW</string>-->
-    <string name="img_favorites_fragment_edit">Edit</string>
+    <string name="txt_favorites_fragment_heading">Favoriten</string>
+    <string name="img_favorites_fragment_edit">Bearbeiten</string>
+
+    <!-- Favorite Job Fragment-->
+    <string name="txt_job_fragment_title">Job-Titel</string>
+    <string name="txt_job_fragment_company">Firma</string>
+    <string name="txt_job_fragment_description">Beschreibung: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</string>
+    <string name="txt_job_fragment_address">Adresse</string>
+    <string name="txt_job_fragment_category">Kategorie</string>
+    <string name="txt_job_fragment_contract_time">Arbeitszeit: </string>
+    <string name="txt_job_fragment_link">Zum Angebot</string>
+    <string name="btn_job_fragment_more">mehr</string>
+    <string name="btn_job_fragment_less">weniger</string>
 
     <!--  Filters Fragment  -->
     <string name="txt_filters_fragment_heading">Filter Optionen</string>
     <string name="txt_filters_fragment_salary">Wunschgehalt:</string>
+    <string name="txt_filters_fragment_salaryinput">0:</string>
     <string name="txt_filters_fragment_contract_time">Arbeitszeit:</string>
     <string name="txt_filters_fragment_category">Kategorie:</string>
     <string name="txt_filters_fragment_qualifications">Qualifikationen:</string>
     <string name="txt_filters_fragment_skills">Fähigkeiten:</string>
+    <string name="txt_filters_fragment_surrounding">Umkreis:</string>
+    <string name="txt_filters_fragment_location">Standort:</string>
+    <string name="btn_filters_fragment_permission_on">Aktiviert</string>
+    <string name="btn_filters_fragment_permission_off">Deaktiviert</string>
     <string name="btn_filters_fragment_toggle">Filter</string>
     <string name="btn_filters_fragment_save">Speichern</string>
+    <string name="btn_filters_fragment_edit">Bearbeiten</string>
 
     <!--  Settings Fragment  -->
     <string name="txt_settings_fragment_title">Einstellungen</string>
@@ -53,4 +65,6 @@
     <string name="txt_settings_fragment_darkmode">Darkmode</string>
     <string name="btn_settings_fragment_messages">Aktiv</string>
     <string name="btn_settings_fragment_darkmode">Aus</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

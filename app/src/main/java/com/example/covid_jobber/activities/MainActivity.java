@@ -102,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
         for(int i = 0; i< results.length(); i++){
             jobs.add(new Job((JSONObject) results.get(i)));
         }
+        System.out.println(jobs.size());
 
         //  make Jobs into cards
 //        List<String> jobtitles = new ArrayList<>();
@@ -112,6 +113,9 @@ public class MainActivity extends AppCompatActivity {
     }
     public FiltersFragment getFilterFragment(){
         return filtersFragment;
+    }
+    public FavoritesFragment getFavoritesFragment(){
+        return favoritesFragment;
     }
 
     public ApiHandler getHandler(){
