@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.covid_jobber.R;
+import com.example.covid_jobber.activities.MainActivity;
 import com.example.covid_jobber.classes.Job;
 import com.example.covid_jobber.databinding.FragmentFavoriteJobBinding;
 import com.example.covid_jobber.databinding.FragmentFavoritesBinding;
@@ -27,6 +28,7 @@ public class FavoriteJobFragment extends Fragment implements View.OnClickListene
     private FragmentFavoriteJobBinding binding;
 
     private boolean extended = false;
+    private MainActivity mainActivity;
 
     public FavoriteJobFragment(Job job) {
         // Required empty public constructor
@@ -47,9 +49,14 @@ public class FavoriteJobFragment extends Fragment implements View.OnClickListene
                              Bundle savedInstanceState) {
         binding = FragmentFavoriteJobBinding.inflate(inflater, container, false);
 
+        mainActivity = (MainActivity) getActivity();
+
         binding.btnJobMore.setOnClickListener(this);
         binding.btnJobLess.setOnClickListener(this);
         binding.btnJobWebsite.setOnClickListener(this);
+        binding.btnJobDelete.setOnClickListener(this);
+
+        binding.btnJobDelete.setVisibility(View.GONE);
 
 //        set texts
         binding.txtJobTitle.setText(job.getTitle());
@@ -86,6 +93,17 @@ public class FavoriteJobFragment extends Fragment implements View.OnClickListene
         else if(v == binding.btnJobWebsite){
             openUrl(job.getUrl());
         }
+        else if(v == binding.btnJobDelete){
+            mainActivity.getFavoritesFragment().deleteFavorite(this);
+        }
+    }
+
+    public void setDeletable(boolean deletable){
+        if(deletable){
+            binding.btnJobDelete.setVisibility(View.VISIBLE);
+        } else {
+            binding.btnJobDelete.setVisibility(View.GONE);
+        }
     }
 
     private void extend(){
@@ -104,5 +122,9 @@ public class FavoriteJobFragment extends Fragment implements View.OnClickListene
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
         startActivity(i);
+    }
+
+    public Job getJob(){
+        return job;
     }
 }

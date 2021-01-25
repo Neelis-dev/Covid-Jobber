@@ -114,6 +114,9 @@ public class MainActivity extends AppCompatActivity {
     public FiltersFragment getFilterFragment(){
         return filtersFragment;
     }
+    public FavoritesFragment getFavoritesFragment(){
+        return favoritesFragment;
+    }
 
     public ApiHandler getHandler(){
         return handler;

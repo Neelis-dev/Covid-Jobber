@@ -27,7 +27,7 @@
         android:layout_marginEnd="15dp"
         android:contentDescription="@string/img_favorites_fragment_edit"
         android:scaleType="fitCenter"
-        android:src="@drawable/edit_icon"
+        android:src="@drawable/delete_icon"
         app:fabCustomSize="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

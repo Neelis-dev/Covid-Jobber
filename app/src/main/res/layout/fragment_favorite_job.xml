@@ -12,15 +12,31 @@
         android:layout_margin="10dp"
         android:background="@color/white">
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_job_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:clickable="true"
+            android:src="@drawable/delete_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:focusable="true"
+            android:backgroundTint="@color/primary_dark"
+            app:fabCustomSize="50dp" />
+
         <TextView
             android:id="@+id/txt_job_title"
             style="@style/h2"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
             android:text="@string/txt_job_fragment_title"
             android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -43,13 +59,13 @@
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
             android:clickable="true"
+            android:contentDescription="@string/btn_job_fragment_more"
+            android:focusable="true"
             app:fabCustomSize="50dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_job_company"
-            app:srcCompat="@android:drawable/ic_menu_more"
-            android:contentDescription="@string/btn_job_fragment_more"
-            android:focusable="true" />
+            app:srcCompat="@android:drawable/ic_menu_more" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_jobs_extend"
@@ -80,9 +96,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/txt_job_fragment_contract_time"
+                android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:textColor="@color/black"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btn_job_less"
@@ -104,10 +120,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="@string/txt_job_fragment_description"
+                android:textColor="@color/black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txt_job_contract_time"
-                android:textColor="@color/black"/>
+                app:layout_constraintTop_toBottomOf="@+id/txt_job_contract_time" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
