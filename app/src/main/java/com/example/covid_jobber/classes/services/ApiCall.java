@@ -18,26 +18,23 @@ public abstract class ApiCall {
 
 
     public ApiCall(){
-        this.request = new Request.Builder()
-                .url(foundationURL+new Random().nextInt(30)+"?app_id="+appId+"&app_key="+appKey)
-                .build();
+        this(new Random().nextInt(30));
     }
     public ApiCall(int pageNumber){
         this.request = new Request.Builder()
-                                 .url(foundationURL+pageNumber+"?app_id="+appId+"&app_key="+appKey)
+                                 .url(foundationURL+pageNumber+"?app_id="+appId+"&app_key="+appKey+"&results_per_page=50")
                                  .build();
     }
     public ApiCall(Filter filter){
         request = new Request.Builder()
-                .url(foundationURL+new Random().nextInt(30)+"?app_id="+appId+"&app_key="+appKey)
+                .url(foundationURL+new Random().nextInt(30)+"?app_id="+appId+"&app_key="+appKey+"&results_per_page=50")
                 .build();
 
 
-        for(int i=0;i<filter.getFilterList().size();i++){
-            this.request = new Request.Builder()
-                    .url(request.url().toString()+filter.getFilterList().get(i))
-                    .build();
-        }
+
+        this.request = new Request.Builder()
+                .url(request.url().toString()+filter.getFilterString())
+                .build();
         System.out.println(request.url().toString());
 
 

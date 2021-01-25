@@ -69,6 +69,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 //    available options
     private final List<ContractTime> contractTimes = new ArrayList<>(Arrays.asList(ContractTime.EITHER, ContractTime.FULL_TIME, ContractTime.PART_TIME));
     private final List<Integer> surroundingList = new ArrayList<>(Arrays.asList(5, 10, 25, 75, 150));
+    private final Map<String,String> contractTimeMap = new HashMap<>();
     private final Map<String, String> categoryMap = new HashMap<>();
     private List<View> editOptions;
 
@@ -123,7 +124,9 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         binding.spinnerFilterContractTime.setOnItemSelectedListener(this);
 
         binding.spinnerFilterContractTime.setAdapter(new ArrayAdapter<>(this.getContext(), android.R.layout.simple_dropdown_item_1line, contractTimes));
-
+        contractTimeMap.put("Vollzeit","full_time");
+        contractTimeMap.put("Teilzeit","part_time");
+        contractTimeMap.put("Beliebig","-");
         if (contractTime != null) {
             binding.spinnerFilterContractTime.setSelection(contractTimes.indexOf(contractTime));
         }
@@ -231,6 +234,19 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         }
         binding.inputFilterSalary.setText(String.valueOf(expSalary));
 
+        MainActivity mainActivity = (MainActivity) getActivity();
+        //get new cards based on new filter
+        mainActivity.getHandler().makeApiCall(new ApiCall(mainActivity.getFilterFragment().getFilter()) {
+            @Override
+            public void callback(JSONArray results) {
+                try {
+                    mainActivity.resultsToJobs(results);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
     }
 
 //    currently only used for category spinner
@@ -276,7 +292,9 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         }
 
         Filter filter = new Filter();
-        filter.addFilter(FilterType.CATEGORY,category);
+        filter.addFilter(FilterType.CONTENT,contractTimeMap.get(contractTime.toString()));
+        filter.addFilter(FilterType.CONTENT,category);
+
         return filter;
     }
 
