@@ -13,21 +13,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text="@string/txt_favorites_heading"
+            android:text="@string/txt_favorites_fragment_heading"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageButton
-            android:id="@+id/btn_favorites_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
-            android:contentDescription="@string/img_favorites_fragment_edit"
-            android:src="@android:drawable/ic_menu_edit"
-            app:layout_constraintBottom_toBottomOf="@+id/txt_favorites_heading"
-            app:layout_constraintEnd_toEndOf="parent" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_favorites_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"
+        android:contentDescription="@string/img_favorites_fragment_edit"
+        android:scaleType="fitCenter"
+        android:src="@drawable/delete_icon"
+        app:fabCustomSize="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 <!--        <SearchView-->
 <!--            android:id="@+id/search_favorites"-->
@@ -39,27 +42,38 @@
 
 <!--        </SearchView>-->
 
-        <ScrollView
-            android:id="@+id/scrollView2"
+    <ScrollView
+        android:id="@+id/scrollView2"
+        style="@style/Swipe_Background"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_favorites_heading"
+        app:layout_constraintWidth_percent="1">
+
+        <LinearLayout
+            android:id="@+id/layout_favorites_jobs"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="15dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_favorites_heading"
-            app:layout_constraintWidth_percent="1">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/layout_favorites_jobs"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+        </LinearLayout>
 
-            </LinearLayout>
+    </ScrollView>
 
-        </ScrollView>
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/floatingActionButton"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:clickable="true"-->
+<!--        app:srcCompat="@drawable/edit_icon"-->
+<!--        tools:layout_editor_absoluteX="48dp"-->
+<!--        tools:layout_editor_absoluteY="7dp" />-->
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

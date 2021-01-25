@@ -157,25 +157,29 @@
         app:layout_constraintEnd_toEndOf="@+id/input_filter_salary"
         app:layout_constraintTop_toTopOf="@+id/txt_filter_contract_time" />
 
-        <ImageButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btn_filter_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"
             android:contentDescription="@string/btn_filters_fragment_edit"
-            android:src="@android:drawable/ic_menu_edit"
-            app:layout_constraintBottom_toBottomOf="@+id/txt_filter_heading"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <Button
-            android:id="@+id/btn_filter_save"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="@string/btn_filters_fragment_save"
+            android:scaleType="fitCenter"
+            android:src="@drawable/edit_icon"
+            app:fabCustomSize="50dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_filter_surrounding" />
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    <Button
+        android:id="@+id/btn_filter_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/btn_filters_fragment_save"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_filter_surrounding" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

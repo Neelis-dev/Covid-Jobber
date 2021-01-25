@@ -3,12 +3,15 @@ package com.example.covid_jobber.fragments;
 import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -27,12 +30,16 @@ import java.util.List;
  * Use the {@link FavoritesFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class FavoritesFragment extends Fragment {
+public class FavoritesFragment extends Fragment implements View.OnClickListener {
 
 //    variables
     private final List<Job> favoriteJobs = new ArrayList<>();
+    private final List<FrameLayout> frames = new ArrayList<>();
+    private final List<FavoriteJobFragment> fragments = new ArrayList<>();
 
     private FragmentFavoritesBinding binding;
+
+    private boolean deleting = false;
 
     public FavoritesFragment() {
         // Required empty public constructor
@@ -47,13 +54,15 @@ public class FavoritesFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentFavoritesBinding.inflate(inflater, container, false);
 
+        deleting = false;
+        binding.btnFavoritesEdit.setOnClickListener(this);
+
+        frames.clear();
+        fragments.clear();
+
         for (int i = 0; i < favoriteJobs.size(); i++) {
             Job j = favoriteJobs.get(i);
-//            create job layout from job_favorites.xml
-            LinearLayout jobLayout = (LinearLayout) View.inflate(this.getContext(), R.layout.job_favorite, null);
-//            set title of Job
-            ((TextView)((ConstraintLayout) jobLayout.getChildAt(0)).getChildAt(0)).setText(j.getTitle());
-            binding.layoutFavoritesJobs.addView(jobLayout, 0);
+            addJobToLayout(j);
         }
 
         return binding.getRoot();
@@ -65,7 +74,55 @@ public class FavoritesFragment extends Fragment {
         binding = null;
     }
 
+    @Override
+    public void onClick(View v) {
+        if(v == binding.btnFavoritesEdit){
+            if(!deleting){
+                deleting = true;
+                binding.btnFavoritesEdit.setBackgroundTintList(ContextCompat.getColorStateList(this.getContext(), R.color.primary_dark));
+                for (FavoriteJobFragment fragment : fragments) {
+                    fragment.setDeletable(true);
+                }
+            } else {
+                deleting = false;
+                binding.btnFavoritesEdit.setBackgroundTintList(ContextCompat.getColorStateList(this.getContext(), R.color.primary));
+                for (FavoriteJobFragment fragment : fragments) {
+                    fragment.setDeletable(false);
+                }
+            }
+        }
+    }
+
     public void addFavorite(Job job){
         favoriteJobs.add(job);
     }
+
+    public void deleteFavorite(FavoriteJobFragment fragment){
+        favoriteJobs.remove(fragment.getJob());
+        int index = fragments.indexOf(fragment);
+        FrameLayout frame = frames.get(index);
+        binding.layoutFavoritesJobs.removeView(frame);
+        fragments.remove(fragment);
+        frames.remove(frame);
+    }
+
+    private void addJobToLayout(Job j){
+//            generate FrameLayout
+        FrameLayout newFrame = new FrameLayout(this.getContext());
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+        newFrame.setLayoutParams(params);
+        newFrame.setId(View.generateViewId());
+        frames.add(newFrame);
+
+//            add FrameLayout to LayoutFavoriteJobs
+        binding.layoutFavoritesJobs.addView(newFrame, 0);
+
+//            generate FavoriteJobFragment
+        FavoriteJobFragment newJobFragment = new FavoriteJobFragment(j);
+        fragments.add(newJobFragment);
+
+//            Place FavoriteJobFragment in the new frame
+        getActivity().getSupportFragmentManager().beginTransaction().replace(newFrame.getId(),newJobFragment).commitAllowingStateLoss();
+    }
+
 }
