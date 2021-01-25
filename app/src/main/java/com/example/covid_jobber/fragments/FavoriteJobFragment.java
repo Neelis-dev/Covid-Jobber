@@ -1,5 +1,7 @@
 package com.example.covid_jobber.fragments;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -47,15 +49,18 @@ public class FavoriteJobFragment extends Fragment implements View.OnClickListene
 
         binding.btnJobMore.setOnClickListener(this);
         binding.btnJobLess.setOnClickListener(this);
+        binding.btnJobWebsite.setOnClickListener(this);
 
 //        set texts
         binding.txtJobTitle.setText(job.getTitle());
         binding.txtJobCompany.setText(job.getCompany());
-        String contractTimeText = "Unbekannt";
+
+        String contractTimeText = "Arbeitszeit: Unbekannt";
         if(job.getContractTime() != ContractTime.EITHER){
             contractTimeText = "Arbeitszeit: "+job.getContractTime().toString();
         }
         binding.txtJobContractTime.setText(contractTimeText);
+
         binding.txtJobDescription.setText(job.getDescription());
 
 //        hide lower part
@@ -78,6 +83,9 @@ public class FavoriteJobFragment extends Fragment implements View.OnClickListene
         else if(v == binding.btnJobLess){
             minimize();
         }
+        else if(v == binding.btnJobWebsite){
+            openUrl(job.getUrl());
+        }
     }
 
     private void extend(){
@@ -90,5 +98,11 @@ public class FavoriteJobFragment extends Fragment implements View.OnClickListene
         extended = false;
         binding.layoutJobsExtend.setVisibility(View.GONE);
         binding.btnJobMore.setVisibility(View.VISIBLE);
+    }
+
+    private void openUrl(String url){
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
     }
 }

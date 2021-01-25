@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="@string/txt_job_fragment_company"
-            android:textColor="@color/black"
+            android:textColor="@color/primary_dark"
             app:layout_constraintStart_toStartOf="@+id/txt_job_title"
             app:layout_constraintTop_toBottomOf="@+id/txt_job_title" />
 
@@ -58,9 +58,21 @@
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_job_company">
+
+            <Button
+                android:id="@+id/btn_job_website"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/txt_job_fragment_link"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txt_job_description" />
 
             <TextView
                 android:id="@+id/txt_job_contract_time"
@@ -69,13 +81,13 @@
                 android:layout_height="wrap_content"
                 android:text="@string/txt_job_fragment_contract_time"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:textColor="@color/black"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btn_job_less"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:clickable="true"
                 android:contentDescription="@string/btn_job_fragment_less"
@@ -83,7 +95,6 @@
                 app:fabCustomSize="50dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txt_job_description"
                 app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
 
             <TextView
@@ -95,7 +106,9 @@
                 android:text="@string/txt_job_fragment_description"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txt_job_contract_time" />
+                app:layout_constraintTop_toBottomOf="@+id/txt_job_contract_time"
+                android:textColor="@color/black"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

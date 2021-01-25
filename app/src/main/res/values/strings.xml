@@ -37,6 +37,7 @@
     <string name="txt_job_fragment_address">Adresse</string>
     <string name="txt_job_fragment_category">Kategorie</string>
     <string name="txt_job_fragment_contract_time">Arbeitszeit: </string>
+    <string name="txt_job_fragment_link">Zum Angebot</string>
     <string name="btn_job_fragment_more">mehr</string>
     <string name="btn_job_fragment_less">weniger</string>
 
