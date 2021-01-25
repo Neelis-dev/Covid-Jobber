@@ -50,23 +50,8 @@ public class FavoritesFragment extends Fragment {
         binding = FragmentFavoritesBinding.inflate(inflater, container, false);
 
         for (int i = 0; i < favoriteJobs.size(); i++) {
-
             Job j = favoriteJobs.get(i);
-
-//            generate FrameLayout
-            FrameLayout newFrame = new FrameLayout(this.getContext());
-            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-            newFrame.setLayoutParams(params);
-            newFrame.setId(View.generateViewId());
-
-//            add FrameLayout to LayoutFavoriteJobs
-            binding.layoutFavoritesJobs.addView(newFrame, 0);
-
-//            generate FavoriteJobFragment
-            FavoriteJobFragment newJobFragment = new FavoriteJobFragment(j);
-
-//            Place FavoriteJobFragment in the new frame
-            getActivity().getSupportFragmentManager().beginTransaction().replace(newFrame.getId(),newJobFragment).commitAllowingStateLoss();
+            addJobToLayout(j);
         }
 
         return binding.getRoot();
@@ -80,5 +65,22 @@ public class FavoritesFragment extends Fragment {
 
     public void addFavorite(Job job){
         favoriteJobs.add(job);
+    }
+
+    private void addJobToLayout(Job j){
+//            generate FrameLayout
+        FrameLayout newFrame = new FrameLayout(this.getContext());
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+        newFrame.setLayoutParams(params);
+        newFrame.setId(View.generateViewId());
+
+//            add FrameLayout to LayoutFavoriteJobs
+        binding.layoutFavoritesJobs.addView(newFrame, 0);
+
+//            generate FavoriteJobFragment
+        FavoriteJobFragment newJobFragment = new FavoriteJobFragment(j);
+
+//            Place FavoriteJobFragment in the new frame
+        getActivity().getSupportFragmentManager().beginTransaction().replace(newFrame.getId(),newJobFragment).commitAllowingStateLoss();
     }
 }

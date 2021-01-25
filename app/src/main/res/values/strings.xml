@@ -28,12 +28,16 @@
 
     <!--  Favorites Fragment  -->
     <string name="txt_favorites_fragment_heading">Favoriten</string>
-    <string name="txt_favorites_fragment_title">Job-Titel</string>
-    <string name="txt_favorites_fragment_company">Firma</string>
-    <string name="txt_favorites_fragment_description">Beschreibung</string>
-    <string name="txt_favorites_fragment_address">Adresse</string>
-    <string name="txt_favorites_fragment_category">Kategorie</string>
     <string name="img_favorites_fragment_edit">Bearbeiten</string>
+
+    <!-- Favorite Job Fragment-->
+    <string name="txt_job_fragment_title">Job-Titel</string>
+    <string name="txt_job_fragment_company">Firma</string>
+    <string name="txt_job_fragment_description">Beschreibung: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</string>
+    <string name="txt_job_fragment_address">Adresse</string>
+    <string name="txt_job_fragment_category">Kategorie</string>
+    <string name="btn_job_fragment_more">mehr</string>
+    <string name="btn_job_fragment_less">weniger</string>
 
     <!--  Filters Fragment  -->
     <string name="txt_filters_fragment_heading">Filter Optionen</string>
