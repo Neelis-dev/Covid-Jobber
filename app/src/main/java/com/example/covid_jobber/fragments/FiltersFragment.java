@@ -196,9 +196,15 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
     }
 
     public void onLocationReceived(Location location){
-        latitude = location.getLatitude();
-        longitude = location.getLongitude();
-        System.out.println(latitude + " " + longitude);
+        if(location != null){
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+            System.out.println(latitude + " " + longitude);
+
+        }
+        else{
+            System.out.println("Keinen Standort gefunden.");
+        }
     }
 
 
