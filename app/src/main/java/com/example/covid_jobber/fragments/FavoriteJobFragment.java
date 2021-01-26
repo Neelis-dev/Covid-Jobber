@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import com.example.covid_jobber.R;
 import com.example.covid_jobber.activities.MainActivity;
 import com.example.covid_jobber.classes.Job;
+import com.example.covid_jobber.classes.services.Dialog;
 import com.example.covid_jobber.databinding.FragmentFavoriteJobBinding;
 import com.example.covid_jobber.databinding.FragmentFavoritesBinding;
 import com.example.covid_jobber.enums.ContractTime;
@@ -94,8 +95,14 @@ public class FavoriteJobFragment extends Fragment implements View.OnClickListene
             openUrl(job.getUrl());
         }
         else if(v == binding.btnJobDelete){
-            mainActivity.getFavoritesFragment().deleteFavorite(this);
+            openDialog();
+            //mainActivity.getFavoritesFragment().deleteFavorite(this);
         }
+    }
+
+    public void openDialog(){
+        Dialog dialog = new Dialog();
+        dialog.show(getFragmentManager(), "example dialog");
     }
 
     public void setDeletable(boolean deletable){
