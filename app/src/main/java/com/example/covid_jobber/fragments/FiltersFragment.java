@@ -3,6 +3,7 @@ package com.example.covid_jobber.fragments;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -172,7 +173,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         } else if (v == binding.btnFilterPermission) {
             permissionActive = binding.btnFilterPermission.isChecked();
             System.out.println("permission: " + permissionActive);
-            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 updateLocation();
             } else {
                 requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 0);
@@ -191,7 +192,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
     @SuppressLint("MissingPermission")
     public void updateLocation() {
-        FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
+        FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this.getContext());
         fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this::onLocationReceived);
     }
 
