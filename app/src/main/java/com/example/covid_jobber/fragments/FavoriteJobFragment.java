@@ -1,7 +1,6 @@
 package com.example.covid_jobber.fragments;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,12 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.covid_jobber.R;
 import com.example.covid_jobber.activities.MainActivity;
 import com.example.covid_jobber.classes.Job;
-import com.example.covid_jobber.classes.services.Dialog;
 import com.example.covid_jobber.databinding.FragmentFavoriteJobBinding;
-import com.example.covid_jobber.databinding.FragmentFavoritesBinding;
 import com.example.covid_jobber.enums.ContractTime;
 
 /**
