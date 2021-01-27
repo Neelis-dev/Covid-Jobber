@@ -1,5 +1,7 @@
 package com.example.covid_jobber.fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -95,14 +97,18 @@ public class FavoriteJobFragment extends Fragment implements View.OnClickListene
             openUrl(job.getUrl());
         }
         else if(v == binding.btnJobDelete){
-            openDialog();
-            //mainActivity.getFavoritesFragment().deleteFavorite(this);
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage("Möchtest du den Eintrag wirklich löschen?")
+                    .setCancelable(false)
+                    .setPositiveButton("Ja", (dialog, id) -> deleteHelper())
+                    .setNegativeButton("Abbrechen", (dialog, id) -> dialog.cancel());
+            AlertDialog alert = builder.create();
+            alert.show();
         }
     }
 
-    public void openDialog(){
-        Dialog dialog = new Dialog();
-        dialog.show(getFragmentManager(), "example dialog");
+    public void deleteHelper(){
+        mainActivity.getFavoritesFragment().deleteFavorite(this);
     }
 
     public void setDeletable(boolean deletable){
