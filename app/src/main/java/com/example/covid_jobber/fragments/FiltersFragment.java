@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.preference.PreferenceManager;
 import android.renderscript.ScriptGroup;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,6 +60,9 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
     private FragmentFiltersBinding binding;
 
+    // Persistence
+//    SharedPreferences prefs = getContext().getSharedPreferences("FilterPref",Context.MODE_PRIVATE);
+//    SharedPreferences.Editor editor = prefs.edit();
     // Variables
 //    chosen options
     private double expSalary = 1000;
@@ -254,6 +259,11 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
             }
         });
 
+
+        // Save to SharedPreferences
+//        editor.putString("category",category);
+//        editor.
+
     }
 
 //    currently only used for category spinner
@@ -299,8 +309,12 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         }
 
         Filter filter = new Filter();
-        filter.addFilter(FilterType.CONTENT,contractTimeMap.get(contractTime.toString()));
-        filter.addFilter(FilterType.CONTENT,category);
+        filter.addFilter(FilterType.CATEGORY,category);
+        filter.addFilter(FilterType.SALARY,String.valueOf((int) Math.floor(expSalary)));
+        if(!contractTimeMap.get(contractTime.toString()).equals("-")){
+            filter.addFilter(contractTimeMap.get(contractTime.toString())+"=1");
+        }
+
 
         return filter;
     }

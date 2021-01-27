@@ -18,7 +18,7 @@ public abstract class ApiCall {
 
 
     public ApiCall(){
-        this(new Random().nextInt(30));
+        this(1);
     }
     public ApiCall(int pageNumber){
         this.request = new Request.Builder()
@@ -27,8 +27,9 @@ public abstract class ApiCall {
     }
     public ApiCall(Filter filter){
         request = new Request.Builder()
-                .url(foundationURL+new Random().nextInt(30)+"?app_id="+appId+"&app_key="+appKey+"&results_per_page=50")
+                .url(foundationURL+1+"?app_id="+appId+"&app_key="+appKey+"&results_per_page=50")
                 .build();
+
 
 
 

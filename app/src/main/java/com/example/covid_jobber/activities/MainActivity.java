@@ -49,16 +49,7 @@ public class MainActivity extends AppCompatActivity {
         filtersFragment.fillCategorySpinner();
         setContentView(R.layout.activity_main);
 
-        handler.makeApiCall(new ApiCall() {
-            @Override
-            public void callback(JSONArray results) {
-                try {
-                    resultsToJobs(results);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+
 
 //        At first Swipe Fragment in Content Frame
         replaceFrame(R.id.content_frame, swipeFragment);
