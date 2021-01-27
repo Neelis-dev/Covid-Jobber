@@ -171,6 +171,9 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
         binding.spinnerFilterSurrounding.setAdapter(new ArrayAdapter<>(this.getContext(), android.R.layout.simple_dropdown_item_1line, surroundingList));
 
+        binding.txtFilterSurrounding.setVisibility(View.GONE);
+        binding.spinnerFilterSurrounding.setVisibility(View.GONE);
+
 //        All options set to disabled if not in edit mode
         editOptions = new ArrayList<>(Arrays.asList(binding.inputFilterSalary, binding.spinnerFilterCategory, binding.spinnerFilterContractTime, binding.btnFilterPermission,  binding.spinnerFilterSurrounding));
         for (View option:editOptions) {
@@ -206,7 +209,20 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
             endEditing();
         } else if (v == binding.btnFilterPermission) {
             permissionActive = binding.btnFilterPermission.isChecked();
-            System.out.println("permission: " + permissionActive);
+            System.out.println(permissionActive);
+            if(permissionActive){
+                binding.spinnerFilterSurrounding.setVisibility(View.VISIBLE);
+                binding.txtFilterSurrounding.setVisibility(View.VISIBLE);
+            } else if(!permissionActive){
+                binding.spinnerFilterSurrounding.setVisibility(View.GONE);
+                binding.txtFilterSurrounding.setVisibility(View.GONE);
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage("Wenn du den Standort deaktivierst, kann deine Suche nicht geografisch eingegrenzt werden. Du erhältst Vorschläge aus ganz Deutschland.")
+                        .setCancelable(false)
+                        .setPositiveButton("Ok", (dialog, id) -> dialog.cancel());
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
             if (ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 updateLocation();
             } else {
@@ -221,7 +237,14 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         if(requestCode == 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
             updateLocation();
         }
-        //evtl. ein else um zu erklären, dass nicht auf die Örtlichkeit gefiltert werden kann
+        else{
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage("Wenn du den Standort nicht freigeben möchtest, kann deine Suche nicht geografisch eingegrenzt werden. Du erhältst Vorschläge aus ganz Deutschland.")
+                    .setCancelable(false)
+                    .setPositiveButton("Ok", (dialog, id) -> dialog.cancel());
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
     }
 
     @SuppressLint("MissingPermission")
@@ -234,8 +257,6 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         if(location != null){
             latitude = location.getLatitude();
             longitude = location.getLongitude();
-            System.out.println(latitude + " " + longitude);
-
         }
         else{
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
