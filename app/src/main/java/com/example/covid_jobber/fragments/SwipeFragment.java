@@ -17,6 +17,7 @@ import com.example.covid_jobber.classes.Job;
 import com.example.covid_jobber.classes.services.ApiCall;
 import com.example.covid_jobber.classes.services.Filter;
 import com.example.covid_jobber.classes.services.FilterType;
+import com.example.covid_jobber.databinding.FragmentFavoriteJobBinding;
 import com.example.covid_jobber.databinding.FragmentNavbarBinding;
 
 import com.google.android.gms.common.api.Api;
@@ -65,7 +66,7 @@ public class SwipeFragment extends Fragment {
         titles = new ArrayList<>();
         titles.add("Start swiping!");
 
-        arrayAdapter = new ArrayAdapter<>(getActivity(), R.layout.item, R.id.helloText, titles);
+        arrayAdapter = new ArrayAdapter(getActivity(), R.layout.item, R.id.helloText, titles);
 
         SwipeFlingAdapterView flingContainer = v.findViewById(R.id.frame);
 
@@ -94,12 +95,12 @@ public class SwipeFragment extends Fragment {
 
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
-
-                if(itemsInAdapter!=3){
-                   return;
+                if(itemsInAdapter>=3){
+                    return;
                 }
 
-                Log.d("TAG", "CARDS ABOUT TO RUN OUT");
+
+//                Log.d("TAG", "CARDS ABOUT TO RUN OUT");
 
                 mainActivity.getHandler().makeApiCall(new ApiCall(mainActivity.getFilterFragment().getFilter()) {
                     @Override

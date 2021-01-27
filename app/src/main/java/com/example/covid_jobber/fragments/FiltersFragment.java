@@ -3,6 +3,9 @@ package com.example.covid_jobber.fragments;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
@@ -12,7 +15,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.preference.PreferenceManager;
 import android.renderscript.ScriptGroup;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,6 +62,9 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
     private FragmentFiltersBinding binding;
 
+    // Persistence
+    SharedPreferences prefs;
+
     // Variables
 //    chosen options
     private double expSalary = 1000;
@@ -79,11 +87,16 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
     private boolean filtersActive = false;
     private boolean permissionActive = false;
 
+
+//    private ArrayAdapter arrayAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_dropdown_item_1line, contractTimes);
+//    private List<String> keyList = new ArrayList<>(categoryMap.keySet());
+
     public FiltersFragment() {
         // Required empty public constructor
     }
 
     public static FiltersFragment newInstance() {
+
         return new FiltersFragment();
     }
 
@@ -91,6 +104,25 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentFiltersBinding.inflate(inflater, container, false);
+
+        MainActivity mainActivity = (MainActivity) getActivity();
+        prefs = mainActivity.getPrefs();
+
+        // Assign variables from SharedPreferences
+        expSalary = prefs.getFloat("expSalary",1000);
+        category = prefs.getString("category","it-jobs");
+        surrounding = prefs.getInt("surrounding",5);
+        latitude = prefs.getFloat("latitude",0);
+        longitude = prefs.getFloat("longitude",0);
+        filtersActive = prefs.getBoolean("filtersActive",false);
+
+        Log.d("TAG","SP DATA"+"\n"+
+                        "expSalary: "+expSalary+"\n"+
+                "category: "+category+"\n"+
+                "surrounding: "+surrounding+"\n"+
+                "filtersActive: "+filtersActive+"\n"
+                );
+
 
 //        Filter toggle
         binding.switchFilterToggle.setOnClickListener(this);
@@ -111,14 +143,17 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         binding.inputFilterSalary.setText(String.valueOf(expSalary));
 
 //        Category Spinner
+
         binding.spinnerFilterCategory.setOnItemSelectedListener(this);
 
+
         List<String> keyList = new ArrayList<>(categoryMap.keySet());
+        Collections.sort(keyList);
         binding.spinnerFilterCategory.setAdapter(new ArrayAdapter<>(this.getContext(), android.R.layout.simple_dropdown_item_1line, keyList));
 
-        if (category != null) {
-            binding.spinnerFilterCategory.setSelection(keyList.indexOf(category));
-        }
+        binding.spinnerFilterCategory.setSelection(keyList.indexOf(category));
+
+
 
 //        Contract Time Spinner
         binding.spinnerFilterContractTime.setOnItemSelectedListener(this);
@@ -155,7 +190,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
     @Override
     public void onDestroyView() {
-//        binding = null;
+        binding = null;
         super.onDestroyView();
     }
 
@@ -172,7 +207,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         } else if (v == binding.btnFilterPermission) {
             permissionActive = binding.btnFilterPermission.isChecked();
             System.out.println("permission: " + permissionActive);
-            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 updateLocation();
             } else {
                 requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 0);
@@ -191,14 +226,25 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
     @SuppressLint("MissingPermission")
     public void updateLocation() {
-        FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
+        FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this.getContext());
         fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this::onLocationReceived);
     }
 
     public void onLocationReceived(Location location){
-        latitude = location.getLatitude();
-        longitude = location.getLongitude();
-        System.out.println(latitude + " " + longitude);
+        if(location != null){
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+            System.out.println(latitude + " " + longitude);
+
+        }
+        else{
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage("Entschuldige, dein Standort konnte nicht bestimmt werden.")
+                    .setCancelable(false)
+                    .setPositiveButton("Ok", (dialog, id) -> dialog.cancel());
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
     }
 
 
@@ -247,13 +293,25 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
             }
         });
 
+
+        SharedPreferences.Editor editor = prefs.edit();
+        System.out.println("editor should write");
+        editor.putFloat("expSalary",(float) expSalary);
+        editor.putString("contractTime",contractTime.toString());
+        editor.putString("category",category);
+        editor.putInt("surrounding",surrounding);
+        editor.putFloat("latitude",(float) latitude);
+        editor.putFloat("longitude",(float) longitude);
+        editor.putBoolean("filtersActive",filtersActive);
+        editor.apply();
     }
 
 //    currently only used for category spinner
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
         if(parent == binding.spinnerFilterCategory){
-            category = categoryMap.get(binding.spinnerFilterCategory.getSelectedItem().toString());
+            category = binding.spinnerFilterCategory.getSelectedItem().toString();
             System.out.println("category chosen: "+category);
         }
         else if(parent == binding.spinnerFilterContractTime){
@@ -292,25 +350,29 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         }
 
         Filter filter = new Filter();
-        filter.addFilter(FilterType.CONTENT,contractTimeMap.get(contractTime.toString()));
-        filter.addFilter(FilterType.CONTENT,category);
+        filter.addFilter(FilterType.CATEGORY,categoryMap.get(category));
+        filter.addFilter(FilterType.SALARY,String.valueOf((int) Math.floor(expSalary)));
+        if(!contractTimeMap.get(contractTime.toString()).equals("-")){
+            filter.addFilter(contractTimeMap.get(contractTime.toString())+"=1");
+        }
+
 
         return filter;
     }
 
 
-//      Berechnung zur Bestimmung ob ein Ort aus der API innerhalb des ausgewählten Umkreises des Users liegt
-//      lat1 und lon 1 sind die Koordinaten des Jobs, lat2 und lon2 sind die Koordinaten des Users
+    //      Berechnung zur Bestimmung ob ein Ort aus der API innerhalb des ausgewählten Umkreises des Users liegt
     public boolean checkDistance(int surrounding, double latlocation, double lonlocation){
-        double dx, dy, lat, distance=0;
+        double dx, dy, lat, distance;
 
-//      lat = (latitude + latlocation) / 2 * 0.01745;
-//      dx = 111.3 * cos(lat) * (longitude - lonlocation);
-//      dy = 111.3 * (latitude - latlocation);
-//      distance = sqrt(dx * dx + dy * dy);
+        lat = (latitude + latlocation) / 2 * 0.01745;
+        dx = 111.3 * Math.cos(lat) * (longitude - lonlocation);
+        dy = 111.3 * (latitude - latlocation);
+        distance = Math.sqrt(dx * dx + dy * dy);
 
         return distance <= surrounding;
     }
+
 
 }
 

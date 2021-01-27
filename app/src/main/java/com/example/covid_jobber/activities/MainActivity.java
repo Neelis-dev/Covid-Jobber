@@ -3,6 +3,7 @@ package com.example.covid_jobber.activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.example.covid_jobber.R;
@@ -38,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private final SettingsFragment settingsFragment = new SettingsFragment();
     private final NavbarFragment navbarFragment = new NavbarFragment();
 
+    private SharedPreferences prefs;
 
     private final MainActivity instance = this;
 
@@ -49,16 +51,9 @@ public class MainActivity extends AppCompatActivity {
         filtersFragment.fillCategorySpinner();
         setContentView(R.layout.activity_main);
 
-        handler.makeApiCall(new ApiCall() {
-            @Override
-            public void callback(JSONArray results) {
-                try {
-                    resultsToJobs(results);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        prefs = getApplicationContext().getSharedPreferences("FilterPref", MODE_PRIVATE);
+
+
 
 //        At first Swipe Fragment in Content Frame
         replaceFrame(R.id.content_frame, swipeFragment);
@@ -128,6 +123,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void addFavoriteJob(Job job){
         favoritesFragment.addFavorite(job);
+    }
+
+    public SharedPreferences getPrefs(){
+        return prefs;
     }
 
 
