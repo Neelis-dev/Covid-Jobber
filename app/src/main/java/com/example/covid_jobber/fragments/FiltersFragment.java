@@ -3,6 +3,7 @@ package com.example.covid_jobber.fragments;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -237,7 +238,12 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
         }
         else{
-            System.out.println("Keinen Standort gefunden.");
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage("Entschuldige, dein Standort konnte nicht bestimmt werden.")
+                    .setCancelable(false)
+                    .setPositiveButton("Ok", (dialog, id) -> dialog.cancel());
+            AlertDialog alert = builder.create();
+            alert.show();
         }
     }
 
@@ -355,18 +361,18 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
     }
 
 
-//      Berechnung zur Bestimmung ob ein Ort aus der API innerhalb des ausgewählten Umkreises des Users liegt
-//      lat1 und lon 1 sind die Koordinaten des Jobs, lat2 und lon2 sind die Koordinaten des Users
+    //      Berechnung zur Bestimmung ob ein Ort aus der API innerhalb des ausgewählten Umkreises des Users liegt
     public boolean checkDistance(int surrounding, double latlocation, double lonlocation){
-        double dx, dy, lat, distance=0;
+        double dx, dy, lat, distance;
 
-//      lat = (latitude + latlocation) / 2 * 0.01745;
-//      dx = 111.3 * cos(lat) * (longitude - lonlocation);
-//      dy = 111.3 * (latitude - latlocation);
-//      distance = sqrt(dx * dx + dy * dy);
+        lat = (latitude + latlocation) / 2 * 0.01745;
+        dx = 111.3 * Math.cos(lat) * (longitude - lonlocation);
+        dy = 111.3 * (latitude - latlocation);
+        distance = Math.sqrt(dx * dx + dy * dy);
 
         return distance <= surrounding;
     }
+
 
 }
 
