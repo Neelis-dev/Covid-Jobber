@@ -86,6 +86,10 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
     private boolean filtersActive = false;
     private boolean permissionActive = false;
 
+
+//    private ArrayAdapter arrayAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_dropdown_item_1line, contractTimes);
+//    private List<String> keyList = new ArrayList<>(categoryMap.keySet());
+
     public FiltersFragment() {
         // Required empty public constructor
     }
@@ -138,6 +142,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         binding.inputFilterSalary.setText(String.valueOf(expSalary));
 
 //        Category Spinner
+
         binding.spinnerFilterCategory.setOnItemSelectedListener(this);
 
 
@@ -145,9 +150,9 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         Collections.sort(keyList);
         binding.spinnerFilterCategory.setAdapter(new ArrayAdapter<>(this.getContext(), android.R.layout.simple_dropdown_item_1line, keyList));
 
-        if(category != null){
-            binding.spinnerFilterCategory.setSelection(keyList.indexOf(category)); //TODO: Something is wrong here
-        }
+        binding.spinnerFilterCategory.setSelection(keyList.indexOf(category));
+
+
 
 //        Contract Time Spinner
         binding.spinnerFilterContractTime.setOnItemSelectedListener(this);
@@ -300,7 +305,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
         if(parent == binding.spinnerFilterCategory){
-            category = categoryMap.get(binding.spinnerFilterCategory.getSelectedItem().toString());
+            category = binding.spinnerFilterCategory.getSelectedItem().toString();
             System.out.println("category chosen: "+category);
         }
         else if(parent == binding.spinnerFilterContractTime){
@@ -339,7 +344,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         }
 
         Filter filter = new Filter();
-        filter.addFilter(FilterType.CATEGORY,category);
+        filter.addFilter(FilterType.CATEGORY,categoryMap.get(category));
         filter.addFilter(FilterType.SALARY,String.valueOf((int) Math.floor(expSalary)));
         if(!contractTimeMap.get(contractTime.toString()).equals("-")){
             filter.addFilter(contractTimeMap.get(contractTime.toString())+"=1");

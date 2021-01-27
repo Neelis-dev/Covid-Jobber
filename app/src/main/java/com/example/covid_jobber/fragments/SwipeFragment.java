@@ -94,7 +94,9 @@ public class SwipeFragment extends Fragment {
 
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
-
+                if(itemsInAdapter>=3){
+                    return;
+                }
 
 
 //                Log.d("TAG", "CARDS ABOUT TO RUN OUT");
