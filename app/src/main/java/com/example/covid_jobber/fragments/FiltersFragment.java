@@ -3,6 +3,7 @@ package com.example.covid_jobber.fragments;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -232,7 +233,12 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
         }
         else{
-            System.out.println("Keinen Standort gefunden.");
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage("Entschuldige, dein Standort konnte nicht bestimmt werden.")
+                    .setCancelable(false)
+                    .setPositiveButton("Ok", (dialog, id) -> dialog.cancel());
+            AlertDialog alert = builder.create();
+            alert.show();
         }
     }
 
