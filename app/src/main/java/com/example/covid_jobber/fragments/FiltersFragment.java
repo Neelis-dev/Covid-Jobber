@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 
 import android.preference.PreferenceManager;
 import android.renderscript.ScriptGroup;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,8 +62,8 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
     private FragmentFiltersBinding binding;
 
     // Persistence
-//    SharedPreferences prefs = getContext().getSharedPreferences("FilterPref",Context.MODE_PRIVATE);
-//    SharedPreferences.Editor editor = prefs.edit();
+    SharedPreferences prefs;
+
     // Variables
 //    chosen options
     private double expSalary = 1000;
@@ -90,6 +91,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
     }
 
     public static FiltersFragment newInstance() {
+
         return new FiltersFragment();
     }
 
@@ -97,6 +99,25 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentFiltersBinding.inflate(inflater, container, false);
+
+        MainActivity mainActivity = (MainActivity) getActivity();
+        prefs = mainActivity.getPrefs();
+
+        // Assign variables from SharedPreferences
+        expSalary = prefs.getFloat("expSalary",1000);
+        category = prefs.getString("category",null);
+        surrounding = prefs.getInt("surrounding",5);
+        latitude = prefs.getFloat("latitude",0);
+        longitude = prefs.getFloat("longitude",0);
+        filtersActive = prefs.getBoolean("filtersActive",false);
+
+        Log.d("TAG","SP DATA"+"\n"+
+                        "expSalary: "+expSalary+"\n"+
+                "category: "+category+"\n"+
+                "surrounding: "+surrounding+"\n"+
+                "filtersActive: "+filtersActive+"\n"
+                );
+
 
 //        Filter toggle
         binding.switchFilterToggle.setOnClickListener(this);
@@ -119,10 +140,12 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 //        Category Spinner
         binding.spinnerFilterCategory.setOnItemSelectedListener(this);
 
+
         List<String> keyList = new ArrayList<>(categoryMap.keySet());
+        Collections.sort(keyList);
         binding.spinnerFilterCategory.setAdapter(new ArrayAdapter<>(this.getContext(), android.R.layout.simple_dropdown_item_1line, keyList));
 
-        if (category != null) {
+        if(category != null){
             binding.spinnerFilterCategory.setSelection(keyList.indexOf(category));
         }
 
@@ -161,7 +184,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
     @Override
     public void onDestroyView() {
-//        binding = null;
+        binding = null;
         super.onDestroyView();
     }
 
@@ -260,15 +283,22 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         });
 
 
-        // Save to SharedPreferences
-//        editor.putString("category",category);
-//        editor.
-
+        SharedPreferences.Editor editor = prefs.edit();
+        System.out.println("editor should write");
+        editor.putFloat("expSalary",(float) expSalary);
+        editor.putString("contractTime",contractTime.toString());
+        editor.putString("category",category);
+        editor.putInt("surrounding",surrounding);
+        editor.putFloat("latitude",(float) latitude);
+        editor.putFloat("longitude",(float) longitude);
+        editor.putBoolean("filtersActive",filtersActive);
+        editor.apply();
     }
 
 //    currently only used for category spinner
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
         if(parent == binding.spinnerFilterCategory){
             category = categoryMap.get(binding.spinnerFilterCategory.getSelectedItem().toString());
             System.out.println("category chosen: "+category);
