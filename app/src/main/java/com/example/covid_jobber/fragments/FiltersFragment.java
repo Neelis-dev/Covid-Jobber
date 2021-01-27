@@ -105,7 +105,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
         // Assign variables from SharedPreferences
         expSalary = prefs.getFloat("expSalary",1000);
-        category = prefs.getString("category",null);
+        category = prefs.getString("category","it-jobs");
         surrounding = prefs.getInt("surrounding",5);
         latitude = prefs.getFloat("latitude",0);
         longitude = prefs.getFloat("longitude",0);
@@ -146,7 +146,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         binding.spinnerFilterCategory.setAdapter(new ArrayAdapter<>(this.getContext(), android.R.layout.simple_dropdown_item_1line, keyList));
 
         if(category != null){
-            binding.spinnerFilterCategory.setSelection(keyList.indexOf(category));
+            binding.spinnerFilterCategory.setSelection(keyList.indexOf(category)); //TODO: Something is wrong here
         }
 
 //        Contract Time Spinner

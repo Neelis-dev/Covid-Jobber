@@ -19,7 +19,7 @@ public abstract class ApiCall {
 
     public ApiCall(){
         this(1);
-    }
+    } // TODO: Talk about pagenumber handling
     public ApiCall(int pageNumber){
         this.request = new Request.Builder()
                                  .url(foundationURL+pageNumber+"?app_id="+appId+"&app_key="+appKey+"&results_per_page=50")
