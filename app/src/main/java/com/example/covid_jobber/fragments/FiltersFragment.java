@@ -21,12 +21,14 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 
 import com.example.covid_jobber.activities.MainActivity;
+import com.example.covid_jobber.classes.Category;
 import com.example.covid_jobber.classes.services.ApiCall;
 import com.example.covid_jobber.classes.services.ApiHandler;
 import com.example.covid_jobber.classes.services.Filter;
 import com.example.covid_jobber.classes.services.FilterType;
 import com.example.covid_jobber.databinding.FragmentFiltersBinding;
 import com.example.covid_jobber.enums.ContractTime;
+import com.example.covid_jobber.enums.Language;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 
@@ -62,7 +64,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 //    chosen options
     private double expSalary = 1000;
     private ContractTime contractTime;
-    private String category;
+    private Category category;
     private List<String> keywords = new ArrayList<>();
     private int surrounding;
     private double latitude;
@@ -71,7 +73,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 //    available options
     private final List<ContractTime> contractTimes = new ArrayList<>(Arrays.asList(ContractTime.EITHER, ContractTime.FULL_TIME, ContractTime.PART_TIME));
     private final List<Integer> surroundingList = new ArrayList<>(Arrays.asList(5, 25, 75, 150, 250));
-    private final Map<String, String> categoryMap = new HashMap<>();
+    private final List<Category> categories = new ArrayList<>();
     private List<View> editOptions;
 
 //    debug variables
@@ -144,10 +146,13 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
         //        Category Spinner
         binding.spinnerFilterCategory.setOnItemSelectedListener(this);
-        List<String> keyList = new ArrayList<>(categoryMap.keySet());
-        Collections.sort(keyList);
-        binding.spinnerFilterCategory.setAdapter(new ArrayAdapter<>(this.getContext(), android.R.layout.simple_dropdown_item_1line, keyList));
-        binding.spinnerFilterCategory.setSelection(keyList.indexOf(category));
+        List<String> tranlatedCategories = new ArrayList<>();
+        for (Category c:categories) {
+            tranlatedCategories.add(c.getTranslation(mainActivity.language));
+        }
+        Collections.sort(tranlatedCategories);
+        binding.spinnerFilterCategory.setAdapter(new ArrayAdapter<>(this.getContext(), android.R.layout.simple_dropdown_item_1line, tranlatedCategories));
+        binding.spinnerFilterCategory.setSelection(tranlatedCategories.indexOf(category.getTranslation(mainActivity.language)));
 
         //        Contract Time Spinner
         binding.spinnerFilterContractTime.setOnItemSelectedListener(this);
@@ -252,7 +257,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if(parent == binding.spinnerFilterCategory){
-            category = binding.spinnerFilterCategory.getSelectedItem().toString();
+            category = Category.getByTranslation(binding.spinnerFilterCategory.getSelectedItem().toString(), categories);
             System.out.println("category chosen: "+category);
         }
         else if(parent == binding.spinnerFilterContractTime){
@@ -269,7 +274,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
         if(parent == binding.spinnerFilterCategory){
-            category = binding.spinnerFilterCategory.getSelectedItem().toString();
+            category = Category.getByTranslation(binding.spinnerFilterCategory.getSelectedItem().toString(), categories);
             System.out.println("category chosen: "+category);
         }
         else if(parent == binding.spinnerFilterContractTime){
@@ -341,7 +346,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
                 for(int i=0; i<results.length();i++){
                     try {
-                        categoryMap.put(results.getJSONObject(i).getString("label"), results.getJSONObject(i).getString("tag"));
+                        categories.add(new Category(results.getJSONObject(i).getString("tag"), results.getJSONObject(i).getString("label")));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -357,7 +362,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         }
 
         Filter filter = new Filter();
-        filter.addFilter(FilterType.CATEGORY,categoryMap.get(category));
+        filter.addFilter(FilterType.CATEGORY,category.getTag());
         filter.addFilter(FilterType.SALARY,String.valueOf((int) Math.floor(expSalary)));
         if(!(contractTime.toString()).equals("-")){
             filter.addFilter(contractTime.toString()+"=1");
@@ -434,7 +439,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         prefs = mainActivity.getPrefs();
 
         expSalary = prefs.getFloat("expSalary",1000);
-        category = prefs.getString("category","it-jobs");
+        category = Category.getByTag(prefs.getString("category","it-jobs"), categories);
         contractTime = ContractTime.getByName(prefs.getString("contractTime",ContractTime.EITHER.toString()));
         Set<String> keywordSet = prefs.getStringSet("keywords", new HashSet<String>());
         keywords = new ArrayList<>(keywordSet);
@@ -459,7 +464,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         System.out.println("editor should write");
         editor.putFloat("expSalary",(float) expSalary);
         editor.putString("contractTime",contractTime.toString());
-        editor.putString("category",category);
+        editor.putString("category",category.getTag());
         Set<String> keywordSet = new HashSet<>(keywords);
         editor.putStringSet("keywords",keywordSet);
         editor.putInt("surrounding",surrounding);
