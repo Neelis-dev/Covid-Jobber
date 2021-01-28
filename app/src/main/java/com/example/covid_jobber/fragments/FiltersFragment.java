@@ -61,6 +61,7 @@ import okhttp3.Request;
 public class FiltersFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private FragmentFiltersBinding binding;
+    private MainActivity mainActivity;
 
     // Persistence
     SharedPreferences prefs;
@@ -76,16 +77,15 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
 //    available options
     private final List<ContractTime> contractTimes = new ArrayList<>(Arrays.asList(ContractTime.EITHER, ContractTime.FULL_TIME, ContractTime.PART_TIME));
-    private final List<Integer> surroundingList = new ArrayList<>(Arrays.asList(5, 10, 25, 75, 150));
+    private final List<Integer> surroundingList = new ArrayList<>(Arrays.asList(5, 25, 75, 150, 250));
     private final Map<String,String> contractTimeMap = new HashMap<>();
     private final Map<String, String> categoryMap = new HashMap<>();
     private List<View> editOptions;
 
-    private boolean editing = false;
-
 //    debug variables
+    private boolean editing = false;
     private boolean filtersActive = false;
-    private boolean permissionActive = false;
+    private boolean locationActive = false;
 
 
 //    private ArrayAdapter arrayAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_dropdown_item_1line, contractTimes);
@@ -96,7 +96,6 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
     }
 
     public static FiltersFragment newInstance() {
-
         return new FiltersFragment();
     }
 
@@ -105,59 +104,54 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
                              Bundle savedInstanceState) {
         binding = FragmentFiltersBinding.inflate(inflater, container, false);
 
-        MainActivity mainActivity = (MainActivity) getActivity();
+        mainActivity = (MainActivity) getActivity();
         prefs = mainActivity.getPrefs();
 
         // Assign variables from SharedPreferences
-        expSalary = prefs.getFloat("expSalary",1000);
-        category = prefs.getString("category","it-jobs");
-        surrounding = prefs.getInt("surrounding",5);
-        latitude = prefs.getFloat("latitude",0);
-        longitude = prefs.getFloat("longitude",0);
-        filtersActive = prefs.getBoolean("filtersActive",false);
+        getPreferences();
 
-        Log.d("TAG","SP DATA"+"\n"+
-                        "expSalary: "+expSalary+"\n"+
-                "category: "+category+"\n"+
-                "surrounding: "+surrounding+"\n"+
-                "filtersActive: "+filtersActive+"\n"
-                );
+//        Inputs ------------------------------------------------
 
+        //        Salary Input
+        binding.inputFilterSalary.setText(String.valueOf(expSalary));
 
-//        Filter toggle
-        binding.switchFilterToggle.setOnClickListener(this);
-        binding.switchFilterToggle.setChecked(filtersActive);
+//        Buttons ----------------------------------------------
 
-//        Permission toggle
-        binding.btnFilterPermission.setOnClickListener(this);
-        binding.btnFilterPermission.setChecked(permissionActive);
-
-//        Edit Button
+        //        Edit Button
         binding.btnFilterEdit.setOnClickListener(this);
-
-//        Save Button
+        //        Save Button
         binding.btnFilterSave.setOnClickListener(this);
         binding.btnFilterSave.setVisibility(View.INVISIBLE);
 
-//        Salary Input
-        binding.inputFilterSalary.setText(String.valueOf(expSalary));
+//        Toggles ----------------------------------------------
 
-//        Category Spinner
+        //        Filter toggle
+        binding.switchFilterToggle.setOnClickListener(this);
+        binding.switchFilterToggle.setChecked(filtersActive);
+        //        Location Permission toggle
+        binding.btnLocationPermission.setOnClickListener(this);
+        binding.btnLocationPermission.setChecked(locationActive);
+        //        Surrounding Option visible/not visible -> depends on locationActive
+        if(locationActive){
+            binding.txtFilterSurrounding.setVisibility(View.VISIBLE);
+            binding.spinnerFilterSurrounding.setVisibility(View.VISIBLE);
+        }
+        else{
+            binding.txtFilterSurrounding.setVisibility(View.GONE);
+            binding.spinnerFilterSurrounding.setVisibility(View.GONE);
+        }
 
+//        Spinner -----------------------------------------------------
+
+        //        Category Spinner
         binding.spinnerFilterCategory.setOnItemSelectedListener(this);
-
-
         List<String> keyList = new ArrayList<>(categoryMap.keySet());
         Collections.sort(keyList);
         binding.spinnerFilterCategory.setAdapter(new ArrayAdapter<>(this.getContext(), android.R.layout.simple_dropdown_item_1line, keyList));
-
         binding.spinnerFilterCategory.setSelection(keyList.indexOf(category));
 
-
-
-//        Contract Time Spinner
+        //        Contract Time Spinner
         binding.spinnerFilterContractTime.setOnItemSelectedListener(this);
-
         binding.spinnerFilterContractTime.setAdapter(new ArrayAdapter<>(this.getContext(), android.R.layout.simple_dropdown_item_1line, contractTimes));
         contractTimeMap.put("Vollzeit","full_time");
         contractTimeMap.put("Teilzeit","part_time");
@@ -166,16 +160,14 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
             binding.spinnerFilterContractTime.setSelection(contractTimes.indexOf(contractTime));
         }
 
-//        Surrounding Spinner
+        //        Surrounding Spinner
         binding.spinnerFilterSurrounding.setOnItemSelectedListener(this);
-
         binding.spinnerFilterSurrounding.setAdapter(new ArrayAdapter<>(this.getContext(), android.R.layout.simple_dropdown_item_1line, surroundingList));
+        binding.spinnerFilterSurrounding.setSelection(surroundingList.indexOf(surrounding));
 
-        binding.txtFilterSurrounding.setVisibility(View.GONE);
-        binding.spinnerFilterSurrounding.setVisibility(View.GONE);
-
+//        --------------------------------------------------------------
 //        All options set to disabled if not in edit mode
-        editOptions = new ArrayList<>(Arrays.asList(binding.inputFilterSalary, binding.spinnerFilterCategory, binding.spinnerFilterContractTime, binding.btnFilterPermission,  binding.spinnerFilterSurrounding));
+        editOptions = new ArrayList<>(Arrays.asList(binding.inputFilterSalary, binding.spinnerFilterCategory, binding.spinnerFilterContractTime, binding.btnLocationPermission,  binding.spinnerFilterSurrounding));
         for (View option:editOptions) {
             option.setEnabled(false);
         }
@@ -197,23 +189,27 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         super.onDestroyView();
     }
 
-//    Currently only used for toggle button
+    //    Currently only used for toggle button
     @Override
     public void onClick(View v) {
+//      Toggle Button to set filters to active
         if (v == binding.switchFilterToggle) {
             filtersActive = binding.switchFilterToggle.isChecked();
             System.out.println("filters: " + filtersActive);
+//      Button to start Editing
         } else if (v == binding.btnFilterEdit) {
             startEditing();
+//      Button to end edting
         } else if (v == binding.btnFilterSave) {
             endEditing();
-        } else if (v == binding.btnFilterPermission) {
-            permissionActive = binding.btnFilterPermission.isChecked();
-            System.out.println(permissionActive);
-            if(permissionActive){
+//      Button
+        } else if (v == binding.btnLocationPermission) {
+            locationActive = binding.btnLocationPermission.isChecked();
+            System.out.println(locationActive);
+            if(locationActive){
                 binding.spinnerFilterSurrounding.setVisibility(View.VISIBLE);
                 binding.txtFilterSurrounding.setVisibility(View.VISIBLE);
-            } else if(!permissionActive){
+            } else if(!locationActive){
                 binding.spinnerFilterSurrounding.setVisibility(View.GONE);
                 binding.txtFilterSurrounding.setVisibility(View.GONE);
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -229,6 +225,31 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
                 requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 0);
             }
         }
+    }
+
+    //    currently only used for category spinner
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+        if(parent == binding.spinnerFilterCategory){
+            category = binding.spinnerFilterCategory.getSelectedItem().toString();
+            System.out.println("category chosen: "+category);
+        }
+        else if(parent == binding.spinnerFilterContractTime){
+            contractTime = (ContractTime) binding.spinnerFilterContractTime.getSelectedItem();
+            System.out.println("contract time chosen: "+contractTime.toString());
+        }
+        else if(parent == binding.spinnerFilterSurrounding){
+            surrounding = (int) binding.spinnerFilterSurrounding.getSelectedItem();
+            System.out.println("surrounding chosen: "+surrounding);
+        }
+
+    }
+
+    //    currently only used for category spinner
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        category = categoryMap.get(binding.spinnerFilterCategory.getSelectedItem().toString());
     }
 
     @Override
@@ -253,6 +274,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         fusedLocationProviderClient.getLastLocation().addOnSuccessListener(this::onLocationReceived);
     }
 
+
     public void onLocationReceived(Location location){
         if(location != null){
             latitude = location.getLatitude();
@@ -268,6 +290,54 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         }
     }
 
+    //      Berechnung zur Bestimmung ob ein Ort aus der API innerhalb des ausgewählten Umkreises des Users liegt
+    public boolean checkDistance(int surrounding, double latlocation, double lonlocation){
+        double dx, dy, lat, distance;
+
+        lat = (latitude + latlocation) / 2 * 0.01745;
+        dx = 111.3 * Math.cos(lat) * (longitude - lonlocation);
+        dy = 111.3 * (latitude - latlocation);
+        distance = Math.sqrt(dx * dx + dy * dy);
+
+        return distance <= surrounding;
+    }
+
+
+    public void fillCategorySpinner(){
+        ApiHandler handler= new ApiHandler();
+        handler.makeApiCall(new ApiCall(new Request.Builder().url("https://api.adzuna.com/v1/api/jobs/de/categories?app_id=64fa1822&app_key=d41a9537116b72a1c2a890a27376d552").build()) {
+            @Override
+            public void callback(JSONArray results) {
+
+                for(int i=0; i<results.length();i++){
+                    try {
+                        categoryMap.put(results.getJSONObject(i).getString("label"), results.getJSONObject(i).getString("tag"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
+
+
+    public Filter getFilter(){
+        if(!filtersActive){
+            return new Filter();
+        }
+
+        Filter filter = new Filter();
+        filter.addFilter(FilterType.CATEGORY,categoryMap.get(category));
+        filter.addFilter(FilterType.SALARY,String.valueOf((int) Math.floor(expSalary)));
+        if(!contractTimeMap.get(contractTime.toString()).equals("-")){
+            filter.addFilter(contractTimeMap.get(contractTime.toString())+"=1");
+        }
+
+        return filter;
+    }
+
+
+//    Private Functions -----------------------------------------------
 
     //    enables edit mode -> activated by edit button
     private void startEditing(){
@@ -281,7 +351,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         }
     }
 
-//    disables edit mode -> activated by save button
+    //    disables edit mode -> activated by save button
     private void endEditing(){
         editing = false;
         binding.btnFilterSave.setVisibility(View.INVISIBLE);
@@ -301,7 +371,6 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         }
         binding.inputFilterSalary.setText(String.valueOf(expSalary));
 
-        MainActivity mainActivity = (MainActivity) getActivity();
         //get new cards based on new filter
         mainActivity.getHandler().makeApiCall(new ApiCall(mainActivity.getFilterFragment().getFilter()) {
             @Override
@@ -314,7 +383,30 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
             }
         });
 
+        setPreferences();
+    }
 
+    // Assign variables from SharedPreferences
+    private void getPreferences(){
+        expSalary = prefs.getFloat("expSalary",1000);
+        category = prefs.getString("category","it-jobs");
+        surrounding = prefs.getInt("surrounding",5);
+        latitude = prefs.getFloat("latitude",0);
+        longitude = prefs.getFloat("longitude",0);
+        filtersActive = prefs.getBoolean("filtersActive",false);
+        locationActive = prefs.getBoolean("locationActive",false);
+
+        Log.d("TAG","SP DATA"+"\n"+
+                "expSalary: "+expSalary+"\n"+
+                "category: "+category+"\n"+
+                "surrounding: "+surrounding+"\n"+
+                "filtersActive: "+filtersActive+"\n"+
+                "locationActive: "+locationActive+"\n"
+        );
+    }
+
+    // set variables from SharedPreferences
+    private void setPreferences(){
         SharedPreferences.Editor editor = prefs.edit();
         System.out.println("editor should write");
         editor.putFloat("expSalary",(float) expSalary);
@@ -324,74 +416,8 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         editor.putFloat("latitude",(float) latitude);
         editor.putFloat("longitude",(float) longitude);
         editor.putBoolean("filtersActive",filtersActive);
+        editor.putBoolean("locationActive",locationActive);
         editor.apply();
-    }
-
-//    currently only used for category spinner
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-        if(parent == binding.spinnerFilterCategory){
-            category = binding.spinnerFilterCategory.getSelectedItem().toString();
-            System.out.println("category chosen: "+category);
-        }
-        else if(parent == binding.spinnerFilterContractTime){
-            contractTime = (ContractTime) binding.spinnerFilterContractTime.getSelectedItem();
-            System.out.println("contract time chosen: "+contractTime.toString());
-        }
-
-    }
-
-//    currently only used for category spinner
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-        category = categoryMap.get(binding.spinnerFilterCategory.getSelectedItem().toString());
-    }
-
-    public void fillCategorySpinner(){
-        ApiHandler handler= new ApiHandler();
-        handler.makeApiCall(new ApiCall(new Request.Builder().url("https://api.adzuna.com/v1/api/jobs/de/categories?app_id=64fa1822&app_key=d41a9537116b72a1c2a890a27376d552").build()) {
-            @Override
-            public void callback(JSONArray results) {
-
-                for(int i=0; i<results.length();i++){
-                    try {
-                        categoryMap.put(results.getJSONObject(i).getString("label"), results.getJSONObject(i).getString("tag"));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-    }
-
-    public Filter getFilter(){
-        if(!filtersActive){
-            return new Filter();
-        }
-
-        Filter filter = new Filter();
-        filter.addFilter(FilterType.CATEGORY,categoryMap.get(category));
-        filter.addFilter(FilterType.SALARY,String.valueOf((int) Math.floor(expSalary)));
-        if(!contractTimeMap.get(contractTime.toString()).equals("-")){
-            filter.addFilter(contractTimeMap.get(contractTime.toString())+"=1");
-        }
-
-
-        return filter;
-    }
-
-
-    //      Berechnung zur Bestimmung ob ein Ort aus der API innerhalb des ausgewählten Umkreises des Users liegt
-    public boolean checkDistance(int surrounding, double latlocation, double lonlocation){
-        double dx, dy, lat, distance;
-
-        lat = (latitude + latlocation) / 2 * 0.01745;
-        dx = 111.3 * Math.cos(lat) * (longitude - lonlocation);
-        dy = 111.3 * (latitude - latlocation);
-        distance = Math.sqrt(dx * dx + dy * dy);
-
-        return distance <= surrounding;
     }
 
 
