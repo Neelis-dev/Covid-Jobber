@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         tools:context=".fragments.FiltersFragment">
 
-    <TextView
+        <TextView
         android:id="@+id/txt_filter_heading"
         style="@style/h1"
         android:layout_width="wrap_content"
@@ -35,14 +35,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="UseSwitchCompatOrMaterialXml" />
 
-    <ToggleButton
-        android:id="@+id/btn_filter_permission"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:textOff="@string/btn_filters_fragment_permission_off"
-        android:textOn="@string/btn_filters_fragment_permission_on"
-        app:layout_constraintEnd_toEndOf="@+id/spinner_filter_surrounding"
-        app:layout_constraintTop_toTopOf="@+id/txt_filter_location" />
+        <ToggleButton
+            android:id="@+id/btn_location_permission"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:textOff="@string/btn_filters_fragment_permission_off"
+            android:textOn="@string/btn_filters_fragment_permission_on"
+            app:layout_constraintEnd_toEndOf="@+id/input_filter_salary"
+            app:layout_constraintTop_toTopOf="@+id/txt_filter_location" />
 
     <TextView
         android:id="@+id/txt_filter_salary"
@@ -56,16 +56,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_filter_heading" />
 
-    <EditText
-        android:id="@+id/input_filter_salary"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="60dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="@string/txt_filters_fragment_salaryinput"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txt_filter_salary" />
+        <EditText
+            android:id="@+id/input_filter_salary"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:text="@string/txt_filters_fragment_salaryinput"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txt_filter_salary" />
 
     <!--     Contract Time Field-->
     <TextView
@@ -80,28 +80,8 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_filter_salary" />
 
     <!--     Qualifications Field-->
-    <TextView
-        android:id="@+id/txt_filter_qualifications"
-        style="@style/h3"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_marginTop="15dp"
-        android:gravity="center"
-        android:text="@string/txt_filters_fragment_qualifications"
-        app:layout_constraintStart_toStartOf="@+id/txt_filter_category"
-        app:layout_constraintTop_toBottomOf="@+id/txt_filter_category" />
 
-    <!--     Skills Field-->
-    <TextView
-        android:id="@+id/txt_filter_skills"
-        style="@style/h3"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_marginTop="15dp"
-        android:gravity="center"
-        android:text="@string/txt_filters_fragment_skills"
-        app:layout_constraintStart_toStartOf="@+id/txt_filter_qualifications"
-        app:layout_constraintTop_toBottomOf="@+id/txt_filter_qualifications" />
+        <!--     Skills Field-->
 
         <TextView
             android:id="@+id/txt_filter_surrounding"
@@ -111,7 +91,7 @@
             android:layout_marginTop="15dp"
             android:gravity="center"
             android:text="@string/txt_filters_fragment_surrounding"
-            app:layout_constraintStart_toStartOf="@+id/txt_filter_location"
+            app:layout_constraintStart_toStartOf="@+id/txt_filter_salary"
             app:layout_constraintTop_toBottomOf="@+id/txt_filter_location" />
 
         <TextView
@@ -122,8 +102,8 @@
             android:layout_marginTop="15dp"
             android:gravity="center"
             android:text="@string/txt_filters_fragment_location"
-            app:layout_constraintStart_toStartOf="@+id/txt_filter_skills"
-            app:layout_constraintTop_toBottomOf="@+id/txt_filter_skills" />
+            app:layout_constraintStart_toStartOf="@+id/txt_filter_salary"
+            app:layout_constraintTop_toBottomOf="@+id/btn_filter_add_keyword" />
 
     <TextView
         android:id="@+id/txt_filter_category"
@@ -136,19 +116,30 @@
         app:layout_constraintStart_toStartOf="@+id/txt_filter_contract_time"
         app:layout_constraintTop_toBottomOf="@+id/txt_filter_contract_time" />
 
-    <Spinner
+        <TextView
+            android:id="@+id/txt_filter_keywords"
+            style="@style/h3"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:text="@string/txt_filters_fragment_keywords"
+            app:layout_constraintStart_toStartOf="@+id/txt_filter_salary"
+            app:layout_constraintTop_toBottomOf="@+id/txt_filter_category" />
+
+        <Spinner
         android:id="@+id/spinner_filter_category"
         android:layout_width="204dp"
         android:layout_height="48dp"
         app:layout_constraintEnd_toEndOf="@+id/input_filter_salary"
         app:layout_constraintTop_toTopOf="@+id/txt_filter_category" />
 
-    <Spinner
-        android:id="@+id/spinner_filter_surrounding"
-        android:layout_width="204dp"
-        android:layout_height="48dp"
-        app:layout_constraintEnd_toEndOf="@+id/spinner_filter_category"
-        app:layout_constraintTop_toTopOf="@+id/txt_filter_surrounding" />
+        <Spinner
+            android:id="@+id/spinner_filter_surrounding"
+            android:layout_width="204dp"
+            android:layout_height="48dp"
+            app:layout_constraintEnd_toEndOf="@+id/input_filter_salary"
+            app:layout_constraintTop_toTopOf="@+id/txt_filter_surrounding" />
 
     <Spinner
         android:id="@+id/spinner_filter_contract_time"
@@ -180,6 +171,39 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_filter_surrounding" />
+
+        <LinearLayout
+            android:id="@+id/layout_filter_keywords"
+            android:layout_width="204dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="@+id/input_filter_salary"
+            app:layout_constraintTop_toTopOf="@+id/txt_filter_keywords"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_filter_add_keyword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:clickable="true"
+            android:contentDescription="@string/btn_filters_fragment_add_keyword"
+            android:focusable="true"
+            app:fabSize="mini"
+            app:layout_constraintStart_toStartOf="@+id/layout_filter_keywords"
+            app:layout_constraintTop_toBottomOf="@+id/layout_filter_keywords"
+            app:srcCompat="@android:drawable/ic_menu_add" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_filter_delete_keyword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:contentDescription="@string/btn_filters_fragment_delete_keyword"
+            android:focusable="true"
+            app:fabSize="mini"
+            app:layout_constraintEnd_toEndOf="@+id/layout_filter_keywords"
+            app:layout_constraintTop_toTopOf="@+id/btn_filter_add_keyword"
+            app:srcCompat="@android:drawable/ic_menu_delete" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

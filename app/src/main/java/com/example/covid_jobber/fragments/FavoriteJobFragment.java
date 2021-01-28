@@ -16,6 +16,8 @@ import com.example.covid_jobber.classes.Job;
 import com.example.covid_jobber.databinding.FragmentFavoriteJobBinding;
 import com.example.covid_jobber.enums.ContractTime;
 
+import java.util.Locale;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link FavoriteJobFragment#newInstance} factory method to
@@ -94,7 +96,14 @@ public class FavoriteJobFragment extends Fragment implements View.OnClickListene
         }
         else if(v == binding.btnJobDelete){
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage("Möchtest du den Eintrag wirklich löschen?")
+            String message = "";
+            switch (mainActivity.language){
+                case GERMAN:
+                    message = "Möchtest du den Eintrag wirklich löschen?"; break;
+                case ENGLISH:
+                    message = "Are you sure you want to delete this entry?"; break;
+            }
+            builder.setMessage(message)
                     .setCancelable(false)
                     .setPositiveButton("Ja", (dialog, id) -> deleteHelper())
                     .setNegativeButton("Abbrechen", (dialog, id) -> dialog.cancel());
