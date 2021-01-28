@@ -47,8 +47,7 @@
     <string name="txt_filters_fragment_salaryinput">0:</string>
     <string name="txt_filters_fragment_contract_time">Arbeitszeit:</string>
     <string name="txt_filters_fragment_category">Kategorie:</string>
-    <string name="txt_filters_fragment_qualifications">Qualifikationen:</string>
-    <string name="txt_filters_fragment_skills">Fähigkeiten:</string>
+    <string name="txt_filters_fragment_keywords">Keywords:</string>
     <string name="txt_filters_fragment_surrounding">Umkreis:</string>
     <string name="txt_filters_fragment_location">Standort:</string>
     <string name="btn_filters_fragment_permission_on">Aktiviert</string>
@@ -60,10 +59,10 @@
     <!--  Settings Fragment  -->
     <string name="txt_settings_fragment_title">Einstellungen</string>
     <string name="txt_settings_fragment_messages">Benachrichtigungen</string>
-    <string name="txt_settings_fragment_exportimport">Export/Import</string>
     <string name="txt_settings_fragment_language">Sprache</string>
     <string name="txt_settings_fragment_darkmode">Darkmode</string>
-    <string name="btn_settings_fragment_messages">Aktiv</string>
+    <string name="btn_settings_fragment_export">Export</string>
+    <string name="btn_settings_fragment_import">Import</string>
     <string name="btn_settings_fragment_darkmode">Aus</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
