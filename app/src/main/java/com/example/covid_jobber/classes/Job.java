@@ -22,14 +22,14 @@ public class Job {
 
     public Job(){
 //        id = -1;
-        title = "Straßenplaner";
-        company = "Stadt Mannheim";
-        description = "Wir suchen inkompetente Straßenplaner für unsere Stadt";
+        title = "Finde den passenden Job: Wenn dir ein Job gefällt wischst du nach rechts, sonst nach links. Viel Spaß!";
+        company = "";
+        description = "Beginne zu wischen";
         url = "";
         created = new Date().toString();
         contractTime = ContractTime.FULL_TIME;
         category = "Öffentliche Arbeit";
-        salary = 10000.0;
+        salary = 10000;
     }
 
     public Job(JSONObject jobObject) throws JSONException {
@@ -153,5 +153,10 @@ public class Job {
 
     public void setSalary(double salary) {
         this.salary = salary;
+    }
+
+    public String getStringSalary(){
+        String s = salary + " €";
+        return s;
     }
 }
