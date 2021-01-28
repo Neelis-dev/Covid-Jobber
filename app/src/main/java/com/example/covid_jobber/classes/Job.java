@@ -13,7 +13,6 @@ public class Job {
     String company;
     String description;
     String url;
-    Address address;
     String created;
     ContractTime contractTime;
     String category;
@@ -22,14 +21,11 @@ public class Job {
     double salary;
 
     public Job(){
-        id = -1;
+//        id = -1;
         title = "Straßenplaner";
         company = "Stadt Mannheim";
         description = "Wir suchen inkompetente Straßenplaner für unsere Stadt";
         url = "";
-        address.setCity("Mannheim");
-        address.setCountry("Germany");
-        address.setDisplayName("E 5, 68159 Mannheim");
         created = new Date().toString();
         contractTime = ContractTime.FULL_TIME;
         category = "Öffentliche Arbeit";
@@ -84,7 +80,6 @@ public class Job {
                 ", company='" + company + '\'' +
                 ", description='" + description + '\'' +
                 ", url='" + url + '\'' +
-                ", address=" + address +
                 ", created='" + created + '\'' +
                 ", contractTime=" + contractTime +
                 ", category='" + category + '\'' +
@@ -126,14 +121,6 @@ public class Job {
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public void setAddress(Address address) {
-        this.address = address;
     }
 
     public String getCreated() {

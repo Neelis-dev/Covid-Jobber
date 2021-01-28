@@ -2,21 +2,16 @@ package com.example.covid_jobber.fragments;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import android.preference.PreferenceManager;
-import android.renderscript.ScriptGroup;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,29 +19,23 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
-import com.example.covid_jobber.R;
 import com.example.covid_jobber.activities.MainActivity;
-import com.example.covid_jobber.classes.Applicant;
 import com.example.covid_jobber.classes.services.ApiCall;
 import com.example.covid_jobber.classes.services.ApiHandler;
 import com.example.covid_jobber.classes.services.Filter;
 import com.example.covid_jobber.classes.services.FilterType;
 import com.example.covid_jobber.databinding.FragmentFiltersBinding;
-import com.example.covid_jobber.databinding.FragmentSettingsBinding;
 import com.example.covid_jobber.enums.ContractTime;
-import com.google.android.gms.common.api.Api;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

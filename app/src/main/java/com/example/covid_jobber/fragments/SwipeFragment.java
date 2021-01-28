@@ -8,19 +8,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Toast;
+import android.widget.ListView;
 
 import com.example.covid_jobber.R;
 import com.example.covid_jobber.activities.MainActivity;
 import com.example.covid_jobber.classes.Job;
 import com.example.covid_jobber.classes.services.ApiCall;
-import com.example.covid_jobber.classes.services.Filter;
-import com.example.covid_jobber.classes.services.FilterType;
-import com.example.covid_jobber.databinding.FragmentFavoriteJobBinding;
-import com.example.covid_jobber.databinding.FragmentNavbarBinding;
+import com.example.covid_jobber.classes.services.arrayAdapter;
 
-import com.google.android.gms.common.api.Api;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import org.jetbrains.annotations.NotNull;
@@ -28,7 +23,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -40,11 +34,11 @@ public class SwipeFragment extends Fragment {
 
     private MainActivity mainActivity;
 
-    private final boolean wannasave = false;
-    private List<String> saved;
+    private arrayAdapter arrayAdapter;
 
-    private List<Job> jobs;
-    private List<String> titles; // Renamed al in titles, because currently only titles used for card creation TODO: later on directly from jobs Array?
+    ListView listView;
+    List<Job> jobitems;
+
 
     public SwipeFragment() {
         // Required empty public constructor
@@ -57,16 +51,15 @@ public class SwipeFragment extends Fragment {
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ArrayAdapter<String> arrayAdapter;
+
         View v = inflater.inflate(R.layout.fragment_swipe, container, false);
 
         mainActivity = (MainActivity) getActivity();
 
-        jobs = new ArrayList<>();
-        titles = new ArrayList<>();
-        titles.add("Start swiping!");
+        jobitems = new ArrayList<Job>();
+        jobitems.add(new Job());
 
-        arrayAdapter = new ArrayAdapter(getActivity(), R.layout.item, R.id.helloText, titles);
+        arrayAdapter = new arrayAdapter(getActivity(), R.layout.item, jobitems);
 
         SwipeFlingAdapterView flingContainer = v.findViewById(R.id.frame);
 
@@ -76,7 +69,7 @@ public class SwipeFragment extends Fragment {
             public void removeFirstObjectInAdapter() {
                 // this is the simplest way to delete an object from the Adapter (/AdapterView)
                 Log.d("LIST", "removed object!");
-                String title = titles.remove(0);
+                jobitems.remove(0);
                 arrayAdapter.notifyDataSetChanged();
             }
 
@@ -86,8 +79,8 @@ public class SwipeFragment extends Fragment {
 
             @Override
             public void onRightCardExit(Object dataObject) {
-                String title = (String) dataObject;
-                Job favorite = getJobByTitle(title);
+                Job currentjob = (Job) dataObject;
+                Job favorite = currentjob;
                 if(favorite != null){
                     mainActivity.addFavoriteJob(favorite);
                 }
@@ -132,10 +125,7 @@ public class SwipeFragment extends Fragment {
 
 
         // Optionally add an OnItemClickListener
-        flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClicked(int itemPosition, Object dataObject) {
-            }
+        flingContainer.setOnItemClickListener((itemPosition, dataObject) -> {
         });
 
         return v;
@@ -147,20 +137,7 @@ public class SwipeFragment extends Fragment {
     }
 
     public void addJob(List<Job> newJobs) {
-        jobs.addAll(newJobs);
-        for (Job j:newJobs) {
-            titles.add(j.getTitle());
-        }
-    }
-
-    private Job getJobByTitle(String title){
-        Job job = null;
-        for (Job j:jobs) {
-            if(j.getTitle().equals(title)){
-                job = j;
-            }
-        }
-        return job;
+        jobitems.addAll(newJobs);
     }
 
 }
