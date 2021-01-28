@@ -73,8 +73,9 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 //    available options
     private final List<ContractTime> contractTimes = new ArrayList<>(Arrays.asList(ContractTime.EITHER, ContractTime.FULL_TIME, ContractTime.PART_TIME));
     private final List<Integer> surroundingList = new ArrayList<>(Arrays.asList(5, 25, 75, 150, 250));
-    private final List<Category> categories = new ArrayList<>();
     private List<View> editOptions;
+
+    private final List<Category> categories = new ArrayList<>();
 
 //    debug variables
     private boolean editing = false;
@@ -100,6 +101,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
         // Assign variables from SharedPreferences
         getPreferences();
+        System.out.println(category);
 
 //        Inputs ------------------------------------------------
 
@@ -146,13 +148,14 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
         //        Category Spinner
         binding.spinnerFilterCategory.setOnItemSelectedListener(this);
-        List<String> tranlatedCategories = new ArrayList<>();
+        List<String> translatedCategories = new ArrayList<>();
         for (Category c:categories) {
-            tranlatedCategories.add(c.getTranslation(mainActivity.language));
+            translatedCategories.add(c.getTranslation(mainActivity.language));
         }
-        Collections.sort(tranlatedCategories);
-        binding.spinnerFilterCategory.setAdapter(new ArrayAdapter<>(this.getContext(), android.R.layout.simple_dropdown_item_1line, tranlatedCategories));
-        binding.spinnerFilterCategory.setSelection(tranlatedCategories.indexOf(category.getTranslation(mainActivity.language)));
+//        Collections.sort(translatedCategories);
+        binding.spinnerFilterCategory.setAdapter(new ArrayAdapter<>(this.getContext(), android.R.layout.simple_dropdown_item_1line, translatedCategories));
+        System.out.println(category.getTranslation(mainActivity.language));
+        binding.spinnerFilterCategory.setSelection(translatedCategories.indexOf(category.getTranslation(mainActivity.language)));
 
         //        Contract Time Spinner
         binding.spinnerFilterContractTime.setOnItemSelectedListener(this);

@@ -12,14 +12,17 @@ public class Category {
     private final String german; // In Api called "label"
     private final String english;
 
-    private static int number = 1;
-
     public Category(String tag, String german){
         this.tag = tag;
         this.german = german;
-//        TODO: Auto-Translate with Library
-        this.english = "category "+number;
-        number++;
+
+        String englishName = "";
+        String[] parts = tag.split("-");
+        for (String part:parts) {
+            englishName = englishName.concat(part.substring(0, 1).toUpperCase() + part.substring(1) + " ");
+        }
+        englishName = englishName.substring(0,englishName.length()-1);
+        this.english = englishName;
     }
 
     public String getTag(){
