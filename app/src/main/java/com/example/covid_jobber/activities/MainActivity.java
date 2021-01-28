@@ -17,6 +17,8 @@ import com.example.covid_jobber.classes.services.ApiCall;
 import com.example.covid_jobber.classes.services.ApiHandler;
 import com.example.covid_jobber.classes.services.Filter;
 import com.example.covid_jobber.databinding.ActivityMainBinding;
+import com.example.covid_jobber.enums.DarkMode;
+import com.example.covid_jobber.enums.Language;
 import com.example.covid_jobber.fragments.FavoritesFragment;
 import com.example.covid_jobber.fragments.FiltersFragment;
 import com.example.covid_jobber.fragments.NavbarFragment;
@@ -46,8 +48,8 @@ public class MainActivity extends AppCompatActivity {
     private final NavbarFragment navbarFragment = new NavbarFragment();
 
     private SharedPreferences prefs;
-    public String language;
-    public String darkMode;
+    public Language language;
+    public DarkMode darkMode;
 
     private final MainActivity instance = this;
 
@@ -125,10 +127,6 @@ public class MainActivity extends AppCompatActivity {
         return handler;
     }
 
-//    public FilterOptions getFilterOptions(){
-//        return filterOptions;
-//    }
-
     public void addFavoriteJob(Job job){
         favoritesFragment.addFavorite(job);
     }
@@ -139,12 +137,12 @@ public class MainActivity extends AppCompatActivity {
 
     // Assign variables from SharedPreferences
     private void getSettingsPreferences(){
-        language = prefs.getString("language","Deutsch");
-        darkMode = prefs.getString("darkMode","System");
+        language = Language.getByCode(prefs.getString("language",Language.GERMAN.toString()));
+        darkMode = DarkMode.getByName(prefs.getString("darkMode",DarkMode.SYSTEM.toString()));
 
         Log.d("TAG","SP DATA"+"\n"+
-                "language: "+language+"\n"+
-                "darkMode: "+darkMode+"\n"
+                "language: "+language.toString()+"\n"+
+                "darkMode: "+darkMode.toString()+"\n"
         );
 
         setLanguage();
@@ -152,34 +150,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setLanguage(){
-        String localeCode = "de";
-        if (language.equals("English")){
-            localeCode = "en";
-        }
         Resources resources = getResources();
         DisplayMetrics dm = resources.getDisplayMetrics();
         Configuration config = resources.getConfiguration();
-        Locale locale = new Locale(localeCode.toLowerCase());
+        Locale locale = new Locale(language.toString().toLowerCase());
         config.setLocale(locale);
         Locale.setDefault(locale);
         resources.updateConfiguration(config, dm);
 
         SharedPreferences.Editor editor = prefs.edit();
         System.out.println("editor should write");
-        editor.putString("language",language);
+        editor.putString("language",language.toString());
         editor.apply();
     }
 
     public void setMode(){
-        switch (darkMode){
-            case "On": AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES); break;
-            case "Off": AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO); break;
-            case "System": AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM); break;
-        }
-
+        DarkMode.setMode(darkMode);
         SharedPreferences.Editor editor = prefs.edit();
         System.out.println("editor should write");
-        editor.putString("darkMode",darkMode);
+        editor.putString("darkMode",darkMode.toString());
         editor.apply();
     }
 

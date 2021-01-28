@@ -19,6 +19,8 @@ import android.widget.ArrayAdapter;
 import com.example.covid_jobber.R;
 import com.example.covid_jobber.activities.MainActivity;
 import com.example.covid_jobber.databinding.FragmentSettingsBinding;
+import com.example.covid_jobber.enums.DarkMode;
+import com.example.covid_jobber.enums.Language;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -44,8 +46,8 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
 //    chosen options in main activity because they effect the whole activity -> needed from start of app
 
 //    available options
-    private final List<String> darkModeOptions = new ArrayList<>(Arrays.asList("System", "Off", "On"));
-    private final List<String> languageOptions = new ArrayList<>(Arrays.asList("English","Deutsch"));
+    private final List<DarkMode> darkModeOptions = new ArrayList<>(Arrays.asList(DarkMode.SYSTEM, DarkMode.ON, DarkMode.OFF));
+    private final List<Language> languageOptions = new ArrayList<>(Arrays.asList(Language.ENGLISH, Language.GERMAN));
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -62,13 +64,21 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
         mainActivity = (MainActivity) getActivity();
 
 //        Dark Mode
-        binding.spinnerSettingsDarkmode.setAdapter(new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_dropdown_item, darkModeOptions));
-        binding.spinnerSettingsDarkmode.setSelection(darkModeOptions.indexOf(mainActivity.darkMode));
+        List<String> translatedDarkModes = new ArrayList<>();
+        for (DarkMode m:darkModeOptions) {
+            translatedDarkModes.add(m.getTranslation(mainActivity.language));
+        }
+        binding.spinnerSettingsDarkmode.setAdapter(new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_dropdown_item, translatedDarkModes));
+        binding.spinnerSettingsDarkmode.setSelection(translatedDarkModes.indexOf(mainActivity.darkMode.getTranslation(mainActivity.language)));
         binding.spinnerSettingsDarkmode.setOnItemSelectedListener(this);
 
 //        Language
-        binding.spinnerSettingsLanguage.setAdapter(new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_dropdown_item, languageOptions));
-        binding.spinnerSettingsLanguage.setSelection(languageOptions.indexOf(mainActivity.language));
+        List<String> translatedLanguages = new ArrayList<>();
+        for (Language l:languageOptions) {
+            translatedLanguages.add(l.getTranslation(mainActivity.language));
+        }
+        binding.spinnerSettingsLanguage.setAdapter(new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_dropdown_item, translatedLanguages));
+        binding.spinnerSettingsLanguage.setSelection(translatedLanguages.indexOf(mainActivity.language.getTranslation(mainActivity.language)));
         binding.spinnerSettingsLanguage.setOnItemSelectedListener(this);
 
         return binding.getRoot();
@@ -80,16 +90,16 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if(parent == binding.spinnerSettingsDarkmode){
-            mainActivity.darkMode = (String) binding.spinnerSettingsDarkmode.getSelectedItem();
+            mainActivity.darkMode = DarkMode.getByTranslation((String) binding.spinnerSettingsDarkmode.getSelectedItem());
             mainActivity.setMode();
-            System.out.println("dark mode: "+mainActivity.darkMode);
+            System.out.println("dark mode: "+mainActivity.darkMode.toString());
         }
         else if(parent == binding.spinnerSettingsLanguage){
-            String prevLanguage = mainActivity.language;
-            mainActivity.language = (String) binding.spinnerSettingsLanguage.getSelectedItem();
+            Language prevLanguage = mainActivity.language;
+            mainActivity.language = Language.getByTranslation((String) binding.spinnerSettingsLanguage.getSelectedItem());
             mainActivity.setLanguage();
-            System.out.println("language: "+mainActivity.language);
-            if(!prevLanguage.equals(mainActivity.language)){
+            System.out.println("language: "+mainActivity.language.toString());
+            if(!prevLanguage.toString().equals(mainActivity.language.toString())){
                 mainActivity.getSupportFragmentManager().beginTransaction().detach(this).attach(this).commit();
             }
         }
@@ -98,16 +108,16 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
         if(parent == binding.spinnerSettingsDarkmode){
-            mainActivity.darkMode = (String) binding.spinnerSettingsDarkmode.getSelectedItem();
+            mainActivity.darkMode = DarkMode.getByTranslation((String) binding.spinnerSettingsDarkmode.getSelectedItem());
             mainActivity.setMode();
-            System.out.println("dark mode: "+mainActivity.darkMode);
+            System.out.println("dark mode: "+mainActivity.darkMode.toString());
         }
         else if(parent == binding.spinnerSettingsLanguage){
-            String prevLanguage = mainActivity.language;
-            mainActivity.language = (String) binding.spinnerSettingsLanguage.getSelectedItem();
+            Language prevLanguage = mainActivity.language;
+            mainActivity.language = Language.getByTranslation((String) binding.spinnerSettingsLanguage.getSelectedItem());
             mainActivity.setLanguage();
-            System.out.println("language: "+mainActivity.language);
-            if(!prevLanguage.equals(mainActivity.language)){
+            System.out.println("language: "+mainActivity.language.toString());
+            if(!prevLanguage.toString().equals(mainActivity.language.toString())){
                 mainActivity.getSupportFragmentManager().beginTransaction().detach(this).attach(this).commit();
             }
         }
