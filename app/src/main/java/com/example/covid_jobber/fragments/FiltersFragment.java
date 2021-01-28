@@ -71,7 +71,6 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 //    available options
     private final List<ContractTime> contractTimes = new ArrayList<>(Arrays.asList(ContractTime.EITHER, ContractTime.FULL_TIME, ContractTime.PART_TIME));
     private final List<Integer> surroundingList = new ArrayList<>(Arrays.asList(5, 25, 75, 150, 250));
-    private final Map<String,String> contractTimeMap = new HashMap<>();
     private final Map<String, String> categoryMap = new HashMap<>();
     private List<View> editOptions;
 
@@ -80,9 +79,6 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
     private boolean filtersActive = false;
     private boolean locationActive = false;
 
-
-//    private ArrayAdapter arrayAdapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_dropdown_item_1line, contractTimes);
-//    private List<String> keyList = new ArrayList<>(categoryMap.keySet());
 
     public FiltersFragment() {
         // Required empty public constructor
@@ -155,12 +151,13 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
         //        Contract Time Spinner
         binding.spinnerFilterContractTime.setOnItemSelectedListener(this);
-        binding.spinnerFilterContractTime.setAdapter(new ArrayAdapter<>(this.getContext(), android.R.layout.simple_dropdown_item_1line, contractTimes));
-        contractTimeMap.put("Vollzeit","full_time");
-        contractTimeMap.put("Teilzeit","part_time");
-        contractTimeMap.put("Beliebig","-");
+        List<String> translatedContractTimes = new ArrayList<>();
+        for (ContractTime c:contractTimes) {
+            translatedContractTimes.add(c.getTranslation(mainActivity.language));
+        }
+        binding.spinnerFilterContractTime.setAdapter(new ArrayAdapter<>(this.getContext(), android.R.layout.simple_dropdown_item_1line, translatedContractTimes));
         if (contractTime != null) {
-            binding.spinnerFilterContractTime.setSelection(contractTimes.indexOf(contractTime));
+            binding.spinnerFilterContractTime.setSelection(translatedContractTimes.indexOf(contractTime.getTranslation(mainActivity.language)));
         }
 
         //        Surrounding Spinner
@@ -254,26 +251,35 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
     //    currently only used for category spinner
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
         if(parent == binding.spinnerFilterCategory){
             category = binding.spinnerFilterCategory.getSelectedItem().toString();
             System.out.println("category chosen: "+category);
         }
         else if(parent == binding.spinnerFilterContractTime){
-            contractTime = (ContractTime) binding.spinnerFilterContractTime.getSelectedItem();
+            contractTime = ContractTime.getByTranslation((String) binding.spinnerFilterContractTime.getSelectedItem());
             System.out.println("contract time chosen: "+contractTime.toString());
         }
         else if(parent == binding.spinnerFilterSurrounding){
             surrounding = (int) binding.spinnerFilterSurrounding.getSelectedItem();
             System.out.println("surrounding chosen: "+surrounding);
         }
-
     }
 
     //    currently only used for category spinner
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
-        category = categoryMap.get(binding.spinnerFilterCategory.getSelectedItem().toString());
+        if(parent == binding.spinnerFilterCategory){
+            category = binding.spinnerFilterCategory.getSelectedItem().toString();
+            System.out.println("category chosen: "+category);
+        }
+        else if(parent == binding.spinnerFilterContractTime){
+            contractTime = ContractTime.getByTranslation((String) binding.spinnerFilterContractTime.getSelectedItem());
+            System.out.println("contract time chosen: "+contractTime.toString());
+        }
+        else if(parent == binding.spinnerFilterSurrounding){
+            surrounding = (int) binding.spinnerFilterSurrounding.getSelectedItem();
+            System.out.println("surrounding chosen: "+surrounding);
+        }
     }
 
     @Override
@@ -353,8 +359,8 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         Filter filter = new Filter();
         filter.addFilter(FilterType.CATEGORY,categoryMap.get(category));
         filter.addFilter(FilterType.SALARY,String.valueOf((int) Math.floor(expSalary)));
-        if(!contractTimeMap.get(contractTime.toString()).equals("-")){
-            filter.addFilter(contractTimeMap.get(contractTime.toString())+"=1");
+        if(!(contractTime.toString()).equals("-")){
+            filter.addFilter(contractTime.toString()+"=1");
         }
 
         return filter;
@@ -429,6 +435,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
         expSalary = prefs.getFloat("expSalary",1000);
         category = prefs.getString("category","it-jobs");
+        contractTime = ContractTime.getByName(prefs.getString("contractTime",ContractTime.EITHER.toString()));
         Set<String> keywordSet = prefs.getStringSet("keywords", new HashSet<String>());
         keywords = new ArrayList<>(keywordSet);
         surrounding = prefs.getInt("surrounding",5);
