@@ -101,7 +101,6 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
         // Assign variables from SharedPreferences
         getPreferences();
-        System.out.println(category);
 
 //        Inputs ------------------------------------------------
 
@@ -154,7 +153,6 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         }
 //        Collections.sort(translatedCategories);
         binding.spinnerFilterCategory.setAdapter(new ArrayAdapter<>(this.getContext(), android.R.layout.simple_dropdown_item_1line, translatedCategories));
-        System.out.println(category.getTranslation(mainActivity.language));
         binding.spinnerFilterCategory.setSelection(translatedCategories.indexOf(category.getTranslation(mainActivity.language)));
 
         //        Contract Time Spinner
@@ -234,7 +232,6 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 //        Location Button
         else if (v == binding.btnLocationPermission) {
             locationActive = binding.btnLocationPermission.isChecked();
-            System.out.println(locationActive);
             if(locationActive){
                 binding.spinnerFilterSurrounding.setVisibility(View.VISIBLE);
                 binding.txtFilterSurrounding.setVisibility(View.VISIBLE);
@@ -242,7 +239,14 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
                 binding.spinnerFilterSurrounding.setVisibility(View.GONE);
                 binding.txtFilterSurrounding.setVisibility(View.GONE);
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setMessage("Wenn du den Standort deaktivierst, kann deine Suche nicht geografisch eingegrenzt werden. Du erhältst Vorschläge aus ganz Deutschland.")
+                String message = "";
+                switch (mainActivity.language){
+                    case GERMAN:
+                        message = "Wenn du den Standort deaktivierst, kann deine Suche nicht geografisch eingegrenzt werden. Du erhältst Vorschläge aus ganz Deutschland."; break;
+                    case ENGLISH:
+                        message = "If you deactivate your location, your search cannot be filtered geographically. You will see job offers from all over Germany."; break;
+                }
+                builder.setMessage(message)
                         .setCancelable(false)
                         .setPositiveButton("Ok", (dialog, id) -> dialog.cancel());
                 AlertDialog alert = builder.create();
@@ -320,7 +324,14 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         }
         else{
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage("Entschuldige, dein Standort konnte nicht bestimmt werden.")
+            String message = "";
+            switch (mainActivity.language){
+                case GERMAN:
+                    message = "Entschuldige, dein Standort konnte nicht bestimmt werden."; break;
+                case ENGLISH:
+                    message = "Sorry, your location could not be determined."; break;
+            }
+            builder.setMessage(message)
                     .setCancelable(false)
                     .setPositiveButton("Ok", (dialog, id) -> dialog.cancel());
             AlertDialog alert = builder.create();
