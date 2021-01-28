@@ -23,6 +23,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.covid_jobber.R;
 import com.example.covid_jobber.activities.MainActivity;
@@ -48,8 +50,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Dictionary;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import okhttp3.Request;
 
@@ -71,6 +75,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
     private double expSalary = 1000;
     private ContractTime contractTime;
     private String category;
+    private List<String> keywords = new ArrayList<>();
     private int surrounding;
     private double latitude;
     private double longitude;
@@ -114,6 +119,12 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
         //        Salary Input
         binding.inputFilterSalary.setText(String.valueOf(expSalary));
+        //        Keyword Inputs
+        for (int i = 0; i < keywords.size(); i++) {
+            addKeywordView(keywords.get(i));
+            EditText view = (EditText) binding.layoutFilterKeywords.getChildAt(i);
+            view.setEnabled(false);
+        }
 
 //        Buttons ----------------------------------------------
 
@@ -122,6 +133,10 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         //        Save Button
         binding.btnFilterSave.setOnClickListener(this);
         binding.btnFilterSave.setVisibility(View.INVISIBLE);
+        //        Add Keyword Button
+        binding.btnFilterAddKeyword.setOnClickListener(this);
+        //        Delete Keyword Button
+        binding.btnFilterDeleteKeyword.setOnClickListener(this);
 
 //        Toggles ----------------------------------------------
 
@@ -167,7 +182,8 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
 //        --------------------------------------------------------------
 //        All options set to disabled if not in edit mode
-        editOptions = new ArrayList<>(Arrays.asList(binding.inputFilterSalary, binding.spinnerFilterCategory, binding.spinnerFilterContractTime, binding.btnLocationPermission,  binding.spinnerFilterSurrounding));
+        editOptions = new ArrayList<>(Arrays.asList(binding.inputFilterSalary, binding.spinnerFilterCategory, binding.spinnerFilterContractTime,
+                binding.btnLocationPermission,  binding.spinnerFilterSurrounding, binding.btnFilterAddKeyword, binding.btnFilterDeleteKeyword));
         for (View option:editOptions) {
             option.setEnabled(false);
         }
@@ -192,18 +208,38 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
     //    Currently only used for toggle button
     @Override
     public void onClick(View v) {
-//      Toggle Button to set filters to active
+//        Toggle Button to set filters to active
         if (v == binding.switchFilterToggle) {
             filtersActive = binding.switchFilterToggle.isChecked();
             System.out.println("filters: " + filtersActive);
-//      Button to start Editing
-        } else if (v == binding.btnFilterEdit) {
+
+        }
+//        Button to start Editing
+        else if (v == binding.btnFilterEdit) {
             startEditing();
-//      Button to end edting
-        } else if (v == binding.btnFilterSave) {
+
+        }
+//        Button to end edting
+        else if (v == binding.btnFilterSave) {
             endEditing();
-//      Button
-        } else if (v == binding.btnLocationPermission) {
+
+        }
+//        Add Keyword Button
+        else if(v == binding.btnFilterAddKeyword){
+            addKeywordView("");
+            keywords.add("");
+        }
+//        Delete Keyword Button
+        else if(v == binding.btnFilterDeleteKeyword){
+            int index = keywords.size()-1;
+            if(index >= 0){
+                binding.layoutFilterKeywords.removeViewAt(index);
+                keywords.remove(index);
+            }
+
+        }
+//        Location Button
+        else if (v == binding.btnLocationPermission) {
             locationActive = binding.btnLocationPermission.isChecked();
             System.out.println(locationActive);
             if(locationActive){
@@ -349,6 +385,11 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         for (View option:editOptions) {
             option.setEnabled(true);
         }
+
+        for (int i = 0; i < keywords.size(); i++) {
+            EditText view = (EditText) binding.layoutFilterKeywords.getChildAt(i);
+            view.setEnabled(true);
+        }
     }
 
     //    disables edit mode -> activated by save button
@@ -371,6 +412,13 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         }
         binding.inputFilterSalary.setText(String.valueOf(expSalary));
 
+//        Save keywords inputs
+        for (int i = 0; i < keywords.size(); i++) {
+            EditText view = (EditText) binding.layoutFilterKeywords.getChildAt(i);
+            keywords.set(i, view.getText().toString());
+            view.setEnabled(false);
+        }
+
         //get new cards based on new filter
         mainActivity.getHandler().makeApiCall(new ApiCall(mainActivity.getFilterFragment().getFilter()) {
             @Override
@@ -390,6 +438,8 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
     private void getPreferences(){
         expSalary = prefs.getFloat("expSalary",1000);
         category = prefs.getString("category","it-jobs");
+        Set<String> keywordSet = prefs.getStringSet("keywords", new HashSet<String>());
+        keywords = new ArrayList<>(keywordSet);
         surrounding = prefs.getInt("surrounding",5);
         latitude = prefs.getFloat("latitude",0);
         longitude = prefs.getFloat("longitude",0);
@@ -412,12 +462,23 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         editor.putFloat("expSalary",(float) expSalary);
         editor.putString("contractTime",contractTime.toString());
         editor.putString("category",category);
+        Set<String> keywordSet = new HashSet<>(keywords);
+        editor.putStringSet("keywords",keywordSet);
         editor.putInt("surrounding",surrounding);
         editor.putFloat("latitude",(float) latitude);
         editor.putFloat("longitude",(float) longitude);
         editor.putBoolean("filtersActive",filtersActive);
         editor.putBoolean("locationActive",locationActive);
         editor.apply();
+    }
+
+    //    Adds a EditText to the Keywords Layout with the given text
+    private void addKeywordView(String text){
+        EditText newKeyword = new EditText(this.getContext());
+        newKeyword.setId(View.generateViewId());
+        newKeyword.setText(text);
+        newKeyword.setSingleLine();
+        binding.layoutFilterKeywords.addView(newKeyword);
     }
 
 

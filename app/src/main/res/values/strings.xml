@@ -55,6 +55,8 @@
     <string name="btn_filters_fragment_toggle">Filter</string>
     <string name="btn_filters_fragment_save">Speichern</string>
     <string name="btn_filters_fragment_edit">Bearbeiten</string>
+    <string name="btn_filters_fragment_add_keyword">Keyword hinzufügen</string>
+    <string name="btn_filters_fragment_delete_keyword">Keyword löschen</string>
 
     <!--  Settings Fragment  -->
     <string name="txt_settings_fragment_title">Einstellungen</string>
