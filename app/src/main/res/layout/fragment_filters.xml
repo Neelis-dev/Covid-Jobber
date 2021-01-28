@@ -56,16 +56,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_filter_heading" />
 
-    <EditText
-        android:id="@+id/input_filter_salary"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="60dp"
-        android:ems="10"
-        android:inputType="numberDecimal"
-        android:text="@string/txt_filters_fragment_salaryinput"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/txt_filter_salary" />
+        <EditText
+            android:id="@+id/input_filter_salary"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:ems="10"
+            android:inputType="numberDecimal"
+            android:text="@string/txt_filters_fragment_salaryinput"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/txt_filter_salary" />
 
     <!--     Contract Time Field-->
     <TextView
@@ -186,23 +186,22 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:clickable="true"
-            app:fabSize="mini"
-            app:layout_constraintEnd_toEndOf="@+id/layout_filter_keywords"
-            app:layout_constraintTop_toBottomOf="@+id/layout_filter_keywords"
-            app:srcCompat="@android:drawable/ic_menu_add"
+            android:contentDescription="@string/btn_filters_fragment_add_keyword"
             android:focusable="true"
-            android:contentDescription="@string/btn_filters_fragment_add_keyword" />
+            app:fabSize="mini"
+            app:layout_constraintStart_toStartOf="@+id/layout_filter_keywords"
+            app:layout_constraintTop_toBottomOf="@+id/layout_filter_keywords"
+            app:srcCompat="@android:drawable/ic_menu_add" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btn_filter_delete_keyword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
             android:clickable="true"
             android:contentDescription="@string/btn_filters_fragment_delete_keyword"
             android:focusable="true"
             app:fabSize="mini"
-            app:layout_constraintEnd_toStartOf="@+id/btn_filter_add_keyword"
+            app:layout_constraintEnd_toEndOf="@+id/layout_filter_keywords"
             app:layout_constraintTop_toTopOf="@+id/btn_filter_add_keyword"
             app:srcCompat="@android:drawable/ic_menu_delete" />
 

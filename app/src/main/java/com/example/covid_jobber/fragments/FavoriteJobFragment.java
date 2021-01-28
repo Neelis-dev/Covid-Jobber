@@ -16,6 +16,8 @@ import com.example.covid_jobber.classes.Job;
 import com.example.covid_jobber.databinding.FragmentFavoriteJobBinding;
 import com.example.covid_jobber.enums.ContractTime;
 
+import java.util.Locale;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link FavoriteJobFragment#newInstance} factory method to

@@ -1,0 +1,68 @@
+<resources>
+    <!--    General-->
+    <string name="app_name">Covid-Jobber</string>
+    <string name="img_logo">Logo</string>
+
+    <!--    Navbar Fragment-->
+    <string name="txt_navbar_fragment_placeholder">Hello navbar fragment</string>
+    <string name="img_navbar_fragment_search">Search Button Image</string>
+    <string name="img_navbar_fragment_favorites">Favorites Button Image</string>
+    <string name="img_navbar_fragment_filters">Filters Button Image</string>
+    <string name="img_navbar_fragment_settings">Settings Button Image</string>
+
+    <!--    Swipe Fragment-->
+    <string name="img_swipe_fragment_picture">some random pic</string>
+    <string name="img_swipe_fragment_thumbsup">Thumbs up!</string>
+    <string name="img_swipe_fragment_thumbsdown">Thumbs down!</string>
+    <string name="txt_swipe_fragment_job_name_tag">Jobname:</string>
+    <string name="txt_swipe_fragment_job_description_tag">Job Description:</string>
+    <string name="txt_swipe_fragment_content_placeholder">Placeholder</string>
+
+    <!--    Item-->
+    <string name="txt_item_title">Nice Job</string>
+    <string name="txt_item_employer">Atos</string>
+    <string name="txt_item_date">13.02.2021 - 14.05.2021</string>
+    <string name="txt_item_salary">20.000€</string>
+    <string name="txt_item_decscription">Aufbereitungsmechaniker/innen der Fachrichtung Braunkohle fördern Rohkohle.</string>
+    <string name="img_item_showMore">show more</string>
+
+    <!--  Favorites Fragment  -->
+    <string name="txt_favorites_fragment_heading">Favoriten</string>
+    <string name="img_favorites_fragment_edit">Bearbeiten</string>
+
+    <!-- Favorite Job Fragment-->
+    <string name="txt_job_fragment_title">Job-Titel</string>
+    <string name="txt_job_fragment_company">Firma</string>
+    <string name="txt_job_fragment_description">Beschreibung: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</string>
+    <string name="txt_job_fragment_address">Adresse</string>
+    <string name="txt_job_fragment_category">Kategorie</string>
+    <string name="txt_job_fragment_contract_time">Arbeitszeit: </string>
+    <string name="txt_job_fragment_link">Zum Angebot</string>
+    <string name="btn_job_fragment_more">mehr</string>
+    <string name="btn_job_fragment_less">weniger</string>
+
+    <!--  Filters Fragment  -->
+    <string name="txt_filters_fragment_heading">Filter Optionen</string>
+    <string name="txt_filters_fragment_salary">Wunschgehalt:</string>
+    <string name="txt_filters_fragment_salaryinput">0:</string>
+    <string name="txt_filters_fragment_contract_time">Arbeitszeit:</string>
+    <string name="txt_filters_fragment_category">Kategorie:</string>
+    <string name="txt_filters_fragment_keywords">Keywords:</string>
+    <string name="txt_filters_fragment_surrounding">Umkreis:</string>
+    <string name="txt_filters_fragment_location">Standort:</string>
+    <string name="btn_filters_fragment_permission_on">Aktiviert</string>
+    <string name="btn_filters_fragment_permission_off">Deaktiviert</string>
+    <string name="btn_filters_fragment_toggle">Filter</string>
+    <string name="btn_filters_fragment_save">Speichern</string>
+    <string name="btn_filters_fragment_edit">Bearbeiten</string>
+    <string name="btn_filters_fragment_add_keyword">Keyword hinzufügen</string>
+    <string name="btn_filters_fragment_delete_keyword">Keyword löschen</string>
+
+    <!--  Settings Fragment  -->
+    <string name="txt_settings_fragment_title">Einstellungen</string>
+    <string name="txt_settings_fragment_language">Sprache</string>
+    <string name="txt_settings_fragment_darkmode">Darkmode</string>
+    <string name="btn_settings_fragment_export">Export</string>
+    <string name="btn_settings_fragment_import">Import</string>
+    <string name="btn_settings_fragment_darkmode">Aus</string>
+</resources>
