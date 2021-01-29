@@ -52,7 +52,7 @@
             app:backgroundTint="@color/primary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/salary"
-            app:srcCompat="@android:drawable/ic_menu_add" />
+            app:srcCompat="@android:drawable/ic_menu_add"/>
 
         <TextView
             android:id="@+id/txt_item_title"
@@ -76,7 +76,7 @@
             android:layout_marginTop="10dp"
             android:clickable="false"
             android:ems="10"
-            android:text="@string/txt_item_date"
+            android:text="@string/txt_item_contractdata"
             android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/employer" />
