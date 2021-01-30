@@ -40,20 +40,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/showMore"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="120dp"
-            android:layout_marginEnd="5dp"
-            android:clickable="true"
-            android:contentDescription="@string/img_item_showMore"
-            android:focusable="true"
-            app:backgroundTint="@color/primary"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/salary"
-            app:srcCompat="@android:drawable/ic_menu_add"/>
-
         <TextView
             android:id="@+id/txt_item_title"
             style="@style/h2"
@@ -109,19 +95,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/workingPeriod" />
 
-        <TextView
-            android:id="@+id/description"
-            style="@style/h3"
+        <Button
+            android:id="@+id/btn_item_more"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="10dp"
-            android:clickable="false"
-            android:ems="10"
-            android:text="@string/txt_item_decscription"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/salary" />
+            android:layout_marginBottom="10dp"
+            android:text="@string/btn_swipe_fragment_more"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

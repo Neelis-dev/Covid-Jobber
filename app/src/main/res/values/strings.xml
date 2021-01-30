@@ -17,6 +17,7 @@
     <string name="txt_swipe_fragment_job_name_tag">Jobname:</string>
     <string name="txt_swipe_fragment_job_description_tag">Job Description:</string>
     <string name="txt_swipe_fragment_content_placeholder">Placeholder</string>
+    <string name="btn_swipe_fragment_more">Show Offer</string>
 
     <!--    Item-->
     <string name="txt_item_title">Nice Job</string>
@@ -50,7 +51,7 @@
     <string name="txt_filters_fragment_keywords">Keywords:</string>
     <string name="txt_filters_fragment_surrounding">Distance:</string>
     <string name="txt_filters_fragment_location">Location:</string>
-    <string name="btn_filters_fragment_permission_off">Deativated</string>
+    <string name="btn_filters_fragment_permission_off">Deactivated</string>
     <string name="btn_filters_fragment_toggle">Filter</string>
     <string name="btn_filters_fragment_save">Save</string>
     <string name="btn_filters_fragment_edit">Edit</string>
@@ -64,4 +65,5 @@
     <string name="btn_settings_fragment_export">Export</string>
     <string name="btn_settings_fragment_import">Import</string>
     <string name="btn_settings_fragment_darkmode">Off</string>
+    <string name="btn_filters_fragment_permission_on">On</string>
 </resources>

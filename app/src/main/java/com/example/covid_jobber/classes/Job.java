@@ -1,7 +1,10 @@
 package com.example.covid_jobber.classes;
 
+import android.content.Intent;
+
 import com.example.covid_jobber.enums.ContractTime;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,7 +21,7 @@ public class Job {
     String category;
 
     //always in euro and always just the minimum
-    double salary;
+    int salary;
 
     public Job(){
 //        id = -1;
@@ -67,11 +70,12 @@ public class Job {
 
         // Better check if these are in the object
         this.url = jobObject.has("redirect_url") ? jobObject.getString("redirect_url") : "";
-        this.salary = jobObject.has("salary_min") ? Double.parseDouble(jobObject.get("salary_min").toString()) : -1.0;
+        this.salary = jobObject.has("salary_min") ? Integer.parseInt(jobObject.get("salary_min").toString()) : -1;
         this.description = jobObject.has("description") ? jobObject.get("description").toString() : "Keine Beschreibung vorhanden";
 
     }
 
+    @NotNull
     @Override
     public String toString() {
         return "Job{" +
@@ -147,16 +151,12 @@ public class Job {
         this.category = category;
     }
 
-    public double getSalary() {
+    public int getSalary() {
         return salary;
     }
 
-    public void setSalary(double salary) {
+    public void setSalary(int salary) {
         this.salary = salary;
     }
 
-    public String getStringSalary(){
-        String s = salary + " €";
-        return s;
-    }
 }

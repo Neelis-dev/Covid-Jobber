@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
@@ -33,7 +34,7 @@ import java.util.List;
  * Use the {@link SwipeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SwipeFragment extends Fragment {
+public class SwipeFragment extends Fragment implements View.OnClickListener {
 
     private MainActivity mainActivity;
 
@@ -82,8 +83,7 @@ public class SwipeFragment extends Fragment {
 
             @Override
             public void onRightCardExit(Object dataObject) {
-                Job currentjob = (Job) dataObject;
-                Job favorite = currentjob;
+                Job favorite = (Job) dataObject;
                 if(favorite != null){
                     mainActivity.addFavoriteJob(favorite);
                 }
@@ -136,6 +136,13 @@ public class SwipeFragment extends Fragment {
                 startActivity(i);
             }
         });
+
+
+*/
+        /*
+        Button btnJob = getView().findViewById(R.id.btn_job_more);
+        Button btnJob = v.findViewById(R.id.btn_job_more);
+        btnJob.setOnClickListener(this);
 */
         return v;
     }
@@ -149,4 +156,12 @@ public class SwipeFragment extends Fragment {
         jobitems.addAll(newJobs);
     }
 
+    @Override
+    public void onClick(View v) {
+        if(v.getId() == R.id.btn_job_more){
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(jobitems.get(0).getUrl()));
+            startActivity(i);
+        }
+    }
 }

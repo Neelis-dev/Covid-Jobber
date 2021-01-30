@@ -62,7 +62,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
     // Variables
 //    chosen options
-    private double expSalary = 1000;
+    private int expSalary = 1000;
     private ContractTime contractTime;
     private Category category;
     private List<String> keywords = new ArrayList<>();
@@ -126,7 +126,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         binding.btnFilterDeleteKeyword.setOnClickListener(this);
         //        Location Permission Button
         binding.btnLocationPermission.setOnClickListener(this);
-        //TODO: Übersetzung
+        //TODO: Übersetzung und locationActive muss persistent gespeichert werden
         if(locationActive){
             binding.btnLocationPermission.setText("Aktiviert");
         }else if(!locationActive){
@@ -427,7 +427,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
 //        Save salary input value
         try{
-            expSalary = Double.parseDouble(binding.inputFilterSalary.getText().toString());
+            expSalary = Integer.parseInt(binding.inputFilterSalary.getText().toString());
         }
         catch (NumberFormatException e){
             System.out.println("Not a number was entered");
@@ -461,7 +461,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         mainActivity = (MainActivity) getActivity();
         prefs = mainActivity.getPrefs();
 
-        expSalary = prefs.getFloat("expSalary",1000);
+        expSalary = (int) prefs.getFloat("expSalary",1000);
         category = Category.getByTag(prefs.getString("category","it-jobs"), categories);
         contractTime = ContractTime.getByName(prefs.getString("contractTime",ContractTime.EITHER.toString()));
         Set<String> keywordSet = prefs.getStringSet("keywords", new HashSet<>());
