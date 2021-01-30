@@ -19,7 +19,7 @@ public class Job {
     String category;
 
     //always in euro and always just the minimum
-    double salary;
+    int salary;
 
     public Job(){
         id = -1;
@@ -33,7 +33,7 @@ public class Job {
         created = new Date().toString();
         contractTime = ContractTime.FULL_TIME;
         category = "Öffentliche Arbeit";
-        salary = 10000.0;
+        salary = 10000;
     }
 
     public Job(JSONObject jobObject) throws JSONException {
@@ -71,7 +71,7 @@ public class Job {
 
         // Better check if these are in the object
         this.url = jobObject.has("redirect_url") ? jobObject.getString("redirect_url") : "";
-        this.salary = jobObject.has("salary_min") ? Double.parseDouble(jobObject.get("salary_min").toString()) : -1.0;
+        this.salary = jobObject.has("salary_min") ? Integer.parseInt(jobObject.get("salary_min").toString()) : -1;
         this.description = jobObject.has("description") ? jobObject.get("description").toString() : "Keine Beschreibung vorhanden";
 
     }
@@ -164,7 +164,7 @@ public class Job {
         return salary;
     }
 
-    public void setSalary(double salary) {
+    public void setSalary(int salary) {
         this.salary = salary;
     }
 }
