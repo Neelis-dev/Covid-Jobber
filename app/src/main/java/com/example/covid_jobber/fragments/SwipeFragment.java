@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
@@ -19,6 +20,8 @@ import com.example.covid_jobber.classes.Job;
 import com.example.covid_jobber.classes.services.ApiCall;
 import com.example.covid_jobber.classes.services.arrayAdapter;
 
+import com.example.covid_jobber.databinding.FragmentFavoriteJobBinding;
+import com.example.covid_jobber.databinding.FragmentSwipeBinding;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import org.jetbrains.annotations.NotNull;
@@ -33,10 +36,10 @@ import java.util.List;
  * Use the {@link SwipeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SwipeFragment extends Fragment {
+public class SwipeFragment extends Fragment implements View.OnClickListener {
 
     private MainActivity mainActivity;
-
+    private FragmentSwipeBinding binding;
     private arrayAdapter arrayAdapter;
 
     ListView listView;
@@ -55,16 +58,16 @@ public class SwipeFragment extends Fragment {
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.fragment_swipe, container, false);
+        binding = FragmentSwipeBinding.inflate(inflater, container, false);
 
         mainActivity = (MainActivity) getActivity();
 
         jobitems = new ArrayList<>();
         jobitems.add(new Job());
 
-        arrayAdapter = new arrayAdapter(getActivity(), R.layout.item, jobitems);
+        arrayAdapter = new arrayAdapter(getActivity(), R.layout.item, jobitems, mainActivity);
 
-        SwipeFlingAdapterView flingContainer = v.findViewById(R.id.frame);
+        SwipeFlingAdapterView flingContainer = binding.frame;
 
         flingContainer.setAdapter(arrayAdapter);
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
@@ -82,8 +85,7 @@ public class SwipeFragment extends Fragment {
 
             @Override
             public void onRightCardExit(Object dataObject) {
-                Job currentjob = (Job) dataObject;
-                Job favorite = currentjob;
+                Job favorite = (Job) dataObject;
                 if(favorite != null){
                     mainActivity.addFavoriteJob(favorite);
                 }
@@ -126,18 +128,9 @@ public class SwipeFragment extends Fragment {
             }
         });
 
- /*       ImageButton btn = v.findViewById(R.id.btn_job_more);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String url = jobitems.get(0).getUrl();
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(url));
-                startActivity(i);
-            }
-        });
-*/
-        return v;
+
+
+        return binding.getRoot();
     }
 
     @Override
@@ -149,4 +142,12 @@ public class SwipeFragment extends Fragment {
         jobitems.addAll(newJobs);
     }
 
+    @Override
+    public void onClick(View v) {
+        if(v.getId() == R.id.btn_job_more){
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(jobitems.get(0).getUrl()));
+            startActivity(i);
+        }
+    }
 }

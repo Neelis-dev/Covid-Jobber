@@ -2,6 +2,7 @@ package com.example.covid_jobber.classes;
 
 import com.example.covid_jobber.enums.ContractTime;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,10 +15,13 @@ public class Job {
     String company;
     String description;
     String url;
-    Address address = new Address();
+    String city;
+    double longitude;
+    double latitude;
     String created;
     ContractTime contractTime;
     String category;
+
 
     //always in euro and always just the minimum
     int salary;
@@ -25,15 +29,16 @@ public class Job {
 
 
     public Job(){
-//        id = -1;
-        title = "Finde den passenden Job: Wenn dir ein Job gefällt wischst du nach rechts, sonst nach links. Viel Spaß!";
-        company = "";
-        description = "Beginne zu wischen";
+        id = -1;
+        title = "Straßenplaner";
+        company = "Stadt Mannheim";
+        description = "Wir suchen inkompetente Straßenplaner für unsere Stadt";
         url = "";
+        city = "";
         created = new Date().toString();
         contractTime = ContractTime.FULL_TIME;
         category = "Öffentliche Arbeit";
-        salary = 10000;
+        salary = 1000;
     }
 
     public Job(JSONObject jobObject) throws JSONException {
@@ -69,23 +74,24 @@ public class Job {
         }
 
 
+
         // Better check if these are in the object
         this.url = jobObject.has("redirect_url") ? jobObject.getString("redirect_url") : "";
         this.salary = jobObject.has("salary_min") ? Integer.parseInt(jobObject.get("salary_min").toString()) : -1;
-        System.out.println(this.salary);
         this.description = jobObject.has("description") ? jobObject.get("description").toString() : "Keine Beschreibung vorhanden";
 
         if(jobObject.has("longitude") && jobObject.has("latitude")){
-            address.setLongitude(Double.parseDouble(jobObject.get("longitude").toString()));
-            address.setLatitude(Double.parseDouble(jobObject.get("latitude").toString()));
+           longitude = Double.parseDouble(jobObject.get("longitude").toString());
+           latitude = Double.parseDouble(jobObject.get("latitude").toString());
         }
         if(jobObject.has("location")){
             JSONArray area = jobObject.getJSONObject("location").getJSONArray("area");
-            address.setCity(area.get(area.length()-1).toString());
+            city = area.get(area.length()-1).toString();
         }
 
     }
 
+    @NotNull
     @Override
     public String toString() {
         return "Job{" +
@@ -94,7 +100,7 @@ public class Job {
                 ", company='" + company + '\'' +
                 ", description='" + description + '\'' +
                 ", url='" + url + '\'' +
-                ", address=" + address +
+                ", city=" + city +
                 ", created='" + created + '\'' +
                 ", contractTime=" + contractTime +
                 ", category='" + category + '\'' +
@@ -138,12 +144,12 @@ public class Job {
         this.url = url;
     }
 
-    public Address getAddress() {
-        return address;
+    public String getcity() {
+        return city;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setAddress(String city) {
+        this.city = city;
     }
 
     public String getCreated() {
@@ -178,8 +184,19 @@ public class Job {
         this.salary = salary;
     }
 
-    public String getStringSalary(){
-        String s = salary + " €";
-        return s;
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double lat) {
+        this.latitude = lat;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double lon) {
+        this.longitude = lon;
     }
 }
