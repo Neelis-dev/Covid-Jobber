@@ -516,6 +516,13 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         binding.layoutFilterKeywords.addView(newKeyword);
     }
 
+    public double getLatitude(){
+        return latitude;
+    }
+
+    public double getLongitude(){
+        return longitude;
+    }
 
 }
 
