@@ -14,7 +14,7 @@ public class Job {
     String company;
     String description;
     String url;
-    Address address;
+    Address address = new Address();
     String created;
     ContractTime contractTime;
     String category;
