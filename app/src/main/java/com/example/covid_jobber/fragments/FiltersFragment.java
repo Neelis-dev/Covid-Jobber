@@ -128,9 +128,17 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         binding.btnLocationPermission.setOnClickListener(this);
         //TODO: Übersetzung und locationActive muss persistent gespeichert werden
         if(locationActive){
-            binding.btnLocationPermission.setText("Aktiviert");
+            String btnText = "Aktiviert";
+            if(mainActivity.language == Language.ENGLISH){
+                btnText = "Activated";
+            }
+            binding.btnLocationPermission.setText(btnText);
         }else if(!locationActive){
-            binding.btnLocationPermission.setText("Deaktiviert");
+            String btnText = "Deaktiviert";
+            if(mainActivity.language == Language.ENGLISH){
+                btnText = "Deactivated";
+            }
+            binding.btnLocationPermission.setText(btnText);
         }
 
 //        Toggles ----------------------------------------------
@@ -239,7 +247,11 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
             if(locationActive){
                 locationActive = false;
                 //TODO Übersetzung
-                binding.btnLocationPermission.setText("Deaktiviert");
+                String btnText = "Deaktiviert";
+                if(mainActivity.language == Language.ENGLISH){
+                    btnText = "Deactivated";
+                }
+                binding.btnLocationPermission.setText(btnText);
                 binding.spinnerFilterSurrounding.setVisibility(View.GONE);
                 binding.txtFilterSurrounding.setVisibility(View.GONE);
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -257,7 +269,11 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
                 alert.show();
             } else if(!locationActive){
                 locationActive = true;
-                binding.btnLocationPermission.setText("Aktiviert");
+                String btnText = "Aktiviert";
+                if(mainActivity.language == Language.ENGLISH){
+                    btnText = "Activated";
+                }
+                binding.btnLocationPermission.setText(btnText);
                 binding.spinnerFilterSurrounding.setVisibility(View.VISIBLE);
                 binding.txtFilterSurrounding.setVisibility(View.VISIBLE);
                 if (ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -311,7 +327,14 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         }
         else{
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage("Wenn du den Standort nicht freigeben möchtest, kann deine Suche nicht geografisch eingegrenzt werden. Du erhältst Vorschläge aus ganz Deutschland.")
+            String message = "";
+            switch (mainActivity.language){
+                case GERMAN:
+                    message = "Wenn du den Standort nicht freigeben möchtest, kann deine Suche nicht geografisch eingegrenzt werden. Du erhältst Vorschläge aus ganz Deutschland."; break;
+                case ENGLISH:
+                    message = "If you do not want to share your location, your search cannot be filtered geographically. You will receive job offers from all Germany."; break;
+            }
+            builder.setMessage(message)
                     .setCancelable(false)
                     .setPositiveButton("Ok", (dialog, id) -> dialog.cancel());
             AlertDialog alert = builder.create();
