@@ -2,6 +2,7 @@ package com.example.covid_jobber.classes;
 
 import com.example.covid_jobber.enums.ContractTime;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,7 +15,9 @@ public class Job {
     String company;
     String description;
     String url;
-    Address address;
+    String city;
+    double longitude;
+    double latitude;
     String created;
     ContractTime contractTime;
     String category;
@@ -31,9 +34,7 @@ public class Job {
         company = "Stadt Mannheim";
         description = "Wir suchen inkompetente Straßenplaner für unsere Stadt";
         url = "";
-        address.setCity("Mannheim");
-        address.setCountry("Germany");
-        address.setDisplayName("E 5, 68159 Mannheim");
+        city = "";
         created = new Date().toString();
         contractTime = ContractTime.FULL_TIME;
         category = "Öffentliche Arbeit";
@@ -80,16 +81,17 @@ public class Job {
         this.description = jobObject.has("description") ? jobObject.get("description").toString() : "Keine Beschreibung vorhanden";
 
         if(jobObject.has("longitude") && jobObject.has("latitude")){
-            address.setLongitude(Double.parseDouble(jobObject.get("longitude").toString()));
-            address.setLatitude(Double.parseDouble(jobObject.get("latitude").toString()));
+           longitude = Double.parseDouble(jobObject.get("longitude").toString());
+           latitude = Double.parseDouble(jobObject.get("latitude").toString());
         }
         if(jobObject.has("location")){
             JSONArray area = jobObject.getJSONObject("location").getJSONArray("area");
-            address.setCity(area.get(area.length()-1).toString());
+            city =area.get(area.length()-1).toString();
         }
 
     }
 
+    @NotNull
     @Override
     public String toString() {
         return "Job{" +
@@ -98,7 +100,7 @@ public class Job {
                 ", company='" + company + '\'' +
                 ", description='" + description + '\'' +
                 ", url='" + url + '\'' +
-                ", address=" + address +
+                ", city=" + city +
                 ", created='" + created + '\'' +
                 ", contractTime=" + contractTime +
                 ", category='" + category + '\'' +
@@ -142,12 +144,12 @@ public class Job {
         this.url = url;
     }
 
-    public Address getAddress() {
-        return address;
+    public String getcity() {
+        return city;
     }
 
-    public void setAddress(Address address) {
-        this.address = address;
+    public void setAddress(String city) {
+        this.city = city;
     }
 
     public String getCreated() {
@@ -180,5 +182,21 @@ public class Job {
 
     public void setSalary(int salary) {
         this.salary = salary;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double lat) {
+        this.latitude = lat;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double lon) {
+        this.longitude = lon;
     }
 }
