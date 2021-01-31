@@ -77,6 +77,7 @@ public class Job {
         // Better check if these are in the object
         this.url = jobObject.has("redirect_url") ? jobObject.getString("redirect_url") : "";
         this.salary = jobObject.has("salary_min") ? Integer.parseInt(jobObject.get("salary_min").toString()) : -1;
+        System.out.println(this.salary);
         this.description = jobObject.has("description") ? jobObject.get("description").toString() : "Keine Beschreibung vorhanden";
 
         if(jobObject.has("longitude") && jobObject.has("latitude")){

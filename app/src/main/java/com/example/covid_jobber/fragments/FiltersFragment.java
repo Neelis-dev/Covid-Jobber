@@ -371,10 +371,6 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
 
     public Filter getFilter(){
-        if(!filtersActive){
-            return new Filter();
-        }
-
         Filter filter = new Filter();
         filter.addFilter(FilterType.CATEGORY,category.getTag());
         filter.addFilter(FilterType.SALARY,String.valueOf((int) Math.floor(expSalary)));
@@ -389,7 +385,10 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
                 keywordString = keywordString + keywords.get(i) + ",";
             }
         }
-        filter.addFilter(FilterType.KEYWORDS,keywordString);
+        if(!keywordString.equals("")){
+            filter.addFilter(FilterType.KEYWORDS,keywordString);
+        }
+
 
         return filter;
     }
