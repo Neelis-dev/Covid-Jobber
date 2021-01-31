@@ -38,7 +38,7 @@ public class Job {
         created = new Date().toString();
         contractTime = ContractTime.FULL_TIME;
         category = "Öffentliche Arbeit";
-        salary = 10000;
+        salary = 1000;
     }
 
     public Job(JSONObject jobObject) throws JSONException {
@@ -86,7 +86,7 @@ public class Job {
         }
         if(jobObject.has("location")){
             JSONArray area = jobObject.getJSONObject("location").getJSONArray("area");
-            city =area.get(area.length()-1).toString();
+            city = area.get(area.length()-1).toString();
         }
 
     }
@@ -176,7 +176,7 @@ public class Job {
         this.category = category;
     }
 
-    public double getSalary() {
+    public int getSalary() {
         return salary;
     }
 
