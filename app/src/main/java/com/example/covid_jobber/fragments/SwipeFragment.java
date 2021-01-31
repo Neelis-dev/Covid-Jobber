@@ -20,6 +20,8 @@ import com.example.covid_jobber.classes.Job;
 import com.example.covid_jobber.classes.services.ApiCall;
 import com.example.covid_jobber.classes.services.arrayAdapter;
 
+import com.example.covid_jobber.databinding.FragmentFavoriteJobBinding;
+import com.example.covid_jobber.databinding.FragmentSwipeBinding;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import org.jetbrains.annotations.NotNull;
@@ -37,7 +39,7 @@ import java.util.List;
 public class SwipeFragment extends Fragment implements View.OnClickListener {
 
     private MainActivity mainActivity;
-
+    private FragmentSwipeBinding binding;
     private arrayAdapter arrayAdapter;
 
     ListView listView;
@@ -56,7 +58,7 @@ public class SwipeFragment extends Fragment implements View.OnClickListener {
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v = inflater.inflate(R.layout.fragment_swipe, container, false);
+        binding = FragmentSwipeBinding.inflate(inflater, container, false);
 
         mainActivity = (MainActivity) getActivity();
 
@@ -65,7 +67,7 @@ public class SwipeFragment extends Fragment implements View.OnClickListener {
 
         arrayAdapter = new arrayAdapter(getActivity(), R.layout.item, jobitems);
 
-        SwipeFlingAdapterView flingContainer = v.findViewById(R.id.frame);
+        SwipeFlingAdapterView flingContainer = binding.frame;
 
         flingContainer.setAdapter(arrayAdapter);
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
@@ -126,25 +128,9 @@ public class SwipeFragment extends Fragment implements View.OnClickListener {
             }
         });
 
- /*       ImageButton btn = v.findViewById(R.id.btn_job_more);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String url = jobitems.get(0).getUrl();
-                Intent i = new Intent(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(url));
-                startActivity(i);
-            }
-        });
 
 
-*/
-        /*
-        Button btnJob = getView().findViewById(R.id.btn_job_more);
-        Button btnJob = v.findViewById(R.id.btn_job_more);
-        btnJob.setOnClickListener(this);
-*/
-        return v;
+        return binding.getRoot();
     }
 
     @Override

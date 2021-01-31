@@ -25,9 +25,9 @@ public class Job {
 
     public Job(){
 //        id = -1;
-        title = "Finde den passenden Job: Wenn dir ein Job gefällt wischst du nach rechts, sonst nach links. Viel Spaß!";
+        title = "Beginne zu wischen";
         company = "";
-        description = "Beginne zu wischen";
+        description = "";
         url = "";
         created = new Date().toString();
         contractTime = ContractTime.FULL_TIME;

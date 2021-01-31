@@ -21,10 +21,10 @@
 
     <!--    Item-->
     <string name="txt_item_title">Nice Job</string>
-    <string name="txt_item_employer">Atos</string>
-    <string name="txt_item_contractdata">Vollzeit</string>
+    <string name="txt_item_location">Location</string>
+    <string name="txt_item_employer">Company</string>
+    <string name="txt_item_contractdata">Contract Time</string>
     <string name="txt_item_salary">20.000€</string>
-    <string name="txt_item_decscription">Aufbereitungsmechaniker/innen der Fachrichtung Braunkohle fördern Rohkohle.</string>
     <string name="img_item_showMore">show more</string>
 
     <!--  Favorites Fragment  -->
