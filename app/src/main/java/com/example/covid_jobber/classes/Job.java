@@ -19,21 +19,17 @@ public class Job {
     ContractTime contractTime;
     String category;
 
-
     //always in euro and always just the minimum
     int salary;
 
 
 
     public Job(){
-        id = -1;
-        title = "Straßenplaner";
-        company = "Stadt Mannheim";
-        description = "Wir suchen inkompetente Straßenplaner für unsere Stadt";
+//        id = -1;
+        title = "Finde den passenden Job: Wenn dir ein Job gefällt wischst du nach rechts, sonst nach links. Viel Spaß!";
+        company = "";
+        description = "Beginne zu wischen";
         url = "";
-        address.setCity("Mannheim");
-        address.setCountry("Germany");
-        address.setDisplayName("E 5, 68159 Mannheim");
         created = new Date().toString();
         contractTime = ContractTime.FULL_TIME;
         category = "Öffentliche Arbeit";
@@ -71,7 +67,6 @@ public class Job {
         else {
             contractTime = ContractTime.EITHER;
         }
-
 
 
         // Better check if these are in the object
@@ -175,11 +170,16 @@ public class Job {
         this.category = category;
     }
 
-    public double getSalary() {
+    public int getSalary() {
         return salary;
     }
 
     public void setSalary(int salary) {
         this.salary = salary;
+    }
+
+    public String getStringSalary(){
+        String s = salary + " €";
+        return s;
     }
 }

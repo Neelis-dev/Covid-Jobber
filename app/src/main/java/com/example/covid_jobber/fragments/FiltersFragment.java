@@ -124,15 +124,20 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         binding.btnFilterAddKeyword.setOnClickListener(this);
         //        Delete Keyword Button
         binding.btnFilterDeleteKeyword.setOnClickListener(this);
+        //        Location Permission Button
+        binding.btnLocationPermission.setOnClickListener(this);
+        //TODO: Übersetzung
+        if(locationActive){
+            binding.btnLocationPermission.setText("Aktiviert");
+        }else if(!locationActive){
+            binding.btnLocationPermission.setText("Deaktiviert");
+        }
 
 //        Toggles ----------------------------------------------
 
         //        Filter toggle
         binding.switchFilterToggle.setOnClickListener(this);
         binding.switchFilterToggle.setChecked(filtersActive);
-        //        Location Permission toggle
-        binding.btnLocationPermission.setOnClickListener(this);
-        binding.btnLocationPermission.setChecked(locationActive);
         //        Surrounding Option visible/not visible -> depends on locationActive
         if(locationActive){
             binding.txtFilterSurrounding.setVisibility(View.VISIBLE);
@@ -231,31 +236,35 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         }
 //        Location Button
         else if (v == binding.btnLocationPermission) {
-            locationActive = binding.btnLocationPermission.isChecked();
             if(locationActive){
-                binding.spinnerFilterSurrounding.setVisibility(View.VISIBLE);
-                binding.txtFilterSurrounding.setVisibility(View.VISIBLE);
-            } else if(!locationActive){
+                locationActive = false;
+                //TODO Übersetzung
+                binding.btnLocationPermission.setText("Deaktiviert");
                 binding.spinnerFilterSurrounding.setVisibility(View.GONE);
                 binding.txtFilterSurrounding.setVisibility(View.GONE);
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 String message = "";
                 switch (mainActivity.language){
                     case GERMAN:
-                        message = "Wenn du den Standort deaktivierst, kann deine Suche nicht geografisch eingegrenzt werden. Du erhältst Vorschläge aus ganz Deutschland."; break;
+                        message = "Wenn du den Standort deaktivierst, kann deine Suche nicht geografisch eingegrenzt werden. Du erhältst Vorschläge aus ganz Deutschland. Settings > Location > App access to location > Covid-Jobber > Deny"; break;
                     case ENGLISH:
-                        message = "If you deactivate your location, your search cannot be filtered geographically. You will see job offers from all over Germany."; break;
+                        message = "If you deactivate your location, your search cannot be filtered geographically. You will see job offers from all over Germany. Settings > Location > App access to location > Covid-Jobber > Deny"; break;
                 }
                 builder.setMessage(message)
                         .setCancelable(false)
                         .setPositiveButton("Ok", (dialog, id) -> dialog.cancel());
                 AlertDialog alert = builder.create();
                 alert.show();
-            }
-            if (ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                updateLocation();
-            } else {
-                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 0);
+            } else if(!locationActive){
+                locationActive = true;
+                binding.btnLocationPermission.setText("Aktiviert");
+                binding.spinnerFilterSurrounding.setVisibility(View.VISIBLE);
+                binding.txtFilterSurrounding.setVisibility(View.VISIBLE);
+                if (ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    updateLocation();
+                } else {
+                    requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 0);
+                }
             }
         }
     }
@@ -463,7 +472,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         expSalary = prefs.getFloat("expSalary",1000);
         category = Category.getByTag(prefs.getString("category","it-jobs"), categories);
         contractTime = ContractTime.getByName(prefs.getString("contractTime",ContractTime.EITHER.toString()));
-        Set<String> keywordSet = prefs.getStringSet("keywords", new HashSet<String>());
+        Set<String> keywordSet = prefs.getStringSet("keywords", new HashSet<>());
         keywords = new ArrayList<>(keywordSet);
         surrounding = prefs.getInt("surrounding",5);
         latitude = prefs.getFloat("latitude",0);
