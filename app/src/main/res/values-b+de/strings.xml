@@ -17,13 +17,14 @@
     <string name="txt_swipe_fragment_job_name_tag">Jobname:</string>
     <string name="txt_swipe_fragment_job_description_tag">Job Description:</string>
     <string name="txt_swipe_fragment_content_placeholder">Placeholder</string>
+    <string name="btn_swipe_fragment_more">Zum Angebot</string>
 
     <!--    Item-->
     <string name="txt_item_title">Nice Job</string>
+    <string name="txt_item_location">Location</string>
     <string name="txt_item_employer">Atos</string>
-    <string name="txt_item_date">13.02.2021 - 14.05.2021</string>
     <string name="txt_item_salary">20.000€</string>
-    <string name="txt_item_decscription">Aufbereitungsmechaniker/innen der Fachrichtung Braunkohle fördern Rohkohle.</string>
+    <string name="txt_item_contractdata">Arbeitszeit</string>
     <string name="img_item_showMore">show more</string>
 
     <!--  Favorites Fragment  -->

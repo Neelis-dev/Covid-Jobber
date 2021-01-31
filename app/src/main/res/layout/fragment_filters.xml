@@ -35,12 +35,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="UseSwitchCompatOrMaterialXml" />
 
-        <ToggleButton
+        <Button
             android:id="@+id/btn_location_permission"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:textOff="@string/btn_filters_fragment_permission_off"
-            android:textOn="@string/btn_filters_fragment_permission_on"
+            android:text="@string/btn_filters_fragment_permission_off"
             app:layout_constraintEnd_toEndOf="@+id/input_filter_salary"
             app:layout_constraintTop_toTopOf="@+id/txt_filter_location" />
 
