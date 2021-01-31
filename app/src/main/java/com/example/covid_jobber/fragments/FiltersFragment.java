@@ -390,6 +390,15 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         if(!(contractTime.toString()).equals("-")){
             filter.addFilter(contractTime.toString()+"=1");
         }
+        String keywordString="";
+        for(int i = 0;i<keywords.size();i++){
+            if(i == keywords.size()-1){
+                keywordString = keywordString + keywords.get(i);
+            }else{
+                keywordString = keywordString + keywords.get(i) + ",";
+            }
+        }
+        filter.addFilter(FilterType.KEYWORDS,keywordString);
 
         return filter;
     }

@@ -32,8 +32,12 @@ public class FavoriteJobFragment extends Fragment implements View.OnClickListene
     private MainActivity mainActivity;
 
     public FavoriteJobFragment(Job job) {
-        // Required empty public constructor
         this.job = job;
+    }
+
+    public FavoriteJobFragment() {
+        // Required empty public constructor
+        this.job = null;
     }
 
     public static FavoriteJobFragment newInstance(Job job) {
@@ -60,16 +64,19 @@ public class FavoriteJobFragment extends Fragment implements View.OnClickListene
         binding.btnJobDelete.setVisibility(View.GONE);
 
 //        set texts
-        binding.txtJobTitle.setText(job.getTitle());
-        binding.txtJobCompany.setText(job.getCompany());
+        if(job != null){
+            binding.txtJobTitle.setText(job.getTitle());
+            binding.txtJobCompany.setText(job.getCompany());
 
-        String contractTimeText = "Arbeitszeit: Unbekannt";
-        if(job.getContractTime() != ContractTime.EITHER){
-            contractTimeText = "Arbeitszeit: "+job.getContractTime().toString();
+            String contractTimeText = "Arbeitszeit: Unbekannt";
+            if(job.getContractTime() != ContractTime.EITHER){
+                contractTimeText = "Arbeitszeit: "+job.getContractTime().toString();
+            }
+            binding.txtJobContractTime.setText(contractTimeText);
+
+            binding.txtJobDescription.setText(job.getDescription());
         }
-        binding.txtJobContractTime.setText(contractTimeText);
 
-        binding.txtJobDescription.setText(job.getDescription());
 
 //        hide lower part
         minimize();
