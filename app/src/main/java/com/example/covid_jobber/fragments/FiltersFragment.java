@@ -184,6 +184,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
             option.setEnabled(false);
         }
 
+
         return binding.getRoot();
     }
 
@@ -204,14 +205,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
     //    Currently only used for toggle button
     @Override
     public void onClick(View v) {
-//        Toggle Button to set filters to active
-        if (v == binding.switchFilterToggle) {
-            filtersActive = binding.switchFilterToggle.isChecked();
-            System.out.println("filters: " + filtersActive);
-
-        }
-//        Button to start Editing
-        else if (v == binding.btnFilterEdit) {
+        if (v == binding.btnFilterEdit) {
             startEditing();
 
         }
@@ -380,6 +374,11 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
 
     public Filter getFilter(){
+
+        if(!filtersActive){
+            return new Filter();
+        }
+
         Filter filter = new Filter();
         filter.addFilter(FilterType.CATEGORY,category.getTag());
         filter.addFilter(FilterType.SALARY,String.valueOf((int) Math.floor(expSalary)));

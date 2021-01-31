@@ -98,8 +98,7 @@ public class SwipeFragment extends Fragment implements View.OnClickListener {
                 }
 
 
-//                Log.d("TAG", "CARDS ABOUT TO RUN OUT");
-
+                Log.d("TAG", "CARDS ABOUT TO RUN OUT");
                 mainActivity.getHandler().makeApiCall(new ApiCall(mainActivity.getFilterFragment().getFilter()) {
                     @Override
                     public void callback(JSONArray results) {
