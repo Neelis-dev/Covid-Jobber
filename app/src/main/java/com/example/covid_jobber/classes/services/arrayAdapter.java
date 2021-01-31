@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.covid_jobber.R;
+import com.example.covid_jobber.activities.MainActivity;
 import com.example.covid_jobber.classes.Job;
 
 import java.util.List;
@@ -16,9 +17,11 @@ import java.util.List;
 public class arrayAdapter extends ArrayAdapter<Job> {
 
     Context context;
+    MainActivity mainActivity;
 
-    public arrayAdapter(Context context, int resourceId, List<Job> items) {
+    public arrayAdapter(Context context, int resourceId, List<Job> items, MainActivity mainActivity) {
         super(context, resourceId, items);
+        this.mainActivity = mainActivity;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -56,9 +59,16 @@ public class arrayAdapter extends ArrayAdapter<Job> {
         name.setText(job_item.getTitle());
         location.setText(job_item.getcity() + " (" + dist + " Km)");
         employer.setText(job_item.getCompany());
-        workingperiod.setText(job_item.getContractTime().toString());
+        workingperiod.setText(job_item.getContractTime().getTranslation(mainActivity.language));
         if(job_item.getSalary() < 0){
-            salary.setText("Unbekannt");
+            String text = "";
+            switch (mainActivity.language){
+                case GERMAN:
+                    text = "Unbekannt"; break;
+                case ENGLISH:
+                    text = "Unknown"; break;
+            }
+            salary.setText(text);
         }else {
             salary.setText(job_item.getSalary() + " €");
         }

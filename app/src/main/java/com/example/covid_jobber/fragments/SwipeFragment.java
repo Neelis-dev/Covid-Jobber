@@ -65,7 +65,7 @@ public class SwipeFragment extends Fragment implements View.OnClickListener {
         jobitems = new ArrayList<>();
         jobitems.add(new Job());
 
-        arrayAdapter = new arrayAdapter(getActivity(), R.layout.item, jobitems);
+        arrayAdapter = new arrayAdapter(getActivity(), R.layout.item, jobitems, mainActivity);
 
         SwipeFlingAdapterView flingContainer = binding.frame;
 
