@@ -2,6 +2,7 @@ package com.example.covid_jobber.classes;
 
 import com.example.covid_jobber.enums.ContractTime;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -18,8 +19,11 @@ public class Job {
     ContractTime contractTime;
     String category;
 
+
     //always in euro and always just the minimum
     int salary;
+
+
 
     public Job(){
         id = -1;
@@ -69,10 +73,20 @@ public class Job {
         }
 
 
+
         // Better check if these are in the object
         this.url = jobObject.has("redirect_url") ? jobObject.getString("redirect_url") : "";
         this.salary = jobObject.has("salary_min") ? Integer.parseInt(jobObject.get("salary_min").toString()) : -1;
         this.description = jobObject.has("description") ? jobObject.get("description").toString() : "Keine Beschreibung vorhanden";
+
+        if(jobObject.has("longitude") && jobObject.has("latitude")){
+            address.setLongitude(Double.parseDouble(jobObject.get("longitude").toString()));
+            address.setLatitude(Double.parseDouble(jobObject.get("latitude").toString()));
+        }
+        if(jobObject.has("location")){
+            JSONArray area = jobObject.getJSONObject("location").getJSONArray("area");
+            address.setCity(area.get(area.length()-1).toString());
+        }
 
     }
 
