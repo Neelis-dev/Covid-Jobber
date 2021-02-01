@@ -62,7 +62,7 @@
             app:layout_constraintTop_toTopOf="@+id/txt_settings_darkmode" />
 
         <Button
-            android:id="@+id/btn_export"
+            android:id="@+id/btn_settings_recommend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
