@@ -67,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
         setLanguage();
         setMode();
 
-//        filtersFragment.getPreferences();
 
 //        At first Swipe Fragment in Content Frame
         replaceFrame(R.id.content_frame, swipeFragment);
@@ -124,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
     public FavoritesFragment getFavoritesFragment(){
         return favoritesFragment;
     }
-
+    public SwipeFragment getSwipeFragment(){return swipeFragment;}
     public ApiHandler getHandler(){
         return handler;
     }

@@ -25,7 +25,7 @@ public abstract class ApiCall {
                                  .url(foundationURL+pageNumber+"?app_id="+appId+"&app_key="+appKey+"&results_per_page=50")
                                  .build();
     }
-    public ApiCall(Filter filter){
+    public ApiCall(Filter filter, int pageNumber){
         request = new Request.Builder()
                 .url(foundationURL+1+"?app_id="+appId+"&app_key="+appKey+"&results_per_page=50")
                 .build();

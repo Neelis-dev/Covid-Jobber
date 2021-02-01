@@ -42,6 +42,8 @@ public class SwipeFragment extends Fragment implements View.OnClickListener {
     private FragmentSwipeBinding binding;
     private arrayAdapter arrayAdapter;
 
+    private int pageNumber = 1;
+
     ListView listView;
     List<Job> jobitems;
 
@@ -97,9 +99,10 @@ public class SwipeFragment extends Fragment implements View.OnClickListener {
                     return;
                 }
 
-
+                mainActivity.getFilterFragment().setMainActivity((MainActivity) getActivity());
+                mainActivity.getFilterFragment().getPreferences();
                 Log.d("TAG", "CARDS ABOUT TO RUN OUT");
-                mainActivity.getHandler().makeApiCall(new ApiCall(mainActivity.getFilterFragment().getFilter()) {
+                mainActivity.getHandler().makeApiCall(new ApiCall(mainActivity.getFilterFragment().getFilter(),getPageNumberAndIncrease()) {
                     @Override
                     public void callback(JSONArray results) {
                         try {
@@ -149,4 +152,12 @@ public class SwipeFragment extends Fragment implements View.OnClickListener {
             startActivity(i);
         }
     }
+
+    public void setPageNumber(int n){
+        pageNumber = n;
+    }
+    public int getPageNumberAndIncrease(){
+        return pageNumber++;
+    }
+
 }

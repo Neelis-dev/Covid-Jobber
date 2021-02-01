@@ -28,7 +28,6 @@ import com.example.covid_jobber.classes.services.Filter;
 import com.example.covid_jobber.classes.services.FilterType;
 import com.example.covid_jobber.databinding.FragmentFiltersBinding;
 import com.example.covid_jobber.enums.ContractTime;
-import com.example.covid_jobber.enums.Language;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 
@@ -38,11 +37,8 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import okhttp3.Request;
@@ -96,8 +92,8 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
                              Bundle savedInstanceState) {
         binding = FragmentFiltersBinding.inflate(inflater, container, false);
 
-        mainActivity = (MainActivity) getActivity();
-        prefs = mainActivity.getPrefs();
+
+
 
         // Assign variables from SharedPreferences
         getPreferences();
@@ -133,11 +129,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
             binding.btnLocationPermission.setText("Deaktiviert");
         }
 
-//        Toggles ----------------------------------------------
-
-        //        Filter toggle
-        binding.switchFilterToggle.setOnClickListener(this);
-        binding.switchFilterToggle.setChecked(filtersActive);
+//        Toggles --------------------------------------------
         //        Surrounding Option visible/not visible -> depends on locationActive
         if(locationActive){
             binding.txtFilterSurrounding.setVisibility(View.VISIBLE);
@@ -375,12 +367,15 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
     public Filter getFilter(){
 
-        if(!filtersActive){
-            return new Filter();
-        }
 
         Filter filter = new Filter();
-        filter.addFilter(FilterType.CATEGORY,category.getTag());
+
+        // Annoying workaround because of having to wait for the API ask Neelis for explanation
+        while(category==null){
+            getPreferences();
+        }
+
+        filter.addFilter(FilterType.CATEGORY,category.toString());
         filter.addFilter(FilterType.SALARY,String.valueOf((int) Math.floor(expSalary)));
         if(!(contractTime.toString()).equals("-")){
             filter.addFilter(contractTime.toString()+"=1");
@@ -423,6 +418,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
     //    disables edit mode -> activated by save button
     private void endEditing(){
+        mainActivity.getSwipeFragment().setPageNumber(1);
         editing = false;
         binding.btnFilterSave.setVisibility(View.INVISIBLE);
         binding.btnFilterEdit.setEnabled(true);
@@ -449,7 +445,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         }
 
         //get new cards based on new filter
-        mainActivity.getHandler().makeApiCall(new ApiCall(mainActivity.getFilterFragment().getFilter()) {
+        mainActivity.getHandler().makeApiCall(new ApiCall(mainActivity.getFilterFragment().getFilter(),mainActivity.getSwipeFragment().getPageNumberAndIncrease()) {
             @Override
             public void callback(JSONArray results) {
                 try {
@@ -465,11 +461,10 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
     // Assign variables from SharedPreferences
     public void getPreferences(){
-        mainActivity = (MainActivity) getActivity();
         prefs = mainActivity.getPrefs();
 
-        expSalary = (int) prefs.getFloat("expSalary",1000);
         category = Category.getByTag(prefs.getString("category","it-jobs"), categories);
+        expSalary = (int) prefs.getFloat("expSalary",1000);
         contractTime = ContractTime.getByName(prefs.getString("contractTime",ContractTime.EITHER.toString()));
         Set<String> keywordSet = prefs.getStringSet("keywords", new HashSet<>());
         keywords = new ArrayList<>(keywordSet);
@@ -522,6 +517,9 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         return longitude;
     }
 
+    public void setMainActivity(MainActivity mainActivity) {
+        this.mainActivity = mainActivity;
+    }
 }
 
 
