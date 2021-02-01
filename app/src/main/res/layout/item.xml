@@ -2,11 +2,16 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="300dp"
-    android:layout_height="550dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:layout_gravity="center"
+    android:layout_marginLeft="25dp"
+    android:layout_marginTop="25dp"
+    android:layout_marginRight="25dp"
+    android:layout_marginBottom="25dp"
     android:background="#FFFFFF"
     android:visibility="visible"
+
     tools:ignore="ExtraText">
 
     <View
@@ -29,23 +34,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.gms.maps.MapView
-            android:id="@+id/mapView"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            app:layout_constraintBottom_toTopOf="@+id/txt_item_title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.2" />
-
         <TextView
             android:id="@+id/txt_item_title"
             style="@style/h2"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="160dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="10dp"
             android:gravity="center"
             android:textColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
@@ -54,76 +50,109 @@
             tools:text="@string/txt_item_title" />
 
         <TextView
-            android:id="@+id/workingPeriod"
+            android:id="@+id/txt_item_location_description"
             style="@style/h3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
+            android:layout_marginTop="35dp"
+            android:text="@string/txt_item_location_description"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_item_title" />
+
+        <TextView
+            android:id="@+id/txt_item_location"
+            style="@style/h3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_item_location"
+            app:layout_constraintEnd_toEndOf="@+id/txt_item_company"
+            app:layout_constraintStart_toStartOf="@+id/txt_item_company"
+            app:layout_constraintTop_toTopOf="@+id/txt_item_location_description" />
+
+        <TextView
+            android:id="@+id/txt_item_company_description"
+            style="@style/h3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:text="@string/txt_item_company_description"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="@+id/txt_item_location_description"
+            app:layout_constraintTop_toTopOf="@+id/txt_item_company" />
+
+        <TextView
+            android:id="@+id/txt_item_company"
+            style="@style/h3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:clickable="false"
-            android:ems="10"
+            android:text="@string/txt_item_company"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="@+id/txt_item_contracttime"
+            app:layout_constraintStart_toStartOf="@+id/txt_item_contracttime"
+            app:layout_constraintTop_toBottomOf="@+id/txt_item_location" />
+
+        <TextView
+            android:id="@+id/txt_item_contracttime_description"
+            style="@style/h3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:text="@string/txt_item_contractdata_description"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="@+id/txt_item_company_description"
+            app:layout_constraintTop_toTopOf="@+id/txt_item_contracttime" />
+
+        <TextView
+            android:id="@+id/txt_item_contracttime"
+            style="@style/h3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="35dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="25dp"
+            android:clickable="false"
             android:text="@string/txt_item_contractdata"
             android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/employer" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/txt_item_contracttime_description"
+            app:layout_constraintTop_toBottomOf="@+id/txt_item_company" />
 
         <TextView
-            android:id="@+id/employer"
+            android:id="@+id/txt_item_salary_description"
             style="@style/h3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="15dp"
             android:clickable="false"
-            android:ems="10"
-            android:text="@string/txt_item_employer"
+            android:text="@string/txt_item_salary_description"
             android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/location" />
+            app:layout_constraintStart_toStartOf="@+id/txt_item_contracttime_description"
+            app:layout_constraintTop_toTopOf="@+id/txt_item_salary" />
 
         <TextView
-            android:id="@+id/salary"
+            android:id="@+id/txt_item_salary"
             style="@style/h3"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
             android:layout_marginTop="15dp"
             android:clickable="false"
-            android:ems="10"
             android:text="@string/txt_item_salary"
             android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/workingPeriod" />
+            app:layout_constraintEnd_toEndOf="@+id/txt_item_contracttime"
+            app:layout_constraintStart_toStartOf="@+id/txt_item_contracttime"
+            app:layout_constraintTop_toBottomOf="@+id/txt_item_contracttime" />
 
         <Button
             android:id="@+id/btn_item_more"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="20dp"
             android:text="@string/btn_swipe_fragment_more"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/location"
-            style="@style/h3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="20dp"
-            android:text="@string/txt_item_location"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_item_title" />
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:drawable/ic_menu_mapmode" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

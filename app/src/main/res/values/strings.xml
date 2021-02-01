@@ -21,9 +21,13 @@
 
     <!--    Item-->
     <string name="txt_item_title">Nice Job</string>
+    <string name="txt_item_location_description">Location:</string>
     <string name="txt_item_location">Location</string>
-    <string name="txt_item_employer">Company</string>
+    <string name="txt_item_company_description">Company:</string>
+    <string name="txt_item_company">Company</string>
+    <string name="txt_item_contractdata_description">Contract Time:</string>
     <string name="txt_item_contractdata">Contract Time</string>
+    <string name="txt_item_salary_description">Salary:</string>
     <string name="txt_item_salary">20.000€</string>
     <string name="img_item_showMore">show more</string>
 
@@ -62,8 +66,7 @@
     <string name="txt_settings_fragment_title">Settings</string>
     <string name="txt_settings_fragment_language">Language</string>
     <string name="txt_settings_fragment_darkmode">Dark Mode</string>
-    <string name="btn_settings_fragment_export">Export</string>
-    <string name="btn_settings_fragment_import">Import</string>
+    <string name="btn_settings_fragment_recommend">Recommend this app</string>
     <string name="btn_settings_fragment_darkmode">Off</string>
     <string name="btn_filters_fragment_permission_on">On</string>
 </resources>

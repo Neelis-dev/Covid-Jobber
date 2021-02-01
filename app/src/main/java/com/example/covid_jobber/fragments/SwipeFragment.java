@@ -36,7 +36,7 @@ import java.util.List;
  * Use the {@link SwipeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SwipeFragment extends Fragment implements View.OnClickListener {
+public class SwipeFragment extends Fragment {
 
     private MainActivity mainActivity;
     private FragmentSwipeBinding binding;
@@ -128,8 +128,6 @@ public class SwipeFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-
-
         return binding.getRoot();
     }
 
@@ -140,14 +138,5 @@ public class SwipeFragment extends Fragment implements View.OnClickListener {
 
     public void addJob(List<Job> newJobs) {
         jobitems.addAll(newJobs);
-    }
-
-    @Override
-    public void onClick(View v) {
-        if(v.getId() == R.id.btn_job_more){
-            Intent i = new Intent(Intent.ACTION_VIEW);
-            i.setData(Uri.parse(jobitems.get(0).getUrl()));
-            startActivity(i);
-        }
     }
 }
