@@ -62,7 +62,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
     // Variables
 //    chosen options
-    private double expSalary = 1000;
+    private int expSalary = 1000;
     private ContractTime contractTime;
     private Category category;
     private List<String> keywords = new ArrayList<>();
@@ -124,15 +124,28 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         binding.btnFilterAddKeyword.setOnClickListener(this);
         //        Delete Keyword Button
         binding.btnFilterDeleteKeyword.setOnClickListener(this);
+        //        Location Permission Button
+        binding.btnLocationPermission.setOnClickListener(this);
+        //TODO: Übersetzung und locationActive muss persistent gespeichert werden
+        if(locationActive){
+            String btnText = "Aktiviert";
+            if(mainActivity.language == Language.ENGLISH){
+                btnText = "Activated";
+            }
+            binding.btnLocationPermission.setText(btnText);
+        }else if(!locationActive){
+            String btnText = "Deaktiviert";
+            if(mainActivity.language == Language.ENGLISH){
+                btnText = "Deactivated";
+            }
+            binding.btnLocationPermission.setText(btnText);
+        }
 
 //        Toggles ----------------------------------------------
 
         //        Filter toggle
         binding.switchFilterToggle.setOnClickListener(this);
         binding.switchFilterToggle.setChecked(filtersActive);
-        //        Location Permission toggle
-        binding.btnLocationPermission.setOnClickListener(this);
-        binding.btnLocationPermission.setChecked(locationActive);
         //        Surrounding Option visible/not visible -> depends on locationActive
         if(locationActive){
             binding.txtFilterSurrounding.setVisibility(View.VISIBLE);
@@ -231,31 +244,43 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         }
 //        Location Button
         else if (v == binding.btnLocationPermission) {
-            locationActive = binding.btnLocationPermission.isChecked();
             if(locationActive){
-                binding.spinnerFilterSurrounding.setVisibility(View.VISIBLE);
-                binding.txtFilterSurrounding.setVisibility(View.VISIBLE);
-            } else if(!locationActive){
+                locationActive = false;
+                //TODO Übersetzung
+                String btnText = "Deaktiviert";
+                if(mainActivity.language == Language.ENGLISH){
+                    btnText = "Deactivated";
+                }
+                binding.btnLocationPermission.setText(btnText);
                 binding.spinnerFilterSurrounding.setVisibility(View.GONE);
                 binding.txtFilterSurrounding.setVisibility(View.GONE);
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 String message = "";
                 switch (mainActivity.language){
                     case GERMAN:
-                        message = "Wenn du den Standort deaktivierst, kann deine Suche nicht geografisch eingegrenzt werden. Du erhältst Vorschläge aus ganz Deutschland."; break;
+                        message = "Wenn du den Standort deaktivierst, kann deine Suche nicht geografisch eingegrenzt werden. Du erhältst Vorschläge aus ganz Deutschland. Settings > Location > App access to location > Covid-Jobber > Deny"; break;
                     case ENGLISH:
-                        message = "If you deactivate your location, your search cannot be filtered geographically. You will see job offers from all over Germany."; break;
+                        message = "If you deactivate your location, your search cannot be filtered geographically. You will see job offers from all over Germany. Settings > Location > App access to location > Covid-Jobber > Deny"; break;
                 }
                 builder.setMessage(message)
                         .setCancelable(false)
                         .setPositiveButton("Ok", (dialog, id) -> dialog.cancel());
                 AlertDialog alert = builder.create();
                 alert.show();
-            }
-            if (ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                updateLocation();
-            } else {
-                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 0);
+            } else if(!locationActive){
+                locationActive = true;
+                String btnText = "Aktiviert";
+                if(mainActivity.language == Language.ENGLISH){
+                    btnText = "Activated";
+                }
+                binding.btnLocationPermission.setText(btnText);
+                binding.spinnerFilterSurrounding.setVisibility(View.VISIBLE);
+                binding.txtFilterSurrounding.setVisibility(View.VISIBLE);
+                if (ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                    updateLocation();
+                } else {
+                    requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 0);
+                }
             }
         }
     }
@@ -302,7 +327,14 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         }
         else{
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage("Wenn du den Standort nicht freigeben möchtest, kann deine Suche nicht geografisch eingegrenzt werden. Du erhältst Vorschläge aus ganz Deutschland.")
+            String message = "";
+            switch (mainActivity.language){
+                case GERMAN:
+                    message = "Wenn du den Standort nicht freigeben möchtest, kann deine Suche nicht geografisch eingegrenzt werden. Du erhältst Vorschläge aus ganz Deutschland."; break;
+                case ENGLISH:
+                    message = "If you do not want to share your location, your search cannot be filtered geographically. You will receive job offers from all Germany."; break;
+            }
+            builder.setMessage(message)
                     .setCancelable(false)
                     .setPositiveButton("Ok", (dialog, id) -> dialog.cancel());
             AlertDialog alert = builder.create();
@@ -381,6 +413,15 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         if(!(contractTime.toString()).equals("-")){
             filter.addFilter(contractTime.toString()+"=1");
         }
+        String keywordString="";
+        for(int i = 0;i<keywords.size();i++){
+            if(i == keywords.size()-1){
+                keywordString = keywordString + keywords.get(i);
+            }else{
+                keywordString = keywordString + keywords.get(i) + ",";
+            }
+        }
+        filter.addFilter(FilterType.KEYWORDS,keywordString);
 
         return filter;
     }
@@ -418,7 +459,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
 //        Save salary input value
         try{
-            expSalary = Double.parseDouble(binding.inputFilterSalary.getText().toString());
+            expSalary = Integer.parseInt(binding.inputFilterSalary.getText().toString());
         }
         catch (NumberFormatException e){
             System.out.println("Not a number was entered");
@@ -452,10 +493,10 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         mainActivity = (MainActivity) getActivity();
         prefs = mainActivity.getPrefs();
 
-        expSalary = prefs.getFloat("expSalary",1000);
+        expSalary = (int) prefs.getFloat("expSalary",1000);
         category = Category.getByTag(prefs.getString("category","it-jobs"), categories);
         contractTime = ContractTime.getByName(prefs.getString("contractTime",ContractTime.EITHER.toString()));
-        Set<String> keywordSet = prefs.getStringSet("keywords", new HashSet<String>());
+        Set<String> keywordSet = prefs.getStringSet("keywords", new HashSet<>());
         keywords = new ArrayList<>(keywordSet);
         surrounding = prefs.getInt("surrounding",5);
         latitude = prefs.getFloat("latitude",0);
@@ -498,6 +539,13 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         binding.layoutFilterKeywords.addView(newKeyword);
     }
 
+    public double getLatitude(){
+        return latitude;
+    }
+
+    public double getLongitude(){
+        return longitude;
+    }
 
 }
 
