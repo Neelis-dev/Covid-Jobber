@@ -2,26 +2,24 @@ package com.example.covid_jobber.enums;
 
 import androidx.annotation.NonNull;
 
-public enum ContractTime {
-    FULL_TIME("full_time","Vollzeit","Full Time"),
-    PART_TIME("part_time","Teilzeit","Part Time"),
-    EITHER("-","Beliebig","Either"),
-    UNKNOWN("xxx", "Unbekannt", "Unknown");
+public enum Language {
+    ENGLISH("en","English","Englisch"),
+    GERMAN("de","German","Deutsch");
 
-    private final String name;
-    private final String german;
+    private final String code;
     private final String english;
+    private final String german;
 
-    ContractTime(String name, String german, String english) {
-        this.name = name;
-        this.german = german;
+    Language(String code, String english, String german) {
+        this.code = code;
         this.english = english;
+        this.german = german;
     }
 
     @NonNull
     @Override
     public String toString() {
-        return name;
+        return code;
     }
 
     public String getTranslation(Language language){
@@ -34,17 +32,17 @@ public enum ContractTime {
         return null;
     }
 
-    public static ContractTime getByName(String name){
-        for(ContractTime c: ContractTime.values()) {
-            if(c.name.equals(name)) {
-                return c;
+    public static Language getByCode(String code){
+        for(Language l: Language.values()) {
+            if(l.code.equals(code)) {
+                return l;
             }
         }
         return null;
     }
 
-    public static ContractTime getByTranslation(String translation) {
-        for(ContractTime c: ContractTime.values()) {
+    public static Language getByTranslation(String translation) {
+        for(Language c: Language.values()) {
             if(c.german.equals(translation)) {
                 return c;
             }

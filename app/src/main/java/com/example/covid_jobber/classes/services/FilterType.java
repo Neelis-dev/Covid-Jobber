@@ -2,7 +2,7 @@ package com.example.covid_jobber.classes.services;
 
 public enum FilterType
 {
-    CONTENT("what"),LOCATION("where");
+    CATEGORY("category"),LOCATION("where"),KEYWORDS("what"),SALARY("salary_min");
 
     String typeURL;
     FilterType(String typeURL){

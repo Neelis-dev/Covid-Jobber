@@ -17,12 +17,10 @@ public class Filter {
      * Entering "-" as the filtervalue will result in nothing to be added to the filter and thus that type of filter ignored
      */
 
-    private String whatString;
-    private String whereString;
+    private List<String> filterList = new ArrayList<>();
 
     public Filter(){
-        whatString = "&what=";
-        whereString= "&where=";
+
     }
 
     public void addFilter(FilterType type, String filtervalue){
@@ -30,25 +28,28 @@ public class Filter {
             return;
         }
 
-        if(whatString.contains(type.getTypeURL())){
-            if(whatString.endsWith("=")){
-                whatString = whatString + filtervalue;
-            }else{
-                whatString = whatString +","+filtervalue;
-            }
-        }if(whereString.contains(type.getTypeURL())){
-            if(whereString.endsWith("=")){
-                whereString = whereString + filtervalue;
-            }else{
-                whereString = whereString +","+filtervalue;
-            }
-        }
+        filterList.add("&"+type.getTypeURL()+"="+filtervalue);
+
+
+    }
+
+    /**
+     * USE THIS ONLY WHEN YOU KNOW WHAT YOU ARE DOING!! IN CASE OF CONFUSION ASK NEELIS!!
+     *
+     */
+    public void addFilter(String specialFilterString){
+        filterList.add("&"+specialFilterString);
 
 
     }
 
     public String getFilterString(){
-        return whatString+whereString;
+        String s= "";
+
+        for (String filter:filterList) {
+            s = s + filter;
+        }
+        return s;
 
     }
 }
