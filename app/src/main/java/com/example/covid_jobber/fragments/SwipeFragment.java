@@ -36,11 +36,13 @@ import java.util.List;
  * Use the {@link SwipeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SwipeFragment extends Fragment {
+public class SwipeFragment extends Fragment implements View.OnClickListener {
 
     private MainActivity mainActivity;
     private FragmentSwipeBinding binding;
     private arrayAdapter arrayAdapter;
+
+    private int pageNumber = 1;
 
     ListView listView;
     List<Job> jobitems;
@@ -97,10 +99,10 @@ public class SwipeFragment extends Fragment {
                     return;
                 }
 
-
-//                Log.d("TAG", "CARDS ABOUT TO RUN OUT");
-
-                mainActivity.getHandler().makeApiCall(new ApiCall(mainActivity.getFilterFragment().getFilter()) {
+                mainActivity.getFilterFragment().setMainActivity((MainActivity) getActivity());
+                mainActivity.getFilterFragment().getPreferences();
+                Log.d("TAG", "CARDS ABOUT TO RUN OUT");
+                mainActivity.getHandler().makeApiCall(new ApiCall(mainActivity.getFilterFragment().getFilter(),getPageNumberAndIncrease()) {
                     @Override
                     public void callback(JSONArray results) {
                         try {
@@ -128,6 +130,8 @@ public class SwipeFragment extends Fragment {
             }
         });
 
+
+
         return binding.getRoot();
     }
 
@@ -139,4 +143,21 @@ public class SwipeFragment extends Fragment {
     public void addJob(List<Job> newJobs) {
         jobitems.addAll(newJobs);
     }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId() == R.id.btn_job_more){
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(Uri.parse(jobitems.get(0).getUrl()));
+            startActivity(i);
+        }
+    }
+
+    public void setPageNumber(int n){
+        pageNumber = n;
+    }
+    public int getPageNumberAndIncrease(){
+        return pageNumber++;
+    }
+
 }
