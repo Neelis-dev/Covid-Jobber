@@ -87,7 +87,9 @@ public class SwipeFragment extends Fragment implements View.OnClickListener {
             public void onRightCardExit(Object dataObject) {
                 Job favorite = (Job) dataObject;
                 if(favorite != null){
-                    mainActivity.addFavoriteJob(favorite);
+                    if(!mainActivity.findFavoriteJob(favorite.getId())){
+                        mainActivity.addFavoriteJob(favorite);
+                    }
                 }
             }
 

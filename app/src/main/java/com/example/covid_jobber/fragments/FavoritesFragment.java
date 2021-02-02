@@ -1,5 +1,6 @@
 package com.example.covid_jobber.fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -16,15 +17,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.covid_jobber.R;
+import com.example.covid_jobber.activities.MainActivity;
 import com.example.covid_jobber.classes.Job;
 import com.example.covid_jobber.databinding.FragmentFavoritesBinding;
 import com.example.covid_jobber.databinding.FragmentFiltersBinding;
+import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,6 +44,7 @@ public class FavoritesFragment extends Fragment implements View.OnClickListener 
     private final List<FavoriteJobFragment> fragments = new ArrayList<>();
 
     private FragmentFavoritesBinding binding;
+    private MainActivity mainActivity;
 
     private boolean deleting = false;
 
@@ -54,6 +60,7 @@ public class FavoritesFragment extends Fragment implements View.OnClickListener 
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentFavoritesBinding.inflate(inflater, container, false);
+        mainActivity = (MainActivity) getActivity();
 
         deleting = false;
         binding.btnFavoritesEdit.setOnClickListener(this);
@@ -96,6 +103,17 @@ public class FavoritesFragment extends Fragment implements View.OnClickListener 
 
     public void addFavorite(Job job){
         favoriteJobs.add(job);
+        setJobsToPrefs(mainActivity.getPrefs());
+    }
+
+    public boolean findFavorite(int id){
+        boolean found = false;
+        for (Job job:favoriteJobs) {
+            if(id == job.getId()){
+                found = true;
+            }
+        }
+        return found;
     }
 
     public void deleteFavorite(FavoriteJobFragment fragment){
@@ -105,6 +123,27 @@ public class FavoritesFragment extends Fragment implements View.OnClickListener 
         binding.layoutFavoritesJobs.removeView(frame);
         fragments.remove(fragment);
         frames.remove(frame);
+        setJobsToPrefs(mainActivity.getPrefs());
+    }
+
+    public void getJobsFromPrefs(SharedPreferences prefs){
+        Gson gson = new Gson();
+        Set<String> jsons = prefs.getStringSet("favoriteJobs", new HashSet<>());
+        favoriteJobs.clear();
+        for (String json:jsons) {
+            favoriteJobs.add(gson.fromJson(json, Job.class));
+        }
+    }
+
+    public void setJobsToPrefs(SharedPreferences prefs){
+        SharedPreferences.Editor prefsEditor = prefs.edit();
+        Gson gson = new Gson();
+        Set<String> jsons = new HashSet<>();
+        for (Job job:favoriteJobs) {
+            jsons.add(gson.toJson(job));
+        }
+        prefsEditor.putStringSet("favoriteJobs", jsons);
+        prefsEditor.apply();
     }
 
     private void addJobToLayout(Job j){

@@ -62,10 +62,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         prefs = getApplicationContext().getSharedPreferences("FilterPref", MODE_PRIVATE);
+
 //        Get Language and Darkmode from prefs
         getSettingsPreferences();
-        setLanguage();
-        setMode();
+
+//        Get favorite Jobs from prefs
+        favoritesFragment.getJobsFromPrefs(prefs);
 
 //        At first Swipe Fragment in Content Frame
         replaceFrame(R.id.content_frame, swipeFragment);
@@ -131,6 +133,10 @@ public class MainActivity extends AppCompatActivity {
         favoritesFragment.addFavorite(job);
     }
 
+    public boolean findFavoriteJob(int id){
+        return favoritesFragment.findFavorite(id);
+    }
+
     public SharedPreferences getPrefs(){
         return prefs;
     }
@@ -145,11 +151,11 @@ public class MainActivity extends AppCompatActivity {
                 "darkMode: "+darkMode.toString()+"\n"
         );
 
-        setLanguage();
-        setMode();
+        setLanguage(prefs);
+        setMode(prefs);
     }
 
-    public void setLanguage(){
+    public void setLanguage(SharedPreferences prefs){
         Resources resources = getResources();
         DisplayMetrics dm = resources.getDisplayMetrics();
         Configuration config = resources.getConfiguration();
@@ -164,13 +170,12 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    public void setMode(){
+    public void setMode(SharedPreferences prefs){
         DarkMode.setMode(darkMode);
         SharedPreferences.Editor editor = prefs.edit();
         System.out.println("editor should write");
         editor.putString("darkMode",darkMode.toString());
         editor.apply();
     }
-
 
 }
