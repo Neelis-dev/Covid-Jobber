@@ -2,19 +2,24 @@ package com.example.covid_jobber.fragments;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.covid_jobber.R;
 import com.example.covid_jobber.activities.MainActivity;
 import com.example.covid_jobber.classes.Job;
 import com.example.covid_jobber.databinding.FragmentFavoriteJobBinding;
 import com.example.covid_jobber.enums.ContractTime;
+import com.example.covid_jobber.enums.Language;
 
 import java.util.Locale;
 
@@ -29,6 +34,7 @@ public class FavoriteJobFragment extends Fragment implements View.OnClickListene
     private FragmentFavoriteJobBinding binding;
 
     private boolean extended = false;
+    private boolean toDelete = false;
     private MainActivity mainActivity;
 
     public FavoriteJobFragment(Job job) {
@@ -68,10 +74,18 @@ public class FavoriteJobFragment extends Fragment implements View.OnClickListene
             binding.txtJobTitle.setText(job.getTitle());
             binding.txtJobCompany.setText(job.getCompany());
 
-            String contractTimeText = "Arbeitszeit: Unbekannt";
-            if(job.getContractTime() != ContractTime.EITHER){
-                contractTimeText = "Arbeitszeit: "+job.getContractTime().toString();
+            String contractTimeText = "Arbeitszeit: ";
+            if(mainActivity.language == Language.ENGLISH){
+                contractTimeText = "Contract Time: ";
             }
+
+            if(job.getContractTime() != ContractTime.EITHER){
+                contractTimeText = contractTimeText+job.getContractTime().getTranslation(mainActivity.language);
+            }
+            else {
+                contractTimeText = contractTimeText+ContractTime.UNKNOWN.getTranslation(mainActivity.language);
+            }
+
             binding.txtJobContractTime.setText(contractTimeText);
 
             binding.txtJobDescription.setText(job.getDescription());
@@ -102,29 +116,26 @@ public class FavoriteJobFragment extends Fragment implements View.OnClickListene
             openUrl(job.getUrl());
         }
         else if(v == binding.btnJobDelete){
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            String message = "";
-            switch (mainActivity.language){
-                case GERMAN:
-                    message = "Möchtest du den Eintrag wirklich löschen?"; break;
-                case ENGLISH:
-                    message = "Are you sure you want to delete this entry?"; break;
+            if(!toDelete){
+//            make button darker
+                binding.btnJobDelete.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this.getContext(), R.color.primary_dark)));
+                toDelete = true;
+                mainActivity.getFavoritesFragment().addJobToDelete(this);
             }
-            builder.setMessage(message)
-                    .setCancelable(false)
-                    .setPositiveButton("Ja", (dialog, id) -> deleteHelper())
-                    .setNegativeButton("Abbrechen", (dialog, id) -> dialog.cancel());
-            AlertDialog alert = builder.create();
-            alert.show();
-        }
-    }
+            else{
+//            make button darker
+                binding.btnJobDelete.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this.getContext(), R.color.primary)));
+                toDelete = false;
+                mainActivity.getFavoritesFragment().removeJobToDelete(this);
+            }
 
-    public void deleteHelper(){
-        mainActivity.getFavoritesFragment().deleteFavorite(this);
+        }
     }
 
     public void setDeletable(boolean deletable){
         if(deletable){
+            binding.btnJobDelete.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this.getContext(), R.color.primary)));
+            toDelete = false;
             binding.btnJobDelete.setVisibility(View.VISIBLE);
         } else {
             binding.btnJobDelete.setVisibility(View.GONE);

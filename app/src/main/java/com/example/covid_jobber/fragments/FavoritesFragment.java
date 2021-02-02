@@ -1,5 +1,7 @@
 package com.example.covid_jobber.fragments;
 
+import android.app.AlertDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -16,15 +18,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.covid_jobber.R;
+import com.example.covid_jobber.activities.MainActivity;
 import com.example.covid_jobber.classes.Job;
 import com.example.covid_jobber.databinding.FragmentFavoritesBinding;
 import com.example.covid_jobber.databinding.FragmentFiltersBinding;
+import com.example.covid_jobber.enums.Language;
+import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,8 +46,11 @@ public class FavoritesFragment extends Fragment implements View.OnClickListener 
     private final List<FavoriteJobFragment> fragments = new ArrayList<>();
 
     private FragmentFavoritesBinding binding;
+    private MainActivity mainActivity;
 
+//    Deleting Jobs
     private boolean deleting = false;
+    private final List<FavoriteJobFragment> jobsToDelete = new ArrayList<>();
 
     public FavoritesFragment() {
         // Required empty public constructor
@@ -54,12 +64,14 @@ public class FavoritesFragment extends Fragment implements View.OnClickListener 
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentFavoritesBinding.inflate(inflater, container, false);
+        mainActivity = (MainActivity) getActivity();
 
         deleting = false;
         binding.btnFavoritesEdit.setOnClickListener(this);
 
         frames.clear();
         fragments.clear();
+        jobsToDelete.clear();
 
         for (int i = 0; i < favoriteJobs.size(); i++) {
             Job j = favoriteJobs.get(i);
@@ -87,24 +99,92 @@ public class FavoritesFragment extends Fragment implements View.OnClickListener 
             } else {
                 deleting = false;
                 binding.btnFavoritesEdit.setBackgroundTintList(ContextCompat.getColorStateList(this.getContext(), R.color.primary));
+
+//                Delete jobsToDelete
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                String message = "Möchtest du die ausgewählten Einträge wirklich löschen?";
+                String yes = "Ja";
+                String cancel = "Abbrechen";
+                if (mainActivity.language == Language.ENGLISH){
+                    message = "Are you sure you want to delete the selected entries?";
+                    yes = "Yes";
+                    cancel = "Cancel";
+                }
+                builder.setMessage(message)
+                        .setCancelable(false)
+    //                    If Deleting
+                        .setPositiveButton(yes, (dialog, id) -> {
+                            for (FavoriteJobFragment fragment : jobsToDelete) {
+                                deleteFavorite(fragment);
+                            }
+                            jobsToDelete.clear();
+                        })
+    //                    If Cancelled
+                        .setNegativeButton(cancel, (dialog, id) -> dialog.cancel());
+
+                AlertDialog alert = builder.create();
+                alert.show();
+
+//                End Deleting mode
                 for (FavoriteJobFragment fragment : fragments) {
                     fragment.setDeletable(false);
                 }
+
             }
         }
     }
 
-    public void addFavorite(Job job){
+    public void addFavorite(Job job, SharedPreferences prefs){
         favoriteJobs.add(job);
+        setJobsToPrefs(prefs);
     }
 
-    public void deleteFavorite(FavoriteJobFragment fragment){
+    public boolean findFavorite(int id){
+        boolean found = false;
+        for (Job job:favoriteJobs) {
+            if(id == job.getId()){
+                found = true;
+            }
+        }
+        return found;
+    }
+
+    public void addJobToDelete(FavoriteJobFragment fragment){
+        jobsToDelete.add(fragment);
+    }
+
+    public void removeJobToDelete(FavoriteJobFragment fragment){
+        jobsToDelete.remove(fragment);
+    }
+
+    private void deleteFavorite(FavoriteJobFragment fragment){
         favoriteJobs.remove(fragment.getJob());
         int index = fragments.indexOf(fragment);
         FrameLayout frame = frames.get(index);
         binding.layoutFavoritesJobs.removeView(frame);
         fragments.remove(fragment);
         frames.remove(frame);
+        setJobsToPrefs(mainActivity.getPrefs());
+    }
+
+    public void getJobsFromPrefs(SharedPreferences prefs){
+        Gson gson = new Gson();
+        Set<String> jsons = prefs.getStringSet("favoriteJobs", new HashSet<>());
+        favoriteJobs.clear();
+        for (String json:jsons) {
+            favoriteJobs.add(gson.fromJson(json, Job.class));
+        }
+    }
+
+    public void setJobsToPrefs(SharedPreferences prefs){
+        SharedPreferences.Editor prefsEditor = prefs.edit();
+        Gson gson = new Gson();
+        Set<String> jsons = new HashSet<>();
+        for (Job job:favoriteJobs) {
+            jsons.add(gson.toJson(job));
+        }
+        prefsEditor.putStringSet("favoriteJobs", jsons);
+        prefsEditor.apply();
     }
 
     private void addJobToLayout(Job j){
