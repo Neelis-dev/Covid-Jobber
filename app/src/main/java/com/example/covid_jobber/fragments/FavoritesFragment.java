@@ -101,9 +101,9 @@ public class FavoritesFragment extends Fragment implements View.OnClickListener 
         }
     }
 
-    public void addFavorite(Job job){
+    public void addFavorite(Job job, SharedPreferences prefs){
         favoriteJobs.add(job);
-        setJobsToPrefs(mainActivity.getPrefs());
+        setJobsToPrefs(prefs);
     }
 
     public boolean findFavorite(int id){

@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void addFavoriteJob(Job job){
-        favoritesFragment.addFavorite(job);
+        favoritesFragment.addFavorite(job, prefs);
     }
 
     public boolean findFavoriteJob(int id){
