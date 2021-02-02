@@ -2,15 +2,19 @@ package com.example.covid_jobber.fragments;
 
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.covid_jobber.R;
 import com.example.covid_jobber.activities.MainActivity;
 import com.example.covid_jobber.classes.Job;
 import com.example.covid_jobber.databinding.FragmentFavoriteJobBinding;
@@ -30,6 +34,7 @@ public class FavoriteJobFragment extends Fragment implements View.OnClickListene
     private FragmentFavoriteJobBinding binding;
 
     private boolean extended = false;
+    private boolean toDelete = false;
     private MainActivity mainActivity;
 
     public FavoriteJobFragment(Job job) {
@@ -111,30 +116,26 @@ public class FavoriteJobFragment extends Fragment implements View.OnClickListene
             openUrl(job.getUrl());
         }
         else if(v == binding.btnJobDelete){
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            String message = "Möchtest du den Eintrag wirklich löschen?";
-            String yes = "Ja";
-            String cancel = "Abbrechen";
-            if (mainActivity.language == Language.ENGLISH){
-                message = "Are you sure you want to delete this entry?";
-                yes = "Yes";
-                cancel = "Cancel";
+            if(!toDelete){
+//            make button darker
+                binding.btnJobDelete.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this.getContext(), R.color.primary_dark)));
+                toDelete = true;
+                mainActivity.getFavoritesFragment().addJobToDelete(this);
             }
-            builder.setMessage(message)
-                    .setCancelable(false)
-                    .setPositiveButton(yes, (dialog, id) -> deleteHelper())
-                    .setNegativeButton(cancel, (dialog, id) -> dialog.cancel());
-            AlertDialog alert = builder.create();
-            alert.show();
-        }
-    }
+            else{
+//            make button darker
+                binding.btnJobDelete.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this.getContext(), R.color.primary)));
+                toDelete = false;
+                mainActivity.getFavoritesFragment().removeJobToDelete(this);
+            }
 
-    public void deleteHelper(){
-        mainActivity.getFavoritesFragment().deleteFavorite(this);
+        }
     }
 
     public void setDeletable(boolean deletable){
         if(deletable){
+            binding.btnJobDelete.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this.getContext(), R.color.primary)));
+            toDelete = false;
             binding.btnJobDelete.setVisibility(View.VISIBLE);
         } else {
             binding.btnJobDelete.setVisibility(View.GONE);

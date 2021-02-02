@@ -91,13 +91,13 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if(parent == binding.spinnerSettingsDarkmode){
             mainActivity.darkMode = DarkMode.getByTranslation((String) binding.spinnerSettingsDarkmode.getSelectedItem());
-            mainActivity.setMode();
+            mainActivity.setMode(mainActivity.getPrefs());
             System.out.println("dark mode: "+mainActivity.darkMode.toString());
         }
         else if(parent == binding.spinnerSettingsLanguage){
             Language prevLanguage = mainActivity.language;
             mainActivity.language = Language.getByTranslation((String) binding.spinnerSettingsLanguage.getSelectedItem());
-            mainActivity.setLanguage();
+            mainActivity.setLanguage(mainActivity.getPrefs());
             System.out.println("language: "+mainActivity.language.toString());
             if(!prevLanguage.toString().equals(mainActivity.language.toString())){
                 mainActivity.getSupportFragmentManager().beginTransaction().detach(this).attach(this).commit();
@@ -109,13 +109,13 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
     public void onNothingSelected(AdapterView<?> parent) {
         if(parent == binding.spinnerSettingsDarkmode){
             mainActivity.darkMode = DarkMode.getByTranslation((String) binding.spinnerSettingsDarkmode.getSelectedItem());
-            mainActivity.setMode();
+            mainActivity.setMode(mainActivity.getPrefs());
             System.out.println("dark mode: "+mainActivity.darkMode.toString());
         }
         else if(parent == binding.spinnerSettingsLanguage){
             Language prevLanguage = mainActivity.language;
             mainActivity.language = Language.getByTranslation((String) binding.spinnerSettingsLanguage.getSelectedItem());
-            mainActivity.setLanguage();
+            mainActivity.setLanguage(mainActivity.getPrefs());
             System.out.println("language: "+mainActivity.language.toString());
             if(!prevLanguage.toString().equals(mainActivity.language.toString())){
                 mainActivity.getSupportFragmentManager().beginTransaction().detach(this).attach(this).commit();
@@ -129,4 +129,7 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
         super.onDestroyView();
         binding = null;
     }
+
+
+
 }
