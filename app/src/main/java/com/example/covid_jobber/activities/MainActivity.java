@@ -107,7 +107,10 @@ public class MainActivity extends AppCompatActivity {
     public void resultsToJobs(JSONArray results) throws JSONException {
         List<Job> jobs = new ArrayList<>();
         for(int i = 0; i< results.length(); i++){
-            jobs.add(new Job((JSONObject) results.get(i)));
+            Job newJob = new Job((JSONObject) results.get(i));
+            if(!findFavoriteJob(newJob.getId())){
+                jobs.add(newJob);
+            }
         }
         System.out.println(jobs.size());
 

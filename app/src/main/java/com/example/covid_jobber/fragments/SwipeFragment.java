@@ -59,7 +59,6 @@ public class SwipeFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
 
         binding = FragmentSwipeBinding.inflate(inflater, container, false);
-
         mainActivity = (MainActivity) getActivity();
 
         jobitems = new ArrayList<>();
