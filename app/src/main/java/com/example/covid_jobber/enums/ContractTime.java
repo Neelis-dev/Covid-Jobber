@@ -5,7 +5,8 @@ import androidx.annotation.NonNull;
 public enum ContractTime {
     FULL_TIME("full_time","Vollzeit","Full Time"),
     PART_TIME("part_time","Teilzeit","Part Time"),
-    EITHER("-","Beliebig","Either");
+    EITHER("-","Beliebig","Either"),
+    UNKNOWN("xxx", "Unbekannt", "Unknown");
 
     private final String name;
     private final String german;
