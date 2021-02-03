@@ -93,8 +93,7 @@ public class SwipeFragment extends Fragment {
                     return;
                 }
 
-                mainActivity.getFilterFragment().setMainActivity((MainActivity) getActivity());
-                mainActivity.getFilterFragment().getPreferences();
+
                 Log.d("TAG", "CARDS ABOUT TO RUN OUT");
                 mainActivity.getHandler().makeApiCall(new ApiCall(mainActivity.getFilterFragment().getFilter(),getPageNumberAndIncrease()) {
                     @Override

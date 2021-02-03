@@ -65,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
 //        Get favorite Jobs from prefs
         favoritesFragment.getJobsFromPrefs(prefs);
 
+//
+        filtersFragment.setMainActivity(this);
+        filtersFragment.getPreferences();
 
 //        At first Swipe Fragment in Content Frame
         replaceFrame(R.id.content_frame, swipeFragment);
