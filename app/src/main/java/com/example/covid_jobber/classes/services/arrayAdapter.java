@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.covid_jobber.R;
@@ -30,11 +31,37 @@ public class arrayAdapter extends ArrayAdapter<Job> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item, parent, false);
         }
 
-        TextView name = convertView.findViewById(R.id.txt_item_title);
+        TextView title = convertView.findViewById(R.id.txt_item_title);
         TextView location = convertView.findViewById(R.id.txt_item_location);
         TextView employer = convertView.findViewById(R.id.txt_item_company);
         TextView workingperiod = convertView.findViewById(R.id.txt_item_contracttime);
         TextView salary = convertView.findViewById(R.id.txt_item_salary);
+
+        //        If it is first item
+        if(job_item.getId() == -1){
+            title.setText(job_item.getTitle());
+            title.setPadding(10, 500, 10, 0);
+            title.setTextSize(32);
+
+            TextView location_des = convertView.findViewById(R.id.txt_item_location_description);
+            TextView employer_des = convertView.findViewById(R.id.txt_item_company_description);
+            TextView workingperiod_des = convertView.findViewById(R.id.txt_item_contracttime_description);
+            TextView salary_des = convertView.findViewById(R.id.txt_item_salary_description);
+
+            location.setVisibility(View.GONE);
+            employer.setVisibility(View.GONE);
+            workingperiod.setVisibility(View.GONE);
+            salary.setVisibility(View.GONE);
+
+            location_des.setVisibility(View.GONE);
+            employer_des.setVisibility(View.GONE);
+            workingperiod_des.setVisibility(View.GONE);
+            salary_des.setVisibility(View.GONE);
+
+            Button btn = convertView.findViewById(R.id.btn_item_more);
+            btn.setVisibility(View.GONE);
+            return convertView;
+        }
 
         boolean locationActive = mainActivity.getPrefs().getBoolean("locationActive", false);
         double latlocation = mainActivity.getPrefs().getFloat("latitude", 0);
@@ -43,7 +70,7 @@ public class arrayAdapter extends ArrayAdapter<Job> {
         double latitude = job_item.getLatitude();
         double longitude = job_item.getLongitude();
 
-        name.setText(job_item.getTitle());
+        title.setText(job_item.getTitle());
 
         if (locationActive) {
             //Berechnung des Abstandes vom persönlichen Standort zur Arbeitsstätte (Luftlinie)

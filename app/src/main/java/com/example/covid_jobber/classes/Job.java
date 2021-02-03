@@ -30,15 +30,15 @@ public class Job {
 
     public Job(){
         id = -1;
-        title = "Straßenplaner";
-        company = "Stadt Mannheim";
-        description = "Wir suchen inkompetente Straßenplaner für unsere Stadt";
+        title = "Start Swiping!";
+        company = "";
+        description = "";
         url = "";
         city = "";
         created = new Date().toString();
-        contractTime = ContractTime.FULL_TIME;
-        category = "Öffentliche Arbeit";
-        salary = 1000;
+        contractTime = ContractTime.UNKNOWN;
+        category = "";
+        salary = 0;
     }
 
     public Job(JSONObject jobObject) throws JSONException {

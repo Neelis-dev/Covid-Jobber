@@ -80,7 +80,7 @@ public class SwipeFragment extends Fragment {
             @Override
             public void onRightCardExit(Object dataObject) {
                 Job favorite = (Job) dataObject;
-                if(favorite != null){
+                if(favorite != null && favorite.getId() != -1){
                     if(!mainActivity.findFavoriteJob(favorite.getId())){
                         mainActivity.addFavoriteJob(favorite);
                     }
