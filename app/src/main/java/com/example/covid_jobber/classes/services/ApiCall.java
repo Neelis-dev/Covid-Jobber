@@ -1,10 +1,6 @@
 package com.example.covid_jobber.classes.services;
 
-import com.google.android.gms.common.api.Api;
-
 import org.json.JSONArray;
-
-import java.util.Random;
 
 import okhttp3.Request;
 
@@ -53,6 +49,8 @@ public abstract class ApiCall {
 
 
     }
+
+    //TODO: Beim Call geografisch und nach salary filtern?
 
 
     public Request getRequest() {
