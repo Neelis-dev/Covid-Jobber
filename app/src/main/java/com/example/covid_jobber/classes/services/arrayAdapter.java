@@ -36,33 +36,24 @@ public class arrayAdapter extends ArrayAdapter<Job> {
         TextView workingperiod = convertView.findViewById(R.id.txt_item_contracttime);
         TextView salary = convertView.findViewById(R.id.txt_item_salary);
 
-        //TODO: Koordinaten aus FilterFragment holen
-
+        boolean locationActive = mainActivity.getPrefs().getBoolean("locationActive", false);
         double latlocation = mainActivity.getPrefs().getFloat("latitude", 0);
         double lonlocation = mainActivity.getPrefs().getFloat("longitude",0 );
 
         double latitude = job_item.getLatitude();
         double longitude = job_item.getLongitude();
-        System.out.println(job_item.getcity());
-        System.out.println("LatJob " + latitude);
-        System.out.println("LonJob " + longitude);
-
-        boolean locActive = mainActivity.getPrefs().getBoolean("locationActive", false);
-        System.out.println(locActive);
-
-
-        //Berechnung Abstand des Jobs vom Heimatstandort
-        double dx, dy, lat, distance;
-        lat = (latitude + latlocation) / (2 * 0.01745);
-        dx = 111.3 * Math.cos(lat) * (longitude - lonlocation);
-        dy = 111.3 * (latitude - latlocation);
-        distance = Math.sqrt(dx * dx + dy * dy);
-        distance = Math.round(distance *100.0) /100.0;
-        String dist = " (" + distance + " Km)";
 
         name.setText(job_item.getTitle());
 
-        if (locActive) {
+        if (locationActive) {
+            //Berechnung des Abstandes vom persönlichen Standort zur Arbeitsstätte (Luftlinie)
+            double dx, dy, lat, distance;
+            lat = (latitude + latlocation) / (2 * 0.01745);
+            dx = 111.3 * Math.cos(lat) * (longitude - lonlocation);
+            dy = 111.3 * (latitude - latlocation);
+            distance = Math.sqrt(dx * dx + dy * dy);
+            distance = Math.round(distance *100.0) /100.0;
+            String dist = " (" + distance + " Km)";
             String locationString = job_item.getcity() + dist;
             location.setText(locationString);
         } else {
