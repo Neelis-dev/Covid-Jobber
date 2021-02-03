@@ -1,26 +1,19 @@
 package com.example.covid_jobber.fragments;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ListView;
+
+import androidx.fragment.app.Fragment;
 
 import com.example.covid_jobber.R;
 import com.example.covid_jobber.activities.MainActivity;
 import com.example.covid_jobber.classes.Job;
 import com.example.covid_jobber.classes.services.ApiCall;
 import com.example.covid_jobber.classes.services.arrayAdapter;
-
-import com.example.covid_jobber.databinding.FragmentFavoriteJobBinding;
 import com.example.covid_jobber.databinding.FragmentSwipeBinding;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
@@ -36,11 +29,13 @@ import java.util.List;
  * Use the {@link SwipeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SwipeFragment extends Fragment implements View.OnClickListener {
+public class SwipeFragment extends Fragment {
 
     private MainActivity mainActivity;
     private FragmentSwipeBinding binding;
     private arrayAdapter arrayAdapter;
+
+    private int pageNumber = 1;
 
     ListView listView;
     List<Job> jobitems;
@@ -59,7 +54,6 @@ public class SwipeFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
 
         binding = FragmentSwipeBinding.inflate(inflater, container, false);
-
         mainActivity = (MainActivity) getActivity();
 
         jobitems = new ArrayList<>();
@@ -86,8 +80,10 @@ public class SwipeFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onRightCardExit(Object dataObject) {
                 Job favorite = (Job) dataObject;
-                if(favorite != null){
-                    mainActivity.addFavoriteJob(favorite);
+                if(favorite != null && favorite.getId() != -1){
+                    if(!mainActivity.findFavoriteJob(favorite.getId())){
+                        mainActivity.addFavoriteJob(favorite);
+                    }
                 }
             }
 
@@ -98,9 +94,8 @@ public class SwipeFragment extends Fragment implements View.OnClickListener {
                 }
 
 
-//                Log.d("TAG", "CARDS ABOUT TO RUN OUT");
-
-                mainActivity.getHandler().makeApiCall(new ApiCall(mainActivity.getFilterFragment().getFilter()) {
+                Log.d("TAG", "CARDS ABOUT TO RUN OUT");
+                mainActivity.getHandler().makeApiCall(new ApiCall(mainActivity.getFilterFragment().getFilter(),getPageNumberAndIncrease()) {
                     @Override
                     public void callback(JSONArray results) {
                         try {
@@ -142,12 +137,16 @@ public class SwipeFragment extends Fragment implements View.OnClickListener {
         jobitems.addAll(newJobs);
     }
 
-    @Override
-    public void onClick(View v) {
-        if(v.getId() == R.id.btn_job_more){
-            Intent i = new Intent(Intent.ACTION_VIEW);
-            i.setData(Uri.parse(jobitems.get(0).getUrl()));
-            startActivity(i);
-        }
+    public void setPageNumber(int n){
+        pageNumber = n;
     }
+
+    public int getPageNumberAndIncrease(){
+        return pageNumber++;
+    }
+
+    public String getCurrentUrl(){
+        return jobitems.get(0).getUrl();
+    }
+
 }
