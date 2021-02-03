@@ -119,12 +119,14 @@ public class FavoriteJobFragment extends Fragment implements View.OnClickListene
             if(!toDelete){
 //            make button darker
                 binding.btnJobDelete.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this.getContext(), R.color.primary_dark)));
+                binding.layoutJob.setBackgroundColor(ContextCompat.getColor(this.getContext(), R.color.primary_light));
                 toDelete = true;
                 mainActivity.getFavoritesFragment().addJobToDelete(this);
             }
             else{
 //            make button darker
                 binding.btnJobDelete.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this.getContext(), R.color.primary)));
+                binding.layoutJob.setBackgroundColor(ContextCompat.getColor(this.getContext(), R.color.white));
                 toDelete = false;
                 mainActivity.getFavoritesFragment().removeJobToDelete(this);
             }
