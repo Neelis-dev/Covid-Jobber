@@ -7,11 +7,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +14,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 import com.example.covid_jobber.activities.MainActivity;
 import com.example.covid_jobber.classes.Category;
@@ -28,6 +27,7 @@ import com.example.covid_jobber.classes.services.Filter;
 import com.example.covid_jobber.classes.services.FilterType;
 import com.example.covid_jobber.databinding.FragmentFiltersBinding;
 import com.example.covid_jobber.enums.ContractTime;
+import com.example.covid_jobber.enums.Language;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 
@@ -68,7 +68,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
 //    available options
     private final List<ContractTime> contractTimes = new ArrayList<>(Arrays.asList(ContractTime.EITHER, ContractTime.FULL_TIME, ContractTime.PART_TIME));
-    private final List<Integer> surroundingList = new ArrayList<>(Arrays.asList(5, 25, 75, 150, 250));
+    private final List<Integer> surroundingList = new ArrayList<>(Arrays.asList(50, 75, 100, 150, 250));
     private List<View> editOptions;
 
     private final List<Category> categories = new ArrayList<>();
@@ -122,7 +122,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         binding.btnFilterDeleteKeyword.setOnClickListener(this);
         //        Location Permission Button
         binding.btnLocationPermission.setOnClickListener(this);
-        //TODO: Übersetzung und locationActive muss persistent gespeichert werden
+        //TODO: locationActive muss persistent gespeichert werden (aus shared Prefs holen)
         if(locationActive){
             String btnText = "Aktiviert";
             if(mainActivity.language == Language.ENGLISH){
@@ -232,7 +232,6 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         else if (v == binding.btnLocationPermission) {
             if(locationActive){
                 locationActive = false;
-                //TODO Übersetzung
                 String btnText = "Deaktiviert";
                 if(mainActivity.language == Language.ENGLISH){
                     btnText = "Deactivated";

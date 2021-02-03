@@ -37,6 +37,7 @@ public class arrayAdapter extends ArrayAdapter<Job> {
         TextView salary = convertView.findViewById(R.id.txt_item_salary);
 
         //TODO: Koordinaten aus FilterFragment holen
+        
         double latlocation= 49.53;
         double lonlocation= 8.16;
 
@@ -76,6 +77,8 @@ public class arrayAdapter extends ArrayAdapter<Job> {
             salary.setText(salaryString);
         }
 
+
         return convertView;
     }
+
 }

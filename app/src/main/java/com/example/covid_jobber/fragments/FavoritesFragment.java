@@ -3,25 +3,18 @@ package com.example.covid_jobber.fragments;
 import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 import com.example.covid_jobber.R;
 import com.example.covid_jobber.activities.MainActivity;
 import com.example.covid_jobber.classes.Job;
 import com.example.covid_jobber.databinding.FragmentFavoritesBinding;
-import com.example.covid_jobber.databinding.FragmentFiltersBinding;
 import com.example.covid_jobber.enums.Language;
 import com.google.gson.Gson;
 
@@ -30,7 +23,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 
 /**
@@ -40,7 +32,7 @@ import java.util.Set;
  */
 public class FavoritesFragment extends Fragment implements View.OnClickListener {
 
-//    variables
+    //    variables
     private final List<Job> favoriteJobs = new ArrayList<>();
     private final List<FrameLayout> frames = new ArrayList<>();
     private final List<FavoriteJobFragment> fragments = new ArrayList<>();
@@ -48,7 +40,7 @@ public class FavoritesFragment extends Fragment implements View.OnClickListener 
     private FragmentFavoritesBinding binding;
     private MainActivity mainActivity;
 
-//    Deleting Jobs
+    //    Deleting Jobs
     private boolean deleting = false;
     private final List<FavoriteJobFragment> jobsToDelete = new ArrayList<>();
 
@@ -112,14 +104,14 @@ public class FavoritesFragment extends Fragment implements View.OnClickListener 
                 }
                 builder.setMessage(message)
                         .setCancelable(false)
-    //                    If Deleting
+                        //                    If Deleting
                         .setPositiveButton(yes, (dialog, id) -> {
                             for (FavoriteJobFragment fragment : jobsToDelete) {
                                 deleteFavorite(fragment);
                             }
                             jobsToDelete.clear();
                         })
-    //                    If Cancelled
+                        //                    If Cancelled
                         .setNegativeButton(cancel, (dialog, id) -> dialog.cancel());
 
                 AlertDialog alert = builder.create();
