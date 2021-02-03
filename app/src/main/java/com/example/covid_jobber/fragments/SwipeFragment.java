@@ -1,5 +1,8 @@
 package com.example.covid_jobber.fragments;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +18,7 @@ import com.example.covid_jobber.classes.Job;
 import com.example.covid_jobber.classes.services.ApiCall;
 import com.example.covid_jobber.classes.services.arrayAdapter;
 import com.example.covid_jobber.databinding.FragmentSwipeBinding;
+import com.example.covid_jobber.enums.Language;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import org.jetbrains.annotations.NotNull;
@@ -36,6 +40,7 @@ public class SwipeFragment extends Fragment {
     private arrayAdapter arrayAdapter;
 
     private int pageNumber = 1;
+    public int apiTries = 0;
 
     ListView listView;
     List<Job> jobitems;
@@ -56,8 +61,12 @@ public class SwipeFragment extends Fragment {
         binding = FragmentSwipeBinding.inflate(inflater, container, false);
         mainActivity = (MainActivity) getActivity();
 
+        binding.txtSwipeWaiting.setText(getResources().getString(R.string.txt_swipe_fragment_loading));
+        checkInternet();
+
         jobitems = new ArrayList<>();
         jobitems.add(new Job());
+        apiTries = 0;
 
         arrayAdapter = new arrayAdapter(getActivity(), R.layout.item, jobitems, mainActivity);
 
@@ -93,6 +102,14 @@ public class SwipeFragment extends Fragment {
                     return;
                 }
 
+                if(apiTries > 2){
+                    String message = "Leider konnten mit diesen Filtereinstellungen keine weiteren Jobangebote gefunden werden.";
+                    if(mainActivity.language == Language.ENGLISH){
+                        message = "No further job offers could be found with the current filter settings.";
+                    }
+                    binding.txtSwipeWaiting.setText(message);
+                    return;
+                }
 
                 Log.d("TAG", "CARDS ABOUT TO RUN OUT");
                 mainActivity.getHandler().makeApiCall(new ApiCall(mainActivity.getFilterFragment().getFilter(),getPageNumberAndIncrease()) {
@@ -104,7 +121,7 @@ public class SwipeFragment extends Fragment {
                             e.printStackTrace();
                         }
                     }
-                });
+                }, mainActivity);
 
 
                 arrayAdapter.notifyDataSetChanged();
@@ -122,8 +139,6 @@ public class SwipeFragment extends Fragment {
                 view.findViewById(R.id.item_swipe_left_indicator).setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
             }
         });
-
-
 
         return binding.getRoot();
     }
@@ -147,6 +162,33 @@ public class SwipeFragment extends Fragment {
 
     public String getCurrentUrl(){
         return jobitems.get(0).getUrl();
+    }
+
+    public void updateArrayAdapter(){
+        arrayAdapter.notifyDataSetChanged();
+    }
+
+    private void checkInternet(){
+        ConnectivityManager cm = (ConnectivityManager) mainActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
+        boolean connected = cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
+
+        if(!connected){
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            String message = "";
+            switch (mainActivity.language){
+                case GERMAN:
+                    message = "Bitte überprüfe deine Internetverbindung! Ohne Internetzugang können leider keine Job-Angebote geladen werden und die App funktioniert nicht ordnungsgemäß."; break;
+                case ENGLISH:
+                    message = "Please check your internet connection! Without internet access no job offers can be loaded and the app does not function properly."; break;
+            }
+            builder.setMessage(message)
+                    .setCancelable(false)
+                    .setPositiveButton("Ok", (dialog, id) -> dialog.cancel());
+            AlertDialog alert = builder.create();
+            alert.show();
+
+            binding.txtSwipeWaiting.setText(getResources().getString(R.string.txt_swipe_fragment_connection_error));
+        }
     }
 
 }

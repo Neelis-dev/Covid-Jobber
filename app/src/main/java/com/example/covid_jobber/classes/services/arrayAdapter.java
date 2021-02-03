@@ -8,6 +8,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
+
 import com.example.covid_jobber.R;
 import com.example.covid_jobber.activities.MainActivity;
 import com.example.covid_jobber.classes.Job;
@@ -40,7 +43,16 @@ public class arrayAdapter extends ArrayAdapter<Job> {
         //        If it is first item
         if(job_item.getId() == -1){
             title.setText(job_item.getTitle());
-            title.setPadding(10, 550, 10, 0);
+
+//            Change title layout (Start Swiping Text)
+            ConstraintLayout constraintLayout = convertView.findViewById(R.id.layout_item_constraint);
+            ConstraintSet constraintSet = new ConstraintSet();
+            constraintSet.clone(constraintLayout);
+            constraintSet.connect(R.id.txt_item_title,ConstraintSet.RIGHT,R.id.layout_item_constraint,ConstraintSet.RIGHT,0);
+            constraintSet.connect(R.id.txt_item_title,ConstraintSet.TOP,R.id.layout_item_constraint,ConstraintSet.TOP,0);
+            constraintSet.connect(R.id.txt_item_title,ConstraintSet.LEFT,R.id.layout_item_constraint,ConstraintSet.LEFT,0);
+            constraintSet.connect(R.id.txt_item_title,ConstraintSet.BOTTOM,R.id.layout_item_constraint,ConstraintSet.BOTTOM,0);
+            constraintSet.applyTo(constraintLayout);
             title.setTextSize(32);
 
             TextView location_des = convertView.findViewById(R.id.txt_item_location_description);

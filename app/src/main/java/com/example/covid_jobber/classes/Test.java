@@ -1,5 +1,6 @@
 package com.example.covid_jobber.classes;
 
+import com.example.covid_jobber.activities.MainActivity;
 import com.example.covid_jobber.classes.services.ApiCall;
 import com.example.covid_jobber.classes.services.ApiHandler;
 
@@ -17,7 +18,7 @@ public class Test {
             public void callback(JSONArray results) {
                 foo(results);
             }
-        });
+        }, new MainActivity());
     }
 
     public static void foo(JSONArray res){

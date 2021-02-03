@@ -117,10 +117,12 @@ public class MainActivity extends AppCompatActivity {
         }
         System.out.println("Amount of Jobs recieved:" + jobs.size());
 
-        // Post API-Call Filtering here
-
         // Make Jobs Into Cards
         swipeFragment.addJob(jobs);
+
+        if(jobs.size() == 0){
+            getSwipeFragment().apiTries++;
+        }
     }
 
     public FiltersFragment getFilterFragment() {

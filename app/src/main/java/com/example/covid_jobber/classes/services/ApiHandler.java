@@ -3,6 +3,8 @@ package com.example.covid_jobber.classes.services;
 
 import android.util.Log;
 
+import com.example.covid_jobber.activities.MainActivity;
+
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -23,7 +25,7 @@ import okhttp3.ResponseBody;
 public class ApiHandler {
     private OkHttpClient client = new OkHttpClient();
 
-    public void makeApiCall(ApiCall apiCall){
+    public void makeApiCall(ApiCall apiCall, MainActivity mainActivity){
 
         // make Runnable to create seperate Thread and not use Main Thread
         Runnable apiCallThread = () -> {
@@ -31,9 +33,17 @@ public class ApiHandler {
 
             try {
                 apiCall.callback(f.get());
+                mainActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mainActivity.getSwipeFragment().updateArrayAdapter();
+                    }
+                });
+
             } catch ( ExecutionException | InterruptedException e) {
                 e.printStackTrace();
             }
+
         };
        new Thread(apiCallThread).start();
 

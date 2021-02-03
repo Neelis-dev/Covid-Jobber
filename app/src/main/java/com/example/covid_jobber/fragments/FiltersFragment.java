@@ -527,7 +527,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
                     e.printStackTrace();
                 }
             }
-        });
+        }, mainActivity);
 
         setPreferences();
     }

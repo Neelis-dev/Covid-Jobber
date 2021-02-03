@@ -18,6 +18,8 @@
     <string name="txt_swipe_fragment_job_description_tag">Job Description:</string>
     <string name="txt_swipe_fragment_content_placeholder">Placeholder</string>
     <string name="btn_swipe_fragment_more">Show Offer</string>
+    <string name="txt_swipe_fragment_loading">Loading job offers …</string>
+    <string name="txt_swipe_fragment_connection_error">No internet connection!</string>
 
     <!--    Item-->
     <string name="txt_item_title">Nice Job</string>
