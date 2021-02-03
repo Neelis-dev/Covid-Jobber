@@ -119,6 +119,10 @@ public class MainActivity extends AppCompatActivity {
 
         // Make Jobs Into Cards
         swipeFragment.addJob(jobs);
+
+        if(jobs.size() == 0){
+            getSwipeFragment().apiTries++;
+        }
     }
 
     public FiltersFragment getFilterFragment() {

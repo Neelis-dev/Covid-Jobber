@@ -18,6 +18,7 @@ import com.example.covid_jobber.classes.Job;
 import com.example.covid_jobber.classes.services.ApiCall;
 import com.example.covid_jobber.classes.services.arrayAdapter;
 import com.example.covid_jobber.databinding.FragmentSwipeBinding;
+import com.example.covid_jobber.enums.Language;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import org.jetbrains.annotations.NotNull;
@@ -39,6 +40,7 @@ public class SwipeFragment extends Fragment {
     private arrayAdapter arrayAdapter;
 
     private int pageNumber = 1;
+    public int apiTries = 0;
 
     ListView listView;
     List<Job> jobitems;
@@ -63,6 +65,7 @@ public class SwipeFragment extends Fragment {
 
         jobitems = new ArrayList<>();
         jobitems.add(new Job());
+        apiTries = 0;
 
         arrayAdapter = new arrayAdapter(getActivity(), R.layout.item, jobitems, mainActivity);
 
@@ -98,6 +101,14 @@ public class SwipeFragment extends Fragment {
                     return;
                 }
 
+                if(apiTries > 2){
+                    String message = "Leider konnten mit diesen Filtereinstellungen keine weiteren Jobangebote gefunden werden.";
+                    if(mainActivity.language == Language.ENGLISH){
+                        message = "No further job offers could be found with the current filter settings.";
+                    }
+                    binding.txtSwipeWaiting.setText(message);
+                    return;
+                }
 
                 Log.d("TAG", "CARDS ABOUT TO RUN OUT");
                 mainActivity.getHandler().makeApiCall(new ApiCall(mainActivity.getFilterFragment().getFilter(),getPageNumberAndIncrease()) {
@@ -127,8 +138,6 @@ public class SwipeFragment extends Fragment {
                 view.findViewById(R.id.item_swipe_left_indicator).setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
             }
         });
-
-
 
         return binding.getRoot();
     }
