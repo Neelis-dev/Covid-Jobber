@@ -40,7 +40,7 @@ public class arrayAdapter extends ArrayAdapter<Job> {
         //        If it is first item
         if(job_item.getId() == -1){
             title.setText(job_item.getTitle());
-            title.setPadding(10, 500, 10, 0);
+            title.setPadding(10, 550, 10, 0);
             title.setTextSize(32);
 
             TextView location_des = convertView.findViewById(R.id.txt_item_location_description);
