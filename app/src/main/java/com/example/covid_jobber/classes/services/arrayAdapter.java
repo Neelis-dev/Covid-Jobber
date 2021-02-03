@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.covid_jobber.R;
@@ -31,35 +30,49 @@ public class arrayAdapter extends ArrayAdapter<Job> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item, parent, false);
         }
 
-        TextView name = (TextView) convertView.findViewById(R.id.txt_item_title);
-        TextView location = (TextView) convertView.findViewById(R.id.location);
-        TextView employer = (TextView) convertView.findViewById(R.id.employer);
-        TextView workingperiod = (TextView) convertView.findViewById(R.id.workingPeriod);
-        TextView salary = (TextView) convertView.findViewById(R.id.salary);
-        ImageView image = (ImageView) convertView.findViewById(R.id.imageView);
-        image.setImageResource(R.drawable.ic_launcher_background);
+        TextView name = convertView.findViewById(R.id.txt_item_title);
+        TextView location = convertView.findViewById(R.id.txt_item_location);
+        TextView employer = convertView.findViewById(R.id.txt_item_company);
+        TextView workingperiod = convertView.findViewById(R.id.txt_item_contracttime);
+        TextView salary = convertView.findViewById(R.id.txt_item_salary);
 
         //TODO: Koordinaten aus FilterFragment holen
 
-        double latlocation= 49.53;
-        double lonlocation= 8.16;
+        double latlocation = mainActivity.getPrefs().getFloat("latitude", 0);
+        double lonlocation = mainActivity.getPrefs().getFloat("longitude",0 );
 
         double latitude = job_item.getLatitude();
         double longitude = job_item.getLongitude();
+        System.out.println(job_item.getcity());
+        System.out.println("LatJob " + latitude);
+        System.out.println("LonJob " + longitude);
+
+        boolean locActive = mainActivity.getPrefs().getBoolean("locationActive", false);
+        System.out.println(locActive);
+
 
         //Berechnung Abstand des Jobs vom Heimatstandort
         double dx, dy, lat, distance;
-        lat = (latitude + latlocation) / 2 * 0.01745;
+        lat = (latitude + latlocation) / (2 * 0.01745);
         dx = 111.3 * Math.cos(lat) * (longitude - lonlocation);
         dy = 111.3 * (latitude - latlocation);
         distance = Math.sqrt(dx * dx + dy * dy);
         distance = Math.round(distance *100.0) /100.0;
-        String dist = String.valueOf(distance);
+        String dist = " (" + distance + " Km)";
 
         name.setText(job_item.getTitle());
-        location.setText(job_item.getcity() + " (" + dist + " Km)");
+
+        if (locActive) {
+            String locationString = job_item.getcity() + dist;
+            location.setText(locationString);
+        } else {
+            location.setText(job_item.getcity());
+        }
+
         employer.setText(job_item.getCompany());
+
         workingperiod.setText(job_item.getContractTime().getTranslation(mainActivity.language));
+
         if(job_item.getSalary() < 0){
             String text = "";
             switch (mainActivity.language){
@@ -70,9 +83,11 @@ public class arrayAdapter extends ArrayAdapter<Job> {
             }
             salary.setText(text);
         }else {
-            salary.setText(job_item.getSalary() + " €");
+            String salaryString = job_item.getSalary() + " €";
+            salary.setText(salaryString);
         }
 
         return convertView;
     }
+
 }

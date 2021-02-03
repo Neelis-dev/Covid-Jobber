@@ -5,13 +5,9 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +15,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 import com.example.covid_jobber.activities.MainActivity;
 import com.example.covid_jobber.classes.Category;
@@ -36,13 +36,11 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import okhttp3.Request;
@@ -72,7 +70,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
 //    available options
     private final List<ContractTime> contractTimes = new ArrayList<>(Arrays.asList(ContractTime.EITHER, ContractTime.FULL_TIME, ContractTime.PART_TIME));
-    private final List<Integer> surroundingList = new ArrayList<>(Arrays.asList(5, 25, 75, 150, 250));
+    private final List<Integer> surroundingList = new ArrayList<>(Arrays.asList(50, 75, 100, 150, 250));
     private List<View> editOptions;
 
     private final List<Category> categories = new ArrayList<>();
@@ -88,6 +86,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
     }
 
     public static FiltersFragment newInstance() {
+
         return new FiltersFragment();
     }
 
@@ -96,11 +95,11 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
                              Bundle savedInstanceState) {
         binding = FragmentFiltersBinding.inflate(inflater, container, false);
 
-        mainActivity = (MainActivity) getActivity();
-        prefs = mainActivity.getPrefs();
 
-        // Assign variables from SharedPreferences
-        getPreferences();
+
+
+//        // Assign variables from SharedPreferences
+//        getPreferences();
 
 //        Inputs ------------------------------------------------
 
@@ -126,7 +125,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         binding.btnFilterDeleteKeyword.setOnClickListener(this);
         //        Location Permission Button
         binding.btnLocationPermission.setOnClickListener(this);
-        //TODO: Übersetzung und locationActive muss persistent gespeichert werden
+        //TODO: locationActive muss persistent gespeichert werden (aus shared Prefs holen)
         if(locationActive){
             String btnText = "Aktiviert";
             if(mainActivity.language == Language.ENGLISH){
@@ -141,11 +140,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
             binding.btnLocationPermission.setText(btnText);
         }
 
-//        Toggles ----------------------------------------------
-
-        //        Filter toggle
-        binding.switchFilterToggle.setOnClickListener(this);
-        binding.switchFilterToggle.setChecked(filtersActive);
+//        Toggles --------------------------------------------
         //        Surrounding Option visible/not visible -> depends on locationActive
         if(locationActive){
             binding.txtFilterSurrounding.setVisibility(View.VISIBLE);
@@ -192,6 +187,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
             option.setEnabled(false);
         }
 
+
         return binding.getRoot();
     }
 
@@ -212,14 +208,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
     //    Currently only used for toggle button
     @Override
     public void onClick(View v) {
-//        Toggle Button to set filters to active
-        if (v == binding.switchFilterToggle) {
-            filtersActive = binding.switchFilterToggle.isChecked();
-            System.out.println("filters: " + filtersActive);
-
-        }
-//        Button to start Editing
-        else if (v == binding.btnFilterEdit) {
+        if (v == binding.btnFilterEdit) {
             startEditing();
 
         }
@@ -246,7 +235,6 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         else if (v == binding.btnLocationPermission) {
             if(locationActive){
                 locationActive = false;
-                //TODO Übersetzung
                 String btnText = "Deaktiviert";
                 if(mainActivity.language == Language.ENGLISH){
                     btnText = "Deactivated";
@@ -385,30 +373,67 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
 
     public void fillCategorySpinner(){
-        ApiHandler handler= new ApiHandler();
-        handler.makeApiCall(new ApiCall(new Request.Builder().url("https://api.adzuna.com/v1/api/jobs/de/categories?app_id=64fa1822&app_key=d41a9537116b72a1c2a890a27376d552").build()) {
-            @Override
-            public void callback(JSONArray results) {
+//        ApiHandler handler= new ApiHandler();
+//        handler.makeApiCall(new ApiCall(new Request.Builder().url("https://api.adzuna.com/v1/api/jobs/de/categories?app_id=64fa1822&app_key=d41a9537116b72a1c2a890a27376d552").build()) {
+//            @Override
+//            public void callback(JSONArray results) {
+//
+//                for(int i=0; i<results.length();i++){
+//                    try {
+//                        categories.add(new Category(results.getJSONObject(i).getString("tag"), results.getJSONObject(i).getString("label")));
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//        });
 
-                for(int i=0; i<results.length();i++){
-                    try {
-                        categories.add(new Category(results.getJSONObject(i).getString("tag"), results.getJSONObject(i).getString("label")));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
+        // Hardcoded now cause categories never change
+        categories.add(new Category("consultancy-jobs","Beraterstellen"));
+        categories.add(new Category("charity-voluntary-jobs","Gemeinnützige & ehrenamtliche Stellen"));
+        categories.add(new Category("property-jobs","Immobilienstellen"));
+        categories.add(new Category("it-jobs","IT-Stellen"));
+        categories.add(new Category("legal-jobs","Juristische Stellen"));
+        categories.add(new Category("customer-services-jobs","Kundendienststellen"));
+        categories.add(new Category("teaching-jobs","Lehrberufe"));
+        categories.add(new Category("other-general-jobs","Sonstige/Allgemeine Stellen"));
+        categories.add(new Category("accounting-finance-jobs","Stellen aus Buchhaltung & Finanzwesen"));
+        categories.add(new Category("retail-jobs","Stellen aus Einzelhandel"));
+        categories.add(new Category("manufacturing-jobs","Stellen aus Fertigung"));
+        categories.add(new Category("hospitality-catering-jobs","Stellen aus Gastronomie & Catering"));
+        categories.add(new Category("healthcare-nursing-jobs","Stellen aus Gesundheitswesen & Pflege"));
+        categories.add(new Category("trade-construction-jobs","Stellen aus Handel & Bau"));
+        categories.add(new Category("domestic-help-cleaning-jobs","Stellen aus Haushaltshilfen & Reinigung"));
+        categories.add(new Category("creative-design-jobs","Stellen aus Kreation & Design"));
+        categories.add(new Category("logistics-warehouse-jobs","Stellen aus Logistik & Lagerhaltung"));
+        categories.add(new Category("hr-jobs","Stellen aus Personal & Personalbeschaffung"));
+        categories.add(new Category("pr-advertising-marketing-jobs","Stellen aus PR, Werbung & Marketing"));
+        categories.add(new Category("social-work-jobs","Stellen aus Sozialarbeit"));
+        categories.add(new Category("travel-jobs","Stellen aus Tourismus"));
+        categories.add(new Category("energy-oil-gas-jobs","Stellen aus Versorgungsunternehmen"));
+        categories.add(new Category("maintenance-jobs","Stellen aus Wartung"));
+        categories.add(new Category("scientific-qa-jobs","Stellen aus Wissenschaft & Qualitätssicherung"));
+        categories.add(new Category("graduate-jobs","Stellen für Hochschulabsolventen"));
+        categories.add(new Category("engineering-jobs","Technikerstellen"));
+        categories.add(new Category("part-time-jobs","Teilzeitstellen"));
+        categories.add(new Category("unknown","Unknown"));
+        categories.add(new Category("sales-jobs","Vertriebsstellen"));
+        categories.add(new Category("admin-jobs","Verwaltungsstellen"));
+
     }
 
 
     public Filter getFilter(){
-        if(!filtersActive){
-            return new Filter();
-        }
+
 
         Filter filter = new Filter();
-        filter.addFilter(FilterType.CATEGORY,category.getTag());
+
+        // Annoying workaround because of having to wait for the API ask Neelis for explanation
+//        while(category==null){
+//            return filter;
+//        }
+
+        filter.addFilter(FilterType.CATEGORY,category.toString());
         filter.addFilter(FilterType.SALARY,String.valueOf((int) Math.floor(expSalary)));
         if(!(contractTime.toString()).equals("-")){
             filter.addFilter(contractTime.toString()+"=1");
@@ -421,7 +446,25 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
                 keywordString = keywordString + keywords.get(i) + ",";
             }
         }
-        filter.addFilter(FilterType.KEYWORDS,keywordString);
+        if(!keywordString.equals("")){
+            filter.addFilter(FilterType.KEYWORDS,keywordString);
+        }
+
+//        Geocoder geocoder = new Geocoder(getActivity());
+//        if(locationActive){
+//            String subAdminArea = null;
+//            try{
+//                subAdminArea =  geocoder.getFromLocation(latitude,longitude,1).get(0).getSubAdminArea();
+//            }catch(IOException e){
+//                Log.d("ERROR","IOException thrown by Geocoder");
+//                e.printStackTrace();
+//            }
+//
+//            if(subAdminArea != null){
+//                filter.addFilter(FilterType.LOCATION,subAdminArea );
+//            }
+//
+//        }
 
         return filter;
     }
@@ -448,6 +491,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
     //    disables edit mode -> activated by save button
     private void endEditing(){
+        mainActivity.getSwipeFragment().setPageNumber(1);
         editing = false;
         binding.btnFilterSave.setVisibility(View.INVISIBLE);
         binding.btnFilterEdit.setEnabled(true);
@@ -474,7 +518,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         }
 
         //get new cards based on new filter
-        mainActivity.getHandler().makeApiCall(new ApiCall(mainActivity.getFilterFragment().getFilter()) {
+        mainActivity.getHandler().makeApiCall(new ApiCall(mainActivity.getFilterFragment().getFilter(),mainActivity.getSwipeFragment().getPageNumberAndIncrease()) {
             @Override
             public void callback(JSONArray results) {
                 try {
@@ -490,11 +534,10 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
     // Assign variables from SharedPreferences
     public void getPreferences(){
-        mainActivity = (MainActivity) getActivity();
         prefs = mainActivity.getPrefs();
 
-        expSalary = (int) prefs.getFloat("expSalary",1000);
         category = Category.getByTag(prefs.getString("category","it-jobs"), categories);
+        expSalary = (int) prefs.getFloat("expSalary",1000);
         contractTime = ContractTime.getByName(prefs.getString("contractTime",ContractTime.EITHER.toString()));
         Set<String> keywordSet = prefs.getStringSet("keywords", new HashSet<>());
         keywords = new ArrayList<>(keywordSet);
@@ -547,6 +590,9 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         return longitude;
     }
 
+    public void setMainActivity(MainActivity mainActivity) {
+        this.mainActivity = mainActivity;
+    }
 }
 
 

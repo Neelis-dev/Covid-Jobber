@@ -1,22 +1,15 @@
 package com.example.covid_jobber.fragments;
 
-import android.content.SharedPreferences;
-import android.content.res.Configuration;
-import android.content.res.Resources;
+import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.fragment.app.Fragment;
-
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
-import com.example.covid_jobber.R;
+import androidx.fragment.app.Fragment;
+
 import com.example.covid_jobber.activities.MainActivity;
 import com.example.covid_jobber.databinding.FragmentSettingsBinding;
 import com.example.covid_jobber.enums.DarkMode;
@@ -26,18 +19,14 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-import java.util.prefs.Preferences;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link SettingsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SettingsFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+public class SettingsFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private FragmentSettingsBinding binding;
     private MainActivity mainActivity;
@@ -62,6 +51,8 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
                              Bundle savedInstanceState) {
         binding = FragmentSettingsBinding.inflate(inflater, container, false);
         mainActivity = (MainActivity) getActivity();
+
+        binding.btnSettingsRecommend.setOnClickListener(this);
 
 //        Dark Mode
         List<String> translatedDarkModes = new ArrayList<>();
@@ -123,13 +114,20 @@ public class SettingsFragment extends Fragment implements AdapterView.OnItemSele
         }
     }
 
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
     }
 
-
-
+    @Override
+    public void onClick(View v) {
+        if(v==binding.btnSettingsRecommend){
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, "Schau dir mal die coole neue App Covid Jobber an: https://github.com/TheF4stB0i/Covid-Jobber.git");
+            sendIntent.setType("text/plain");
+            startActivity(sendIntent);
+        }
+    }
 }

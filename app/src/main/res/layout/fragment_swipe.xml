@@ -5,14 +5,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/very_light_grey"
     tools:context=".fragments.SettingsFragment">
 
     <com.lorentzos.flingswipe.SwipeFlingAdapterView
         android:id="@+id/frame"
+        style="@style/Swipe_Background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:rotation_degrees="15.5"
-        tools:context=".MyActivity"
-        style="@style/Swipe_Background"/>
+        tools:context=".MyActivity" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

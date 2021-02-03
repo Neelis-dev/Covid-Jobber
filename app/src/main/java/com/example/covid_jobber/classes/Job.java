@@ -52,7 +52,8 @@ public class Job {
         }
 
         // Every jobObject should have these
-        this.title = jobObject.getString("title");
+        this.title = jobObject.getString("title").replace("<strong>","");
+        this.title = this.title.replace("</strong>","");
         if(jobObject.getJSONObject("company").has("display_name")) {
             this.company = jobObject.getJSONObject("company").getString("display_name");
         }
@@ -79,6 +80,9 @@ public class Job {
         this.url = jobObject.has("redirect_url") ? jobObject.getString("redirect_url") : "";
         this.salary = jobObject.has("salary_min") ? Integer.parseInt(jobObject.get("salary_min").toString()) : -1;
         this.description = jobObject.has("description") ? jobObject.get("description").toString() : "Keine Beschreibung vorhanden";
+
+        this.description = this.description.replace("<strong>","");
+        this.description = this.description.replace("</strong>","");
 
         if(jobObject.has("longitude") && jobObject.has("latitude")){
            longitude = Double.parseDouble(jobObject.get("longitude").toString());
