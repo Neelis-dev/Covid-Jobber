@@ -61,6 +61,7 @@ public class SwipeFragment extends Fragment {
         binding = FragmentSwipeBinding.inflate(inflater, container, false);
         mainActivity = (MainActivity) getActivity();
 
+        binding.txtSwipeWaiting.setText(getResources().getString(R.string.txt_swipe_fragment_loading));
         checkInternet();
 
         jobitems = new ArrayList<>();
@@ -185,6 +186,8 @@ public class SwipeFragment extends Fragment {
                     .setPositiveButton("Ok", (dialog, id) -> dialog.cancel());
             AlertDialog alert = builder.create();
             alert.show();
+
+            binding.txtSwipeWaiting.setText(getResources().getString(R.string.txt_swipe_fragment_connection_error));
         }
     }
 
