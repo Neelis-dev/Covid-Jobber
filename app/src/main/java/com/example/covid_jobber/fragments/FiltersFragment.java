@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,6 +36,7 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -84,6 +86,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
     }
 
     public static FiltersFragment newInstance() {
+
         return new FiltersFragment();
     }
 
@@ -95,8 +98,8 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
 
 
-        // Assign variables from SharedPreferences
-        getPreferences();
+//        // Assign variables from SharedPreferences
+//        getPreferences();
 
 //        Inputs ------------------------------------------------
 
@@ -370,20 +373,53 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
 
     public void fillCategorySpinner(){
-        ApiHandler handler= new ApiHandler();
-        handler.makeApiCall(new ApiCall(new Request.Builder().url("https://api.adzuna.com/v1/api/jobs/de/categories?app_id=64fa1822&app_key=d41a9537116b72a1c2a890a27376d552").build()) {
-            @Override
-            public void callback(JSONArray results) {
+//        ApiHandler handler= new ApiHandler();
+//        handler.makeApiCall(new ApiCall(new Request.Builder().url("https://api.adzuna.com/v1/api/jobs/de/categories?app_id=64fa1822&app_key=d41a9537116b72a1c2a890a27376d552").build()) {
+//            @Override
+//            public void callback(JSONArray results) {
+//
+//                for(int i=0; i<results.length();i++){
+//                    try {
+//                        categories.add(new Category(results.getJSONObject(i).getString("tag"), results.getJSONObject(i).getString("label")));
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//        });
 
-                for(int i=0; i<results.length();i++){
-                    try {
-                        categories.add(new Category(results.getJSONObject(i).getString("tag"), results.getJSONObject(i).getString("label")));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
+        // Hardcoded now cause categories never change
+        categories.add(new Category("consultancy-jobs","Beraterstellen"));
+        categories.add(new Category("charity-voluntary-jobs","Gemeinnützige & ehrenamtliche Stellen"));
+        categories.add(new Category("property-jobs","Immobilienstellen"));
+        categories.add(new Category("it-jobs","IT-Stellen"));
+        categories.add(new Category("legal-jobs","Juristische Stellen"));
+        categories.add(new Category("customer-services-jobs","Kundendienststellen"));
+        categories.add(new Category("teaching-jobs","Lehrberufe"));
+        categories.add(new Category("other-general-jobs","Sonstige/Allgemeine Stellen"));
+        categories.add(new Category("accounting-finance-jobs","Stellen aus Buchhaltung & Finanzwesen"));
+        categories.add(new Category("retail-jobs","Stellen aus Einzelhandel"));
+        categories.add(new Category("manufacturing-jobs","Stellen aus Fertigung"));
+        categories.add(new Category("hospitality-catering-jobs","Stellen aus Gastronomie & Catering"));
+        categories.add(new Category("healthcare-nursing-jobs","Stellen aus Gesundheitswesen & Pflege"));
+        categories.add(new Category("trade-construction-jobs","Stellen aus Handel & Bau"));
+        categories.add(new Category("domestic-help-cleaning-jobs","Stellen aus Haushaltshilfen & Reinigung"));
+        categories.add(new Category("creative-design-jobs","Stellen aus Kreation & Design"));
+        categories.add(new Category("logistics-warehouse-jobs","Stellen aus Logistik & Lagerhaltung"));
+        categories.add(new Category("hr-jobs","Stellen aus Personal & Personalbeschaffung"));
+        categories.add(new Category("pr-advertising-marketing-jobs","Stellen aus PR, Werbung & Marketing"));
+        categories.add(new Category("social-work-jobs","Stellen aus Sozialarbeit"));
+        categories.add(new Category("travel-jobs","Stellen aus Tourismus"));
+        categories.add(new Category("energy-oil-gas-jobs","Stellen aus Versorgungsunternehmen"));
+        categories.add(new Category("maintenance-jobs","Stellen aus Wartung"));
+        categories.add(new Category("scientific-qa-jobs","Stellen aus Wissenschaft & Qualitätssicherung"));
+        categories.add(new Category("graduate-jobs","Stellen für Hochschulabsolventen"));
+        categories.add(new Category("engineering-jobs","Technikerstellen"));
+        categories.add(new Category("part-time-jobs","Teilzeitstellen"));
+        categories.add(new Category("unknown","Unknown"));
+        categories.add(new Category("sales-jobs","Vertriebsstellen"));
+        categories.add(new Category("admin-jobs","Verwaltungsstellen"));
+
     }
 
 
@@ -393,9 +429,9 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         Filter filter = new Filter();
 
         // Annoying workaround because of having to wait for the API ask Neelis for explanation
-        while(category==null){
-            getPreferences();
-        }
+//        while(category==null){
+//            return filter;
+//        }
 
         filter.addFilter(FilterType.CATEGORY,category.toString());
         filter.addFilter(FilterType.SALARY,String.valueOf((int) Math.floor(expSalary)));
@@ -414,6 +450,21 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
             filter.addFilter(FilterType.KEYWORDS,keywordString);
         }
 
+//        Geocoder geocoder = new Geocoder(getActivity());
+//        if(locationActive){
+//            String subAdminArea = null;
+//            try{
+//                subAdminArea =  geocoder.getFromLocation(latitude,longitude,1).get(0).getSubAdminArea();
+//            }catch(IOException e){
+//                Log.d("ERROR","IOException thrown by Geocoder");
+//                e.printStackTrace();
+//            }
+//
+//            if(subAdminArea != null){
+//                filter.addFilter(FilterType.LOCATION,subAdminArea );
+//            }
+//
+//        }
 
         return filter;
     }

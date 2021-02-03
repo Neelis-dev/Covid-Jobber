@@ -65,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
 //        Get favorite Jobs from prefs
         favoritesFragment.getJobsFromPrefs(prefs);
 
+//
+        filtersFragment.setMainActivity(this);
+        filtersFragment.getPreferences();
 
 //        At first Swipe Fragment in Content Frame
         replaceFrame(R.id.content_frame, swipeFragment);
@@ -114,11 +117,9 @@ public class MainActivity extends AppCompatActivity {
         }
         System.out.println("Amount of Jobs recieved:" + jobs.size());
 
-        //  make Jobs into cards
-//        List<String> jobtitles = new ArrayList<>();
-//        for (Job j:jobs) {
-//            jobtitles.add(j.getTitle());
-//        }
+        // Post API-Call Filtering here
+
+        // Make Jobs Into Cards
         swipeFragment.addJob(jobs);
     }
 

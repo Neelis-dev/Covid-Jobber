@@ -80,7 +80,7 @@ public class SwipeFragment extends Fragment {
             @Override
             public void onRightCardExit(Object dataObject) {
                 Job favorite = (Job) dataObject;
-                if(favorite != null){
+                if(favorite != null && favorite.getId() != -1){
                     if(!mainActivity.findFavoriteJob(favorite.getId())){
                         mainActivity.addFavoriteJob(favorite);
                     }
@@ -93,8 +93,7 @@ public class SwipeFragment extends Fragment {
                     return;
                 }
 
-                mainActivity.getFilterFragment().setMainActivity((MainActivity) getActivity());
-                mainActivity.getFilterFragment().getPreferences();
+
                 Log.d("TAG", "CARDS ABOUT TO RUN OUT");
                 mainActivity.getHandler().makeApiCall(new ApiCall(mainActivity.getFilterFragment().getFilter(),getPageNumberAndIncrease()) {
                     @Override

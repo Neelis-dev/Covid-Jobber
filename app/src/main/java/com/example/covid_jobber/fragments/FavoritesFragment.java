@@ -92,30 +92,32 @@ public class FavoritesFragment extends Fragment implements View.OnClickListener 
                 deleting = false;
                 binding.btnFavoritesEdit.setBackgroundTintList(ContextCompat.getColorStateList(this.getContext(), R.color.primary));
 
-//                Delete jobsToDelete
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                String message = "Möchtest du die ausgewählten Einträge wirklich löschen?";
-                String yes = "Ja";
-                String cancel = "Abbrechen";
-                if (mainActivity.language == Language.ENGLISH){
-                    message = "Are you sure you want to delete the selected entries?";
-                    yes = "Yes";
-                    cancel = "Cancel";
-                }
-                builder.setMessage(message)
-                        .setCancelable(false)
-                        //                    If Deleting
-                        .setPositiveButton(yes, (dialog, id) -> {
-                            for (FavoriteJobFragment fragment : jobsToDelete) {
-                                deleteFavorite(fragment);
-                            }
-                            jobsToDelete.clear();
-                        })
-                        //                    If Cancelled
-                        .setNegativeButton(cancel, (dialog, id) -> dialog.cancel());
+                if(jobsToDelete.size() > 0){
+                    //                Delete jobsToDelete
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    String message = "Möchtest du die ausgewählten Einträge wirklich löschen?";
+                    String yes = "Ja";
+                    String cancel = "Abbrechen";
+                    if (mainActivity.language == Language.ENGLISH){
+                        message = "Are you sure you want to delete the selected entries?";
+                        yes = "Yes";
+                        cancel = "Cancel";
+                    }
+                    builder.setMessage(message)
+                            .setCancelable(false)
+                            //                    If Deleting
+                            .setPositiveButton(yes, (dialog, id) -> {
+                                for (FavoriteJobFragment fragment : jobsToDelete) {
+                                    deleteFavorite(fragment);
+                                }
+                                jobsToDelete.clear();
+                            })
+                            //                    If Cancelled
+                            .setNegativeButton(cancel, (dialog, id) -> dialog.cancel());
 
-                AlertDialog alert = builder.create();
-                alert.show();
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                }
 
 //                End Deleting mode
                 for (FavoriteJobFragment fragment : fragments) {
