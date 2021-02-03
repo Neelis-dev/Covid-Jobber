@@ -1,5 +1,8 @@
 package com.example.covid_jobber.fragments;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -55,6 +58,8 @@ public class SwipeFragment extends Fragment {
 
         binding = FragmentSwipeBinding.inflate(inflater, container, false);
         mainActivity = (MainActivity) getActivity();
+
+        checkInternet();
 
         jobitems = new ArrayList<>();
         jobitems.add(new Job());
@@ -147,6 +152,27 @@ public class SwipeFragment extends Fragment {
 
     public String getCurrentUrl(){
         return jobitems.get(0).getUrl();
+    }
+
+    private void checkInternet(){
+        ConnectivityManager cm = (ConnectivityManager) mainActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
+        boolean connected = cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
+
+        if(!connected){
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            String message = "";
+            switch (mainActivity.language){
+                case GERMAN:
+                    message = "Bitte überprüfe deine Internetverbindung! Ohne Internetzugang können leider keine Job-Angebote geladen werden und die App funktioniert nicht ordnungsgemäß."; break;
+                case ENGLISH:
+                    message = "Please check your internet connection! Without internet access no job offers can be loaded and the app does not function properly."; break;
+            }
+            builder.setMessage(message)
+                    .setCancelable(false)
+                    .setPositiveButton("Ok", (dialog, id) -> dialog.cancel());
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
     }
 
 }
