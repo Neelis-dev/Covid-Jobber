@@ -109,7 +109,7 @@ public class SwipeFragment extends Fragment {
                             e.printStackTrace();
                         }
                     }
-                });
+                }, mainActivity);
 
 
                 arrayAdapter.notifyDataSetChanged();
@@ -152,6 +152,10 @@ public class SwipeFragment extends Fragment {
 
     public String getCurrentUrl(){
         return jobitems.get(0).getUrl();
+    }
+
+    public void updateArrayAdapter(){
+        arrayAdapter.notifyDataSetChanged();
     }
 
     private void checkInternet(){
