@@ -114,11 +114,9 @@ public class MainActivity extends AppCompatActivity {
         }
         System.out.println("Amount of Jobs recieved:" + jobs.size());
 
-        //  make Jobs into cards
-//        List<String> jobtitles = new ArrayList<>();
-//        for (Job j:jobs) {
-//            jobtitles.add(j.getTitle());
-//        }
+        // Post API-Call Filtering here
+
+        // Make Jobs Into Cards
         swipeFragment.addJob(jobs);
     }
 
