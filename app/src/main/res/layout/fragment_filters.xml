@@ -32,7 +32,7 @@
             app:layout_constraintEnd_toEndOf="@+id/input_filter_salary"
             app:layout_constraintTop_toTopOf="@+id/txt_filter_location" />
 
-    <TextView
+        <TextView
         android:id="@+id/txt_filter_salary"
         style="@style/h3"
         android:layout_width="wrap_content"

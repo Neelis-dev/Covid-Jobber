@@ -75,9 +75,9 @@ public class arrayAdapter extends ArrayAdapter<Job> {
             return convertView;
         }
 
-        boolean locationActive = mainActivity.getPrefs().getBoolean("locationActive", false);
-        double latlocation = mainActivity.getPrefs().getFloat("latitude", 0);
-        double lonlocation = mainActivity.getPrefs().getFloat("longitude",0 );
+        boolean locationActive = mainActivity.getFilterFragment().isLocationActive();
+        double latlocation = mainActivity.getFilterFragment().getLatitude();
+        double lonlocation = mainActivity.getFilterFragment().getLongitude();
 
         double latitude = job_item.getLatitude();
         double longitude = job_item.getLongitude();
@@ -87,7 +87,7 @@ public class arrayAdapter extends ArrayAdapter<Job> {
         if (locationActive) {
             //Berechnung des Abstandes vom persönlichen Standort zur Arbeitsstätte (Luftlinie)
             double dx, dy, lat, distance;
-            lat = (latitude + latlocation) / (2 * 0.01745);
+            lat = (latitude + latlocation) / 2 * (Math.PI/180);
             dx = 111.3 * Math.cos(lat) * (longitude - lonlocation);
             dy = 111.3 * (latitude - latlocation);
             distance = Math.sqrt(dx * dx + dy * dy);

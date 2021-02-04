@@ -5,7 +5,6 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,7 +22,6 @@ import androidx.fragment.app.Fragment;
 import com.example.covid_jobber.activities.MainActivity;
 import com.example.covid_jobber.classes.Category;
 import com.example.covid_jobber.classes.services.ApiCall;
-import com.example.covid_jobber.classes.services.ApiHandler;
 import com.example.covid_jobber.classes.services.Filter;
 import com.example.covid_jobber.classes.services.FilterType;
 import com.example.covid_jobber.databinding.FragmentFiltersBinding;
@@ -36,14 +34,11 @@ import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import okhttp3.Request;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -126,7 +121,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         binding.btnFilterDeleteKeyword.setOnClickListener(this);
         //        Location Permission Button
         binding.btnLocationPermission.setOnClickListener(this);
-        //TODO: locationActive muss persistent gespeichert werden (aus shared Prefs holen)
+
         if(locationActive){
             String btnText = "Aktiviert";
             if(mainActivity.language == Language.ENGLISH){
@@ -274,7 +269,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         }
     }
 
-    //    currently only used for category spinner
+    //    TODO: richtiger Kommentar? currently only used for category spinner
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if(parent == binding.spinnerFilterCategory){
@@ -364,7 +359,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
     public boolean checkDistance(int surrounding, double latlocation, double lonlocation){
         double dx, dy, lat, distance;
 
-        lat = (latitude + latlocation) / 2 * 0.01745;
+        lat = (latitude + latlocation) / 2 * (Math.PI/180);
         dx = 111.3 * Math.cos(lat) * (longitude - lonlocation);
         dy = 111.3 * (latitude - latlocation);
         distance = Math.sqrt(dx * dx + dy * dy);
@@ -430,6 +425,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
         Filter filter = new Filter();
 
+        //TODO: kann weg?
         // Annoying workaround because of having to wait for the API ask Neelis for explanation
 //        while(category==null){
 //            return filter;
@@ -451,23 +447,6 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         if(!keywordString.equals("")){
             filter.addFilter(FilterType.KEYWORDS,keywordString);
         }
-
-//        Geocoder geocoder = new Geocoder(mainActivity);
-//        locationActive = true;
-//        if(locationActive){
-//            String subAdminArea = null;
-//            try{
-//                subAdminArea =  geocoder.getFromLocation(54.908534,8.309822,1).get(0).getSubAdminArea();
-//            }catch(IOException e){
-//                Log.d("ERROR","IOException thrown by Geocoder");
-//                e.printStackTrace();
-//            }
-//
-//            if(subAdminArea != null){
-//                filter.addFilter(FilterType.LOCATION,subAdminArea );
-//            }
-//
-//        }
 
         return filter;
     }
