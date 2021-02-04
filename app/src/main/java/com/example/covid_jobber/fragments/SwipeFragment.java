@@ -43,7 +43,7 @@ public class SwipeFragment extends Fragment {
     public int apiTries = 0;
 
     ListView listView;
-    List<Job> jobitems;
+    List<Job> jobitems = new ArrayList<>();
 
 
     public SwipeFragment() {
@@ -64,8 +64,11 @@ public class SwipeFragment extends Fragment {
         binding.txtSwipeWaiting.setText(getResources().getString(R.string.txt_swipe_fragment_loading));
         checkInternet();
 
-        jobitems = new ArrayList<>();
-        jobitems.add(new Job());
+//        jobitems = new ArrayList<>();
+
+        if(jobitems.size() == 0){
+            jobitems.add(new Job());
+        }
         apiTries = 0;
 
         arrayAdapter = new arrayAdapter(getActivity(), R.layout.item, jobitems, mainActivity);
@@ -98,7 +101,7 @@ public class SwipeFragment extends Fragment {
 
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
-                if(itemsInAdapter>=3){
+                if(itemsInAdapter>=10){
                     return;
                 }
 
@@ -149,7 +152,19 @@ public class SwipeFragment extends Fragment {
     }
 
     public void addJob(List<Job> newJobs) {
-        jobitems.addAll(newJobs);
+
+        if(mainActivity.getFilterFragment().isLocationActive()){
+            for (Job j : newJobs) {
+                if(mainActivity.getFilterFragment().checkDistance(mainActivity.getFilterFragment().getSurrounding(),j.getLatitude(),j.getLongitude())){
+                    System.out.println(j.getcity());
+                    jobitems.add(j);
+                }
+            }
+        }else{
+            jobitems.addAll(newJobs);
+        }
+
+
     }
 
     public void setPageNumber(int n){
@@ -190,5 +205,12 @@ public class SwipeFragment extends Fragment {
             binding.txtSwipeWaiting.setText(getResources().getString(R.string.txt_swipe_fragment_connection_error));
         }
     }
+
+    public void resetJobList(){
+        this.jobitems.clear();
+        arrayAdapter.notifyDataSetChanged();
+    }
+
+
 
 }
