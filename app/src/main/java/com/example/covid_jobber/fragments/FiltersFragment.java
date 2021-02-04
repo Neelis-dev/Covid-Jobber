@@ -390,6 +390,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 //        });
 
         // Hardcoded now cause categories never change
+        categories.add(new Category("-","Beliebig"));
         categories.add(new Category("consultancy-jobs","Beraterstellen"));
         categories.add(new Category("charity-voluntary-jobs","Gemeinnützige & ehrenamtliche Stellen"));
         categories.add(new Category("property-jobs","Immobilienstellen"));
