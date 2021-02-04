@@ -16,6 +16,12 @@ public class Category {
         this.tag = tag;
         this.german = german;
 
+        // Special case for no category chosen
+        if(tag.equals("-")){
+            this.english = "Any";
+            return;
+        }
+
         String englishName = "";
         String[] parts = tag.split("-");
         for (String part:parts) {

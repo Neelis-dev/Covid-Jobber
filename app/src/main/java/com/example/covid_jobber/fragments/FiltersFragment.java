@@ -64,6 +64,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
     private ContractTime contractTime;
     private Category category;
     private List<String> keywords = new ArrayList<>();
+
     private int surrounding;
     private double latitude;
     private double longitude;
@@ -389,6 +390,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 //        });
 
         // Hardcoded now cause categories never change
+        categories.add(new Category("-","Beliebig"));
         categories.add(new Category("consultancy-jobs","Beraterstellen"));
         categories.add(new Category("charity-voluntary-jobs","Gemeinnützige & ehrenamtliche Stellen"));
         categories.add(new Category("property-jobs","Immobilienstellen"));
@@ -450,11 +452,12 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
             filter.addFilter(FilterType.KEYWORDS,keywordString);
         }
 
-//        Geocoder geocoder = new Geocoder(getActivity());
+//        Geocoder geocoder = new Geocoder(mainActivity);
+//        locationActive = true;
 //        if(locationActive){
 //            String subAdminArea = null;
 //            try{
-//                subAdminArea =  geocoder.getFromLocation(latitude,longitude,1).get(0).getSubAdminArea();
+//                subAdminArea =  geocoder.getFromLocation(54.908534,8.309822,1).get(0).getSubAdminArea();
 //            }catch(IOException e){
 //                Log.d("ERROR","IOException thrown by Geocoder");
 //                e.printStackTrace();
@@ -491,7 +494,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
     //    disables edit mode -> activated by save button
     private void endEditing(){
-        mainActivity.getSwipeFragment().setPageNumber(1);
+
         editing = false;
         binding.btnFilterSave.setVisibility(View.INVISIBLE);
         binding.btnFilterEdit.setEnabled(true);
@@ -518,6 +521,8 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         }
 
         //get new cards based on new filter
+        mainActivity.getSwipeFragment().setPageNumber(1);
+        mainActivity.getSwipeFragment().resetJobList();
         mainActivity.getHandler().makeApiCall(new ApiCall(mainActivity.getFilterFragment().getFilter(),mainActivity.getSwipeFragment().getPageNumberAndIncrease()) {
             @Override
             public void callback(JSONArray results) {
@@ -589,6 +594,15 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
     public double getLongitude(){
         return longitude;
     }
+
+    public boolean isLocationActive() {
+        return locationActive;
+    }
+
+    public int getSurrounding() {
+        return surrounding;
+    }
+
 
     public void setMainActivity(MainActivity mainActivity) {
         this.mainActivity = mainActivity;
