@@ -3,6 +3,7 @@ package com.example.covid_jobber.fragments;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -122,13 +123,15 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         //        Location Permission Button
         binding.btnLocationPermission.setOnClickListener(this);
 
-        if(locationActive){
+        if(ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+            locationActive = true;
             String btnText = "Aktiviert";
             if(mainActivity.language == Language.ENGLISH){
                 btnText = "Activated";
             }
             binding.btnLocationPermission.setText(btnText);
-        }else if(!locationActive){
+        }else if(ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+            locationActive = false;
             String btnText = "Deaktiviert";
             if(mainActivity.language == Language.ENGLISH){
                 btnText = "Deactivated";
@@ -235,38 +238,42 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 //        Location Button
         else if (v == binding.btnLocationPermission) {
             if(locationActive){
-                locationActive = false;
-                String btnText = "Deaktiviert";
-                if(mainActivity.language == Language.ENGLISH){
-                    btnText = "Deactivated";
-                }
-                binding.btnLocationPermission.setText(btnText);
-                binding.spinnerFilterSurrounding.setVisibility(View.GONE);
-                binding.txtFilterSurrounding.setVisibility(View.GONE);
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 String message = "";
                 switch (mainActivity.language){
                     case GERMAN:
-                        message = "Wenn du den Standort deaktivierst, kann deine Suche nicht geografisch eingegrenzt werden. Du erhältst Vorschläge aus ganz Deutschland. Settings > Location > App access to location > Covid-Jobber > Deny"; break;
+                        message = "Wenn du den Standort deaktivierst, kann deine Suche nicht geografisch eingegrenzt werden. Du erhältst Vorschläge aus ganz Deutschland. \n Einstellungen > Standort > App-Berechtigungen > Covid-Jobber > Deny"; break;
                     case ENGLISH:
-                        message = "If you deactivate your location, your search cannot be filtered geographically. You will see job offers from all over Germany. Settings > Location > App access to location > Covid-Jobber > Deny"; break;
+                        message = "If you deactivate your location, your search cannot be filtered geographically. You will see job offers from all over Germany. \n Settings > Location > App access to location > Covid-Jobber > Deny"; break;
                 }
                 builder.setMessage(message)
                         .setCancelable(false)
-                        .setPositiveButton("Ok", (dialog, id) -> dialog.cancel());
+                        .setPositiveButton("Einstellungen", (dialog, id) -> startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0))
+                        .setNegativeButton("Abbrechen", (dialog, id) -> dialog.cancel());
                 AlertDialog alert = builder.create();
                 alert.show();
-            } else if(!locationActive){
-                locationActive = true;
-                String btnText = "Aktiviert";
-                if(mainActivity.language == Language.ENGLISH){
-                    btnText = "Activated";
+
+                if (ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    locationActive = false;
+                    String btnText = "Deaktiviert";
+                    if (mainActivity.language == Language.ENGLISH) {
+                        btnText = "Deactivated";
+                    }
+                    binding.btnLocationPermission.setText(btnText);
+                    binding.spinnerFilterSurrounding.setVisibility(View.GONE);
+                    binding.txtFilterSurrounding.setVisibility(View.GONE);
                 }
-                binding.btnLocationPermission.setText(btnText);
-                binding.spinnerFilterSurrounding.setVisibility(View.VISIBLE);
-                binding.txtFilterSurrounding.setVisibility(View.VISIBLE);
+            } else if(!locationActive){
                 if (ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     updateLocation();
+                    locationActive = true;
+                    String btnText = "Aktiviert";
+                    if(mainActivity.language == Language.ENGLISH){
+                        btnText = "Activated";
+                    }
+                    binding.btnLocationPermission.setText(btnText);
+                    binding.spinnerFilterSurrounding.setVisibility(View.VISIBLE);
+                    binding.txtFilterSurrounding.setVisibility(View.VISIBLE);
                 } else {
                     requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 0);
                 }
@@ -313,6 +320,14 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if(requestCode == 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
             updateLocation();
+            locationActive = true;
+            String btnText = "Aktiviert";
+            if(mainActivity.language == Language.ENGLISH){
+                btnText = "Activated";
+            }
+            binding.btnLocationPermission.setText(btnText);
+            binding.spinnerFilterSurrounding.setVisibility(View.VISIBLE);
+            binding.txtFilterSurrounding.setVisibility(View.VISIBLE);
         }
         else{
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
