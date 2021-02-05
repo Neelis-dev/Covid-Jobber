@@ -202,7 +202,12 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
     @Override
     public void onDestroyView() {
+
+        if(editing){
+            endEditing();
+        }
         binding = null;
+
         super.onDestroyView();
     }
 
