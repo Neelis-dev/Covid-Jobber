@@ -96,7 +96,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
 
 //        // Assign variables from SharedPreferences
-//        getPreferences();
+          getPreferences();
 
 //        Inputs ------------------------------------------------
 
@@ -123,8 +123,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         //        Location Permission Button
         binding.btnLocationPermission.setOnClickListener(this);
 
-        if(ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-            locationActive = true;
+        if(locationActive){
             String btnText = "Aktiviert";
             if(mainActivity.language == Language.ENGLISH){
                 btnText = "Activated";
@@ -242,7 +241,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
                 String message = "";
                 switch (mainActivity.language){
                     case GERMAN:
-                        message = "Wenn du den Standort deaktivierst, kann deine Suche nicht geografisch eingegrenzt werden. Du erhältst Vorschläge aus ganz Deutschland. \n Einstellungen > Standort > App-Berechtigungen > Covid-Jobber > Deny"; break;
+                        message = "Wenn du den Standort deaktivierst, wird deine Suche nicht geografisch eingegrenzt. Du erhältst Vorschläge aus ganz Deutschland. Wenn du zudem den Standort nicht mehr freigeben möchtest, kannst du das in den Einstellungen ändern. \n Einstellungen > Standort > App-Berechtigungen > Covid-Jobber > Deny"; break;
                     case ENGLISH:
                         message = "If you deactivate your location, your search cannot be filtered geographically. You will see job offers from all over Germany. \n Settings > Location > App access to location > Covid-Jobber > Deny"; break;
                 }
@@ -253,16 +252,16 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
                 AlertDialog alert = builder.create();
                 alert.show();
 
-                if (ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    locationActive = false;
-                    String btnText = "Deaktiviert";
-                    if (mainActivity.language == Language.ENGLISH) {
-                        btnText = "Deactivated";
-                    }
-                    binding.btnLocationPermission.setText(btnText);
-                    binding.spinnerFilterSurrounding.setVisibility(View.GONE);
-                    binding.txtFilterSurrounding.setVisibility(View.GONE);
+
+                locationActive = false;
+                String btnText = "Deaktiviert";
+                if (mainActivity.language == Language.ENGLISH) {
+                    btnText = "Deactivated";
                 }
+                binding.btnLocationPermission.setText(btnText);
+                binding.spinnerFilterSurrounding.setVisibility(View.GONE);
+                binding.txtFilterSurrounding.setVisibility(View.GONE);
+
             } else if(!locationActive){
                 if (ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     updateLocation();
