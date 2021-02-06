@@ -90,7 +90,6 @@ public class NavbarFragment extends Fragment implements View.OnClickListener{
     public void onStart() {
         super.onStart();
 
-//        Todo: Do something on start?
     }
 
 

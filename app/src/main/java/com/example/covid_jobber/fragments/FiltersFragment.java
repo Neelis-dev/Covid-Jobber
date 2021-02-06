@@ -123,13 +123,16 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         //        Location Permission Button
         binding.btnLocationPermission.setOnClickListener(this);
 
-        if(locationActive){
+        if(locationActive && ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
             String btnText = "Aktiviert";
             if(mainActivity.language == Language.ENGLISH){
                 btnText = "Activated";
             }
             binding.btnLocationPermission.setText(btnText);
-        }else if(ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+        }else{
+            // reset gps data
+            latitude = 0;
+            longitude = 0;
             locationActive = false;
             String btnText = "Deaktiviert";
             if(mainActivity.language == Language.ENGLISH){
@@ -241,17 +244,19 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
                 String message = "";
                 switch (mainActivity.language){
                     case GERMAN:
-                        message = "Wenn du den Standort deaktivierst, wird deine Suche nicht geografisch eingegrenzt. Du erhältst Vorschläge aus ganz Deutschland. Wenn du zudem den Standort nicht mehr freigeben möchtest, kannst du das in den Einstellungen ändern. \n Einstellungen > Standort > App-Berechtigungen > Covid-Jobber > Deny"; break;
+                        message = "Wenn du den Standort deaktivierst, wird deine Suche nicht geografisch eingegrenzt. Du erhältst Vorschläge aus ganz Deutschland. Wenn du zudem den Standort nicht mehr freigeben möchtest, kannst du das in den Einstellungen ändern.\n\nEinstellungen > Standort > App-Berechtigungen > Covid-Jobber > Deny"; break;
                     case ENGLISH:
                         message = "If you deactivate your location, your search cannot be filtered geographically. You will see job offers from all over Germany. \n Settings > Location > App access to location > Covid-Jobber > Deny"; break;
                 }
                 builder.setMessage(message)
                         .setCancelable(false)
-                        .setPositiveButton("Einstellungen", (dialog, id) -> startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0))
-                        .setNegativeButton("Abbrechen", (dialog, id) -> dialog.cancel());
+                        .setPositiveButton("Ok", (dialog, id) -> dialog.cancel());
                 AlertDialog alert = builder.create();
                 alert.show();
 
+                // reset gps data
+                latitude = 0;
+                longitude = 0;
 
                 locationActive = false;
                 String btnText = "Deaktiviert";
@@ -262,7 +267,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
                 binding.spinnerFilterSurrounding.setVisibility(View.GONE);
                 binding.txtFilterSurrounding.setVisibility(View.GONE);
 
-            } else if(!locationActive){
+            } else{
                 if (ContextCompat.checkSelfPermission(this.getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                     updateLocation();
                     locationActive = true;
@@ -280,7 +285,6 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         }
     }
 
-    //    TODO: richtiger Kommentar? currently only used for category spinner
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if(parent == binding.spinnerFilterCategory){
@@ -297,7 +301,6 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         }
     }
 
-    //    currently only used for category spinner
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
         if(parent == binding.spinnerFilterCategory){
@@ -362,9 +365,9 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
             String message = "";
             switch (mainActivity.language){
                 case GERMAN:
-                    message = "Entschuldige, dein Standort konnte nicht bestimmt werden."; break;
+                    message = "Entschuldige, dein Standort konnte nicht bestimmt werden. Prüfe ob GPS eingeschaltet ist und dein Gerät geortet werden kann."; break;
                 case ENGLISH:
-                    message = "Sorry, your location could not be determined."; break;
+                    message = "Sorry, your location could not be determined. Check if your device has GPS enabled."; break;
             }
             builder.setMessage(message)
                     .setCancelable(false)
@@ -388,22 +391,10 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
 
     public void fillCategorySpinner(){
-//        ApiHandler handler= new ApiHandler();
-//        handler.makeApiCall(new ApiCall(new Request.Builder().url("https://api.adzuna.com/v1/api/jobs/de/categories?app_id=64fa1822&app_key=d41a9537116b72a1c2a890a27376d552").build()) {
-//            @Override
-//            public void callback(JSONArray results) {
-//
-//                for(int i=0; i<results.length();i++){
-//                    try {
-//                        categories.add(new Category(results.getJSONObject(i).getString("tag"), results.getJSONObject(i).getString("label")));
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//        });
 
         // Hardcoded now cause categories never change
+        // Getting categories through APICall is possible, but causes unnecessary problems and is
+        // harder to deal with
         categories.add(new Category("-","Beliebig"));
         categories.add(new Category("consultancy-jobs","Beraterstellen"));
         categories.add(new Category("charity-voluntary-jobs","Gemeinnützige & ehrenamtliche Stellen"));
@@ -440,16 +431,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
 
     public Filter getFilter(){
-
-
         Filter filter = new Filter();
-
-        //TODO: kann weg?
-        // Annoying workaround because of having to wait for the API ask Neelis for explanation
-//        while(category==null){
-//            return filter;
-//        }
-
         filter.addFilter(FilterType.CATEGORY,category.toString());
         filter.addFilter(FilterType.SALARY,String.valueOf((int) Math.floor(expSalary)));
         if(!(contractTime.toString()).equals("-")){
