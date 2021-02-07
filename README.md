@@ -1,7 +1,7 @@
 # Covid-Jobber
 A free application for everyone to download and easily find shorttime jobs in times of the pandemic.
 
-This projects is made with AndroidStudio and Java as language.
+This projects is made with AndroidStudio and Java as programming language. Minimum SDK Version: 24 (Nougat)
 
 Important Comments: 
 
@@ -12,3 +12,10 @@ Important Comments:
 3. The API doesn't differ between monthly, yearly or hourly salary. Nevertheless any category is included.
 
 Have fun with our app! 
+
+Access limits on the adzuna api (https://developer.adzuna.com/):
+
+    25 hits per minute
+    250 hits per day
+    1000 hits per week
+    2500 hits per month
