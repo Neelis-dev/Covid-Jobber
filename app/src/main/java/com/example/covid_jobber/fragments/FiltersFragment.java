@@ -56,7 +56,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
 
     // Variables
 //    chosen options
-    private int expSalary = 1000;
+    private int expSalary;
     private ContractTime contractTime;
     private Category category;
     private List<String> keywords = new ArrayList<>();
@@ -522,7 +522,7 @@ public class FiltersFragment extends Fragment implements View.OnClickListener, A
         prefs = mainActivity.getPrefs();
 
         category = Category.getByTag(prefs.getString("category","it-jobs"), categories);
-        expSalary = (int) prefs.getFloat("expSalary",1000);
+        expSalary = (int) prefs.getFloat("expSalary",0);
         contractTime = ContractTime.getByName(prefs.getString("contractTime",ContractTime.EITHER.toString()));
         Set<String> keywordSet = prefs.getStringSet("keywords", new HashSet<>());
         keywords = new ArrayList<>(keywordSet);
